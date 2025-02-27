@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  width: 80px; /* Ancho de la barra */
+  background-color: #000; /* Color negro */
+  border-radius: 20px 0 0 20px; /* Bordes redondeados en la esquina izquierda */
+  padding: 20px 0; /* Espaciado interno */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
+}
+
+.content {
+  flex: 1;
+  background-color: #f5f5f5; /* Color de fondo claro */
+  padding: 20px;
+  overflow: auto;
+}
+
+

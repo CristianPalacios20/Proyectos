@@ -1,0 +1,175 @@
+*{
+    list-style: none;
+    text-decoration: none;
+    
+}
+
+.menu{
+    /* width: 150px; */
+    display: grid;
+    grid-template-areas: 
+        "content-logo"
+        "content-menu"
+        "content-menu"
+        "content-logout"
+    ;
+    grid-template-columns: 1fr;
+    grid-template-rows: 80px auto auto 80px;
+    font-size: 10px;
+    color: #ffff;
+    transition: width 0.2s;
+}
+
+/* .menu:hover{
+    width: 180px;
+} */
+
+.content-logo{
+    grid-area: content-logo;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-logo div{
+    width: 50px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: antiquewhite;
+    border-radius: 10px;
+}
+
+.content-logo div img{
+    width: 40px;
+    height: auto;
+    object-fit: cover;
+}
+
+.content-logo h2{
+    font-size: 20px;
+}
+
+.content-user{
+    grid-area: content-user;
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+    /* background-color: red; */
+}
+
+.content-user div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.content-user div img{
+    width: 130px;
+    height: auto;
+    background: none;
+}
+
+.content-user div span{
+    font-size: 18px;
+}
+
+.content-menu{
+    grid-area: content-menu;
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.content-menu ul{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.content-menu ul li{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+    position: relative;
+    width: 100%;
+}
+
+.content-menu ul img{
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.content-menu ul li:hover img {
+    transform: translateX(-40px);
+}
+
+.content-menu ul li a{
+    display: block;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    transform: translateX(5px);
+    position: absolute;
+    left: -10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.content-menu ul li:hover a{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.content-logout{
+    grid-area: content-logout;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border-top: 1px solid #ffff;
+}
+
+.content-logout ul li{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.content-logout img{
+    /* width: 25px;
+    height: 25px; */
+    cursor: pointer;
+}
+
+.content-logout button{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: #ffff;
+    text-decoration: underline;
+    font-size: 15px;
+}
+
+.content-loading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffff;
+    color: #000;
+    font-size: 20px;
+}

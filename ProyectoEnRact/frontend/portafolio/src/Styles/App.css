@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: white;
+    overflow: hidden;
+    overflow-y: scroll;
+    
+}
+
+.App{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main > *{
+    margin-bottom: 40px;
+}
+
+section{
+    min-height: 300px;
+}
+
+.main-content{
+    flex: 1;
+}
+
+footer{
+    background-color: black;
+    color: white;
+    height: 40vh;
+}

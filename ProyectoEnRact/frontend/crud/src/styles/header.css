@@ -1,0 +1,155 @@
+*{
+    text-decoration: none;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 80px;
+    padding: 5px;
+    z-index: 10;
+    /* border-bottom: 1px solid #ccc; */
+}
+
+.contetTitle{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    padding: 5px;
+}
+
+.contetTitle h2{
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.content-nav{
+    display: flex;
+    width: 80%;
+    height: 100%;
+}
+
+.content-nav ul{
+    width: 100%;
+    height: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin: 0 15px 0 0 ;
+}
+
+.content-nav ul li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+}
+
+.header .content-buscador{
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .content-buscador input{
+    width: 200px;
+    height: 25px;
+    border: none;
+    outline: none;
+    padding: 10px 40px 10px 15px;
+    border-radius: 20px;
+    background-color: #f0f3f4;
+}
+
+.header .content-buscador img{
+    width: 15px;
+    height: 15px;
+    margin-left: -35px;
+    cursor: pointer;
+    object-fit: contain;
+}
+
+.contentNofi img{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.header .content-user{
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 140px;
+    height: 30px;
+    background-color: #cacfd266;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.header .content-user .user-info{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    /* justify-content: space-between; */
+    gap: 0;
+}
+
+.header .content-user .user-info img{
+    width: 60px;
+    height: auto;
+    object-fit: cover;
+    /* margin-right: 18px; */
+}
+
+.header .content-user .user-info p{
+    font-size: 13px;
+    /* gap: 0; */
+}
+
+.header .content-user .user-info .iconFlechaAbajo{
+    width: 25px;
+    height: auto;
+    position: relative;
+}
+
+.content-nav .ul-hijo {
+    position: absolute;
+    width: 70px;
+    height: 8px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    top: 100%;
+    left: 0;
+    background: #454545;
+    list-style: none;
+    padding: 8px;
+    margin: 12px 0 0 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .ul-hijo li {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: white;
+  }
+
+  .user-info:hover + .ul-hijo {
+    opacity: 1;
+    visibility: visible;
+  }

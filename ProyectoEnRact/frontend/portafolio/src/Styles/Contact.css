@@ -1,0 +1,101 @@
+#section-contact{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 80px;
+}
+
+.content-about{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.content-contact{
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.content-form form{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+    "nombre correo"
+    "mensaje mensaje"
+    "btn btn";
+    gap: 10px;
+}
+
+form input[type = text]{
+    grid-area: nombre;
+}
+
+form input[type = email]{
+    grid-area: correo;
+}
+
+form textarea{
+    grid-area: mensaje;
+}
+
+form .wrapper-btn{
+    grid-area: btn;
+    align-self: center;
+}
+
+.content-form form input{
+    outline: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-bottom: 1px solid black;
+}
+
+.wrapper-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.content-form form .btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    padding: 5px;
+    gap: 5px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.content-form form .btn:hover{
+    transform: scale(1.02);
+    box-shadow: -2px 5px 5px rgba(0,0,0,0.5);
+}
+
+.content-form form .btn img{
+    width: 15px;
+    height: 15px;
+}
+
+.content-form form textarea{
+    outline: none;
+    border: none;
+    resize: none;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+@media (max-width: 900px) {
+    #section-contact{
+        padding: 10px ;
+    }
+}
