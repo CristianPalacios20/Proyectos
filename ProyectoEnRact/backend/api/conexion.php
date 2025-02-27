@@ -1,5 +1,5 @@
 <?php
-
+//Api conexión
 //34.55.220.177
 $servername = "127.0.0.1";
 $port = "3306";
