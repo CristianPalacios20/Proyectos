@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useAuthContext }  from '../../../hooks/useContext';
 import iconSereach from '../../../assets/icons/Sereach.svg';
 import iconUser from '../../../assets/image2.png';
@@ -23,13 +24,15 @@ const Header : React.FC = () => {
               <img src={iconNoti} alt="" />
             </li>
             <li className='content-user'>
-              <div className='user-info'>
-                <img src={ iconUser } alt="" />
-                <p>{ user?.nombres ? formatearNombreCompleto(user.nombres) : 'USERNAME' }</p>
-              </div>
-              <ul className="ul-hijo">
-                <li>Perfil</li>
-              </ul>
+              <Link to='/dashboard/perfil'>
+                <div className='user-info'>
+                  <img src={ iconUser } alt="perfil" />
+                  <p>{ user?.nombres ? formatearNombreCompleto(user.nombres) : 'USERNAME' }</p>
+                </div>
+                <ul className="ul-hijo">
+                  <li>Perfil</li>
+                </ul>
+              </Link>
             </li>
           </ul>
         </nav>

@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
-import { FaBox, FaCheck, FaTimes, FaThumbsUp, FaThumbsDown } from "react-icons/fa";
-import '../../../styles/productos.css'
+import { useEffect, useState } from "react";
 import editar from '../../../assets/icons/editar.svg';
-import eliminar from '../../../assets/icons/iconEliminar.svg'
+import eliminar from '../../../assets/icons/iconEliminar.svg';
 import FormProducts from "../forms/FormProducts";
-import Graficos from "./grafico";
 import Cargando from '../../loading';
+import '../../../styles/productos.css';
 
 interface Productos{
   id: number;
@@ -30,7 +28,6 @@ export default function Productos() {
     PMV_negativo: 0
   });
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  
 
   // Obtener los productos al cargar la página
   useEffect(() => {
@@ -76,58 +73,49 @@ export default function Productos() {
               alert("Error al eliminar el producto.");
             }
      })
-      .catch((error) => console.error("Error al eliminar el productooo", error));
+      .catch((error) => console.error("Error al eliminar el producto", error));
     }
   }
   // Renderizar los productos aquí...
   return (
     <div className="productos-container">
-      
+
       <div className="title-container">
       <h3>Productos</h3>
       <span></span>
       <p>Indicadores y métricas</p>
+
       </div>
-      <div className="indicators-container">
-        <div className="indicadores">
-          <div className="indicator total-productos">
-            <div>
-              {/* <h3><FaBox style={{ color : "blue" }}/>TP</h3> */}
-              <span className="descripcion">
-                Total de productos: {metricas.TP}
-              </span>
-            </div>
-            <div className="grafico">
-              <Graficos metricas = {metricas}/>
-            </div>
+      <div className="indicadores">
+        <div className="indicador ">
+          {/* Productos activos */}
+          <span className="descripcion">Total de productos:</span>
+          <div className="total-productos">  
+            <p>{metricas.TP}</p>
           </div>
-          <div className="indicator productos-activos">
-            <div>
-              <h3><FaCheck style={{ color : "green" }}/>PA</h3>
-              <p>{metricas.PA}</p>
-            </div>
-            <span className="descripcion">Productos Activos</span>
+        </div>
+        <div className="indicador ">
+          <span className="descripcion">Productos Activos</span>
+          <div className="productos-activos">
+            <p>{metricas.PA}</p>
           </div>
-          <div className="indicator productos-inactivos">
-            <div>
-              <h3><FaTimes style={{ color : "red" }}/>PI</h3>
-              <p>{metricas.PI}</p>
-            </div>
-            <span className="descripcion">Productos inactivos</span>
+        </div>
+        <div className="indicador ">
+        <span className="descripcion">Productos inactivos</span>
+          <div className="productos-inactivos">
+            <p>{metricas.PI}</p>
           </div>
-          <div className="indicator productos-mas-vendidos">
-            <div>
-              <h3><FaThumbsUp style={{ color : "blue"}}/>PMV+</h3>
-              <p>{metricas.PMV_positivo}</p>
-            </div>
-            <span className="descripcion">Productos disponibles</span>
+        </div>
+        <div className="indicador ">
+          <span className="descripcion">Productos +vendidos</span>
+          <div className="productos-mas-vendidos">
+            <p>{metricas.PMV_positivo}</p>
           </div>
-          <div className="indicator productos-menos-vendidos">
-            <div>
-              <h3><FaThumbsDown style={{ color : "red" }}/>PMV-</h3>
-              <p>{metricas.PMV_negativo}</p>
-            </div>
-            <span className="descripcion">Productos disponibles</span>
+        </div>
+        <div className="indicador">
+          <span className="descripcion">Productos -vendidos</span>
+          <div className="productos-menos-vendidos">
+            <p>{metricas.PMV_negativo}</p>
           </div>
         </div>
       </div>

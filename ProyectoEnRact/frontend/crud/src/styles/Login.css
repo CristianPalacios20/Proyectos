@@ -165,10 +165,11 @@
     height: 40px;
     margin-top: 10px;
     text-align: center;
+    /* border: 1px solid red; */
 }
 
 .secondary-button{
-    width: 80%;
+    width: 88%;
     height: 80%;
     border: none;
     cursor: pointer;

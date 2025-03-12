@@ -79,47 +79,41 @@
 }
 
 .header .content-user{
-    /* border: 1px solid red; */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    width: 140px;
+    width: auto;
     height: 30px;
     background-color: #cacfd266;
     border-radius: 30px;
     cursor: pointer;
+    margin: 0 10px;
+    text-decoration: none;
 }
 
 .header .content-user .user-info{
     width: 100%;
-    height: auto;
+    height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-right: 20px;
-    /* justify-content: space-between; */
-    gap: 0;
+    gap: 5px;
+    padding: 8px;
 }
 
 .header .content-user .user-info img{
-    width: 60px;
+    width: 30px;
     height: auto;
     object-fit: cover;
-    /* margin-right: 18px; */
 }
 
 .header .content-user .user-info p{
     font-size: 13px;
-    /* gap: 0; */
+    color: black;
 }
 
-.header .content-user .user-info .iconFlechaAbajo{
-    width: 25px;
-    height: auto;
-    position: relative;
-}
 
 .content-nav .ul-hijo {
     position: absolute;

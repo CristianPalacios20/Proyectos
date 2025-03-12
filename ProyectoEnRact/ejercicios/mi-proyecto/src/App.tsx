@@ -4,6 +4,7 @@ import Perfil from './components/props/ejercicio2';
 import Usario from './components/props/ejercicio3';
 import Boton from './components/props/ejercicio4';
 import ListaUsuarios from './components/props/ejercicio5';
+import Nnn from './components/nn/nn';
 import './App.css'
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
       <Usario datos={usuarios}/>
       <Boton accion={handleClick}/>
       <ListaUsuarios datos={usuarios2}/>
+      <Nnn/>
     </>
   )
 }

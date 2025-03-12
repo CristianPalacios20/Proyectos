@@ -1,8 +1,7 @@
 import  useArrastar  from '../../../hooks/useArrastrar';
-// import Arrastrar from '../../arrastrar';
-import '../../../styles/FormProducts.css';
 import iconCerrar from '../../../assets/icons/iconCerrar.svg';
 import { useState } from 'react';
+import '../../../styles/FormProducts.css';
 
 interface FormularioProps {
   cerrarFormulario: () => void;

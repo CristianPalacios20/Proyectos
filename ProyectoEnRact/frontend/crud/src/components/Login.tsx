@@ -8,6 +8,8 @@ import flDerecha from '../assets/flecha-derecha.png';
 import "../styles/Login.css";
 
 const Form = () => {
+  const [invitado, setInvitado] = useState(false);
+  const [mostrar, setMostrar] = useState(true);
   const { 
     correo, 
     setCorreo,
@@ -17,7 +19,6 @@ const Form = () => {
     loading,
     error,
   } = useLogin();
-
   const {
     registroNombres,
     setRegistroNombres,
@@ -34,8 +35,6 @@ const Form = () => {
     registroLoading,
   } = useAuthRegistro();
 
-  const newLocal = <label className="recordarme"><input type="checkbox" name="" id="checkbox" />Recuérdame</label>;
-  const [mostrar, setMostrar] = useState(true);
   return (
     <div className="form-container ">
       {/* Sección para iniciar sesión */}
@@ -59,7 +58,7 @@ const Form = () => {
                     type="email" 
                     placeholder="Enter your email"
                     className="input-field"
-                    required
+                    // required
                     value={correo}
                     onChange={(e) => setCorreo(e.target.value)}
                 />
@@ -67,12 +66,21 @@ const Form = () => {
                   type="password" 
                   placeholder="Enter your password"
                   className="input-field"
-                  required
+                  // required
                   value={contrasena}
                   onChange={(e) => setContrasena(e.target.value)}
                 />
                 <div className="outh-options">
-                  {newLocal /* Checkbox para recordar usuario */}
+                <label className="recordarme" >
+                <input 
+                  type="checkbox" 
+                  name="" 
+                  id="checkbox" 
+                  checked={invitado}
+                  onChange={(e) => setInvitado(e.target.checked)}
+                />
+                  Invitado
+                </label>
                   <p>¿Olvidaste tu contraseña?</p>
                 </div>
                 <div className="button-container">
@@ -81,7 +89,12 @@ const Form = () => {
                     className="secondary-button"
                     disabled={loading}
                   >
-                    { loading ? 'Iniciando sesión...' : 'Iniciar sesión' }
+                    {loading 
+                      ? 'Iniciando sesión...'
+                      : invitado
+                      ? 'Acceder como invitado'
+                      : 'Iniciar sesión'
+                    }
                   </button>
                 </div>
                 <div className='social-buttons-container'>

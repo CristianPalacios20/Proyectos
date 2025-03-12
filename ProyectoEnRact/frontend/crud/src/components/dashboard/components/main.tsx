@@ -3,6 +3,7 @@ import DashboardPage from '../pages/dashboardPage';
 import UsuariosPage from '../pages/usuarios';
 import ProductosPage from '../pages/productos';
 import ConfiguracionPage from '../pages/configuracion';
+import PerfilPage from '../pages/perfil';
 import '../../../styles/main.css'
 
 export default function main() {
@@ -10,9 +11,10 @@ export default function main() {
       <div className='main'>
         <Routes>
           <Route path='/' element = { <DashboardPage /> }/>
-          <Route path='/usuarios' element = { < UsuariosPage /> }/>
-          <Route path='/productos' element = { < ProductosPage /> }/>
-          <Route path='/configuracion' element = { < ConfiguracionPage /> }/>
+          <Route path='/usuarios' element = { <UsuariosPage /> }/>
+          <Route path='/productos' element = { <ProductosPage /> }/>
+          <Route path='/configuracion' element = { <ConfiguracionPage /> }/>
+          <Route path='/perfil' element = { <PerfilPage/> }/>
         </Routes>
       </div>
   )
