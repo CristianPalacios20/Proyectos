@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useLogin from '../hooks/useLogin';
 import useAuthRegistro from '../hooks/useAuthRegistro';
 import facebook from '../assets/facebook.png';
@@ -8,8 +8,8 @@ import flDerecha from '../assets/flecha-derecha.png';
 import "../styles/Login.css";
 
 const Form = () => {
-  const [invitado, setInvitado] = useState(false);
   const [mostrar, setMostrar] = useState(true);
+  const [invitado, setInvitado] = useState(false);
   const { 
     correo, 
     setCorreo,
@@ -35,6 +35,15 @@ const Form = () => {
     registroLoading,
   } = useAuthRegistro();
 
+  useEffect(() => {
+    if(invitado){
+      fetch("")
+    }else{
+      setCorreo('');
+      setContrasena('');
+    }
+  }, [invitado]);
+
   return (
     <div className="form-container ">
       {/* Sección para iniciar sesión */}
@@ -54,34 +63,41 @@ const Form = () => {
           <div className="form-box">
             <h2>Inicia sesión aquí</h2>
             <form className="login-form" onSubmit={handleLogin}>
-                <input 
-                    type="email" 
-                    placeholder="Enter your email"
-                    className="input-field"
-                    // required
-                    value={correo}
-                    onChange={(e) => setCorreo(e.target.value)}
-                />
-                <input 
-                  type="password" 
-                  placeholder="Enter your password"
-                  className="input-field"
-                  // required
-                  value={contrasena}
-                  onChange={(e) => setContrasena(e.target.value)}
-                />
+              {!invitado && (
+                  <>
+                    <input 
+                      type="email" 
+                      placeholder="Enter your email"
+                      className="input-field"
+                      required
+                      value={correo}
+                      onChange={(e) => setCorreo(e.target.value)}
+                      disabled={invitado}
+                    />
+                    <input 
+                      type="password" 
+                      placeholder="Enter your password"
+                      className="input-field"
+                      required
+                      value={contrasena}
+                      onChange={(e) => setContrasena(e.target.value)}
+                      disabled={invitado}
+                    />
+                  </>
+                )}
+
                 <div className="outh-options">
-                <label className="recordarme" >
-                <input 
-                  type="checkbox" 
-                  name="" 
-                  id="checkbox" 
-                  checked={invitado}
-                  onChange={(e) => setInvitado(e.target.checked)}
-                />
-                  Invitado
-                </label>
-                  <p>¿Olvidaste tu contraseña?</p>
+                  <label className="recordarme" >
+                    <input 
+                      type="checkbox" 
+                      name="" 
+                      id="checkbox" 
+                      checked={invitado}
+                      onChange={(e) => setInvitado(e.target.checked)}
+                    />
+                    Invitado
+                  </label>
+                    <a>¿Olvidaste tu contraseña?</a>
                 </div>
                 <div className="button-container">
                   <button 
