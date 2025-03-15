@@ -37,7 +37,15 @@ const Form = () => {
 
   useEffect(() => {
     if(invitado){
-      fetch("")
+      fetch("http://localhost/Proyectos/ProyectoEnRact/backend/api/guest_credentials.php")
+        .then(response => response.json())
+        .then((data) => {
+          setCorreo(data.correo);
+          setContrasena(data.contrasena);
+          console.log(data.correo);
+          console.log(data.contrasena);
+        })
+        .catch((error) => console.error("Error al obtener las credenciales",error));
     }else{
       setCorreo('');
       setContrasena('');

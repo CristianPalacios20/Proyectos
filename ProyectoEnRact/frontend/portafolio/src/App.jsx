@@ -15,12 +15,12 @@ function App() {
         <Header />
         <div className='main-content'>
           <main >
-              <Home />
-              <About />
-              <Skills />
-              <Projects />
-              <Contact />
-            </main>
+            <Home />
+            <About />
+            <Skills />
+            <Projects />
+            <Contact />
+          </main>
         </div>
         <Footer/>
       </div>
