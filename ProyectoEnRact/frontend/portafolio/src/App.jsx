@@ -1,31 +1,16 @@
-import { BrowserRouter as Router} from 'react-router-dom';
-import Home from './components/Home';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import About from './components/about';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-import Contact from './components/Contact';
-import './Styles/App.css';
+import InfoPersonal from "./components/info-personal";
+import ContenidoPrincipal from "./components/ContenidoPrincipal";
+import { HashRouter } from "react-router-dom";
+import "./Styles/App.css";
 
 function App() {
   return (
-    <Router>
-      <div className='App'>
-        <Header />
-        <div className='main-content'>
-          <main >
-            <Home />
-            <About />
-            <Skills />
-            <Projects />
-            <Contact />
-          </main>
-        </div>
-        <Footer/>
+    <HashRouter>
+      <div className="App">
+        <InfoPersonal />
+        <ContenidoPrincipal />
       </div>
-    </Router>
-  )
+    </HashRouter>
+  );
 }
-
-export default App
+export default App;

@@ -7,10 +7,9 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-
     <header class="header">
         <nav class="nav">
-            <ul class="content-menu-projects">
+            <ul class="menu-desktop">
                 <li><a href="#">HOME</a></li>
                 <li><a href="#">CUADROS</a></li>
                 <li><a href="#">FOTOGRAFÍAS</a></li>
@@ -18,65 +17,106 @@
                 <li><a href="#">PORTAFOLIO</a></li>
                 <li><a href="#">¡HABLEMOS!</a></li>
                 <div class="Redes">
-                    <a href="#"><img src="assets/img/facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="assets/img/instagram.png" alt="Instagram"></a>
+                    <a href="#"><img src="assets/IMG/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="assets/IMG/instagram.png" alt="Instagram"></a>
+                </div>
+            </ul>
+
+            <ul class="mobile-menu">
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">CUADROS</a></li>
+                <li><a href="#">FOTOGRAFÍAS</a></li>
+                <li><a href="#">¿QUIÉN SOY?</a></li>
+                <li><a href="#">PORTAFOLIO</a></li>
+                <li><a href="#">¡HABLEMOS!</a></li>
+                <div class="Redes">
+                    <a href="#"><img src="assets/IMG/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="assets/IMG/instagram.png" alt="Instagram"></a>
                 </div>
             </ul>
         </nav>
-        <div class="Menu-toggle">
+        <div class="Menu-toggle  Menu-toggle-movil">
             <div class="Menu-toggle__container">
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
+                <span class="bar1 bar"></span>
+                <span class="bar2 bar"></span>
+                <span class="bar3 bar"></span>
+            </div>
+            <div class="logo-movil">
+                <img src="assets/IMG/logo.png" alt="Logo">
             </div>
         </div>
     </header>
 
     <main id="contenido">
         <section id="home">
-            <img src="/assets/IMG/JuanLeon.jpg" alt="">
+            <div class="home-content-img">
+                <img src="assets/IMG/JuanLeon.jpg" alt="">
+            </div>
+            <div class="home-text">
+                <div class="home-text-content">
+                    <h1>Biólogo y <span>fotográfico</span></h1>
+                    <p>Proyecto la vida a través de la cámara</p>
+                    <button>Ver Portafolio</button>
+                </div>
+            </div>
+            <img class="img-movil" src="assets/IMG/JuanLeon.jpg" alt="">
             <div class="home-content">
                 <div class="logo">
-                    <img src="assets/img/logo.png" alt="Logo">
-                </div>
-                <div class="home-text">
-                    <div class="home-text-content">
-                        <h1>Biologo y <span>fotográfico</span></h1>
-                        <p>Proyecto la vida a través de la cámara</p>
-                        <button>Ver Portafolio</button>
-                    </div>
+                    <img src="assets/IMG/logo.png" alt="Logo">
                 </div>
             </div>
         </section>
-        <!-- <section class="section1"></section> -->
-        <section class="section2"></section>
+        <section class="section1">
+            <h2>¿Quién soy?</h2>
+            <div class="content-about">
+                <span class="bar5"></span>
+                <p><i>"Capturando la esencia de la naturaleza".</i> <br><br>
+                    Soy <span>Juan León Voitier</span>, fotógrafo profesional de fauna salvaje y orgulloso panameño. 
+                    Desde niño, la fotografía me ha fascinado como una forma de inmortalizar emociones y paisajes.
+                    A través de mis imágenes, busco conectar a las personas con la belleza de la naturaleza y crear conciencia sobre la importancia de su conservación. 
+                    Cada fotografía es una invitación a admirar y proteger nuestro mundo.
+                </p>
+            </div>
+        </section>
+        <section class="section2">
+            <img src="assets/IMG/coliflor.png" alt="">
+        </section>
         <section class="section3">
             <div class="section3-1">
                 <h2>Dale un toque especial a tus <span>espacios</span></h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ullamcorper magna eget lacus lacinia, ut faucibus ante molestie. </p>
             </div>
-            <div class="section3-2">
-                <div class="section3-2-1">
-                    <img src="/assets/IMG/2.png" alt="">
+            <div class="gallery">
+                <div class="gallery-item item-large">
+                    <img src="assets/IMG/8.png" alt="">
                     <p>Lorem ipsum dolor sit amet -14x10"</p>
                     <p class="p2">Desde $95.00</p>
                 </div>
-                <div class="section3-2-2">
-                    <img src="/assets/IMG/6.png" alt="">
+                <div class="gallery-item">
+                    <img src="assets/IMG/8.png" alt="">
                     <p>Lorem ipsum dolor sit amet -14x10"</p>
                     <p class="p2">Desde $95.00</p>
                 </div>
-                <div class="section3-2-3">
-                    <img src="/assets/IMG/4.png" alt="">
+                <div class="gallery-item">
+                    <img src="assets/IMG/8.png" alt="">
                     <p>Lorem ipsum dolor sit amet -14x10"</p>
                     <p class="p2">Desde $95.00</p>
+                </div>
+                <div class="gallery-item gallery-img-movil">
+                    <img src="assets/IMG/8.png" alt="">
+                    <p>Lorem ipsum dolor sit amet -14x10"</p>
+                    <p class="p2">Desde $95.00</p>
+                </div>
+                <div class="gallery-item more-images gallery-img-movil">
+                    <img src="assets/IMG/8.png" alt="Imagen 5">
+                    <div class="overlay">+</div>
                 </div>
             </div>
-            <button>Ver todos los cuadros</button>
+            <button class="btn-mostrar-cuadros">Ver todos los cuadros</button>
         </section>
 
         <section class="section4">
-            <img src="/assets/IMG/8.png" alt="">
+            <img src="assets/IMG/8.png" alt="">
         </section>
         <section class="section5">
             <div class="section5-1">
@@ -87,6 +127,25 @@
                     se adapte a tus espacios.
                 </p>
                 <button>¡Hablemos!</button>
+            </div>
+        </section>
+        <section class="section6">
+            <div class="content-h2">
+                <h2>Contáctame</h2>
+            </div>
+            <div class="content-info">
+                <div class="content-email">
+                    <img src="##_IMG/correo-electronico-1--1742228336114_412.png" alt="">
+                    <p>correo@ejemplo.com</p>
+                </div>
+                <div class="content-phone">
+                    <img src="##_IMG/telefono-inteligente-1--1742228291283_5383.png" alt="">
+                    <p>+507 123 45678910</p>
+                </div>
+                <div class="content-ubicacion">
+                    <img src="##_IMG/mapa-1--1742228235862_9562.png" alt="">
+                    <p>Ciudad, País</p>
+                </div>
             </div>
         </section>
     </main>
@@ -115,7 +174,7 @@
             </div>
         </div>
         <div class="footer-img">
-            <img src="/assets/IMG/JuanLeon-imgII.jpg" alt="">
+            <img src="assets/IMG/JuanLeon-imgII.jpg" alt="">
         </div>
         <div class="footer-content-derechos">
             <p>Todos los derechos reservados © 2025</p>

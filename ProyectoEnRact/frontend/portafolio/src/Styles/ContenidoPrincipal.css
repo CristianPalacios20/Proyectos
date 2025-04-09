@@ -1,0 +1,25 @@
+#contenido-principal {
+  display: flex;
+  flex-direction: column;
+  grid-template-areas:
+    "header header"
+    "main main"
+    "footer footer";
+  grid-template-columns: auto auto 30px;
+  border-radius: 20px;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+  background-color: #1a1a1a;
+}
+
+#contenido-principal .header {
+  grid-area: header;
+}
+#contenido-principal .main {
+  grid-area: main;
+}
+
+#contenido-principal .footer {
+  grid-area: footer;
+}
