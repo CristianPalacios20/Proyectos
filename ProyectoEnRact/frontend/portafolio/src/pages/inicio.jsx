@@ -7,13 +7,16 @@ import iconReact from "../assets/icon-react.svg";
 import iconPhp from "../assets/icon-php.svg";
 import iconMysql from "../assets/icon-mysql.svg";
 import "../Styles/inicio.css";
+import useObservar from "../Hooks/useObservar";
 
 export default function inicio() {
+
+  useObservar('.observando');
   return (
     <section id="inicio">
       <div className="contenido">
         <h1>Bienvenido a mi portafolio.</h1>
-        <div>
+        <div className="des">
           Soy Desarrollador Frontend enfocado en crear experiencias web
           modernas, rápidas y accesibles.
         </div>
@@ -25,9 +28,9 @@ export default function inicio() {
           </button>
         </div>
       </div>
-      <div className="habilidades">
+      <div className="habilidades observando">
         <h2>My Skills</h2>
-        <div className="items">
+        <div className="items observando">
           <img src={iconHTML}/>
           <img src={iconCSS}/>
           <img src={iconJS}/>

@@ -39,7 +39,7 @@
   /* width: 100px; */
 }
 
-.nav-links .link{
+.nav-links .link {
   margin-right: 10px;
 }
 
@@ -50,7 +50,6 @@
   font-weight: bold;
   color: #fff;
   border-radius: 5px;
-  transition: border-bottom 1s ease-in-out;
 }
 
 .link a:hover {
@@ -58,10 +57,8 @@
   transition: background-color 0.4s ease;
 }
 
-
-a.activo{
+a.activo {
   border-bottom: 2px solid #ff4500;
-
 }
 
 .scrolled {

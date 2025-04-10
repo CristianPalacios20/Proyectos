@@ -1,22 +1,18 @@
 import React from "react";
 import useContactForm from "../Hooks/useContactForm";
-import "../Styles/Contact.css";
+import "../Styles/Contacto.css";
 import enviar from "../assets/enviar.png";
+import imgMessage from "../assets/mensaje2.svg";
 
 export default function Contact() {
   const { form, formData, handleChange, sendEmail } = useContactForm();
   return (
-    <section id="section-contact">
-      <div className="content-about">
-        <div className="content-sobreMi">
-          <h2>CONTÁCTAME</h2>
-          <div className="content-span">
-            <span className="line large"></span>
-            <span className="line small"></span>
-          </div>
-        </div>
+    <section id="contactame">
+      <div className="contenedor-img">
+        <h2>CONTÁCTAME</h2>
+        <img src={imgMessage} alt="" />
       </div>
-      <div className="content-contact">
+      <div className="contenedor-contacto">
         <div className="content-form">
           <form ref={form} onSubmit={sendEmail}>
             <input

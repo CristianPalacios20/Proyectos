@@ -15,7 +15,6 @@ export function useLogicaCarusel() {
     if (runningBar) {
       runningBar.style.animation = "none";
       runningBar.offsetHeight; // <--- Forza el reflow ---->
-      // runningBar.style.animation = null;
       runningBar.style.animation = "timeRunning 4s linear 1 forwards";
     }
   };
