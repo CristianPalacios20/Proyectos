@@ -41,17 +41,17 @@
   animation: aparecer2 1s ease-in-out forwards;
 }
 
-@keyframes aparecer2{
-    0%{
-        opacity: 0;
-        transform: translateY(100%);
-        filter: blur(30px);
-    }
-    100%{
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
+@keyframes aparecer2 {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+    filter: blur(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 .contenido .btn button {
@@ -95,11 +95,14 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 500px;
+  width: 100%;
   height: 100px;
   top: 70%;
-  right: 30%;
-  transform: translate(-75%);
+}
+
+.habilidades h2 {
+  width: 100%;
+  text-align: center;
   transform: translateX(100%);
   opacity: 0;
   animation: aparecer 1s ease-in-out 0.3s 1 forwards;
@@ -109,24 +112,47 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 100%;
   height: 50px;
   gap: 20px;
-  border-radius: 10px;
-  transform: translateX(100%);
+  /* border: 1px solid red; */
+}
+
+.habilidades .items img {
   opacity: 0;
-  animation: aparecer 1s ease-in-out 0.8s 1 forwards;
+  transform: translateX(400px);
+  animation: aparecer 1s ease-out forwards;
+  filter: blur(20px);
+}
+
+.habilidades .items img:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.habilidades .items img:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.habilidades .items img:nth-child(3) {
+  animation-delay: 0.9s;
+}
+.habilidades .items img:nth-child(4) {
+  animation-delay: 1.2s;
+}
+.habilidades .items img:nth-child(5) {
+  animation-delay: 1.5s;
+}
+.habilidades .items img:nth-child(6) {
+  animation-delay: 1.8s;
 }
 
 @keyframes aparecer {
   0% {
     opacity: 0;
-    transform: translateX(0, 100px);
-    filter: blur(10px);
+    transform: translateX(400px);
+    filter: blur(20px);
   }
   100% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
     filter: blur(0);
   }
 }
@@ -134,4 +160,81 @@
 .items img {
   width: 40px;
   height: 40px;
+}
+
+/* Escritorios 💻 */
+
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  /* Escritorio mediano */
+  .contenido {
+    width: 100%;
+    padding: 10px 20px;
+    left: 50px;
+  }
+
+  .contenido h1 {
+    font-size: 25px;
+  }
+
+  .contenido .des {
+    width: 400px;
+  }
+
+  .contenido .btn button {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .habilidades {
+    width: 100%;
+    right: 0;
+  }
+
+  .habilidades .items img {
+    width: 30px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+
+  .contenido {
+    width: 100%;
+    padding: 10px 20px;
+    left: 30px;
+  }
+
+  .contenido h1 {
+    font-size: 25px;
+  }
+
+  .contenido .des {
+    width: 400px;
+  }
+
+  .contenido .btn button {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .habilidades {
+    width: 100%;
+    right: 0;
+  }
+
+  .habilidades .items img {
+    width: 30px;
+  }
+}
+
+/* Móviles 📱 */
+@media screen and(max-width: 320px) {
+  /* Móvil pequeño */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
 }

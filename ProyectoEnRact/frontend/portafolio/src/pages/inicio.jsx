@@ -8,10 +8,10 @@ import iconPhp from "../assets/icon-php.svg";
 import iconMysql from "../assets/icon-mysql.svg";
 import "../Styles/inicio.css";
 import useObservar from "../Hooks/useObservar";
+import { Link } from "react-router-dom";
 
 export default function inicio() {
-
-  useObservar('.observando');
+  useObservar("observando");
   return (
     <section id="inicio">
       <div className="contenido">
@@ -21,22 +21,24 @@ export default function inicio() {
           modernas, rápidas y accesibles.
         </div>
         <div className="btn">
-          <button>Leer más</button>
+          <Link to='/acercaDeMi'>
+            <button>Leer más</button>
+          </Link>
           <button>
             Descargar Cv
             <img src={download} alt="descargar" />
           </button>
         </div>
       </div>
-      <div className="habilidades observando">
-        <h2>My Skills</h2>
-        <div className="items observando">
-          <img src={iconHTML}/>
-          <img src={iconCSS}/>
-          <img src={iconJS}/>
-          <img src={iconReact}/>
-          <img src={iconPhp}/>
-          <img src={iconMysql}/>
+      <div className="habilidades">
+        <h2 className="observando">My Skills</h2>
+        <div className="items ">
+          <img src={iconHTML} />
+          <img src={iconCSS} />
+          <img src={iconJS} />
+          <img src={iconReact} />
+          <img src={iconPhp} />
+          <img src={iconMysql} />
         </div>
       </div>
     </section>

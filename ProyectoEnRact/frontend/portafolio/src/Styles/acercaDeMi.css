@@ -8,7 +8,7 @@
 }
 
 #acerca-de-mi .imgAcercaDeMi {
-  width: 500px;
+  width: 450px;
   height: 500px;
   opacity: 0;
   animation: aparecer4 1s ease-in-out 0.3s 1 forwards;
@@ -25,23 +25,24 @@
   overflow-y: auto;
 }
 
-.contenedor-des .des {
+.contenedor-des .descripcionn {
   display: flex;
   flex-direction: column;
-  height: 320px;
+  /* position: relative; */
+  height: auto;
   gap: 10px;
   opacity: 0;
   animation: aparecer3 1s ease-in-out 0.6s 1 forwards;
 }
 
-.contenedor-des .des h2 {
+.contenedor-des .descripcionn h2 {
   text-transform: uppercase;
   font-weight: bold;
   opacity: 0;
   animation: aparecer3 1s ease-in-out 0.9s 1 forwards;
 }
 
-.contenedor-des .des p {
+.contenedor-des .descripcionn p {
   /* opacity: 0; */
   animation: aparecer3 1s ease-in-out 0.3 1 forwards;
 }
@@ -146,3 +147,51 @@
       filter: blur(0);
     }
   }
+
+
+  /* Escritorios 💻 */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+
+  #acerca-de-mi .imgAcercaDeMi{
+    width: 350px;
+    height: auto;
+  }
+
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+  #acerca-de-mi{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 70px;
+    
+  }
+
+  #acerca-de-mi .imgAcercaDeMi{
+    width: 250px;
+    height: auto;
+  }
+
+  .descripcionn {
+    gap: 10px;
+  }
+
+  #acerca-de-mi .contenedor-des{
+    height: 285px;
+    margin-top: 0;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+/* Móviles 📱 */
+@media screen and(max-width: 320px) {
+  /* Móvil pequeño */
+}

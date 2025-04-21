@@ -8,12 +8,16 @@ export default function Contact() {
   const { form, formData, handleChange, sendEmail } = useContactForm();
   return (
     <section id="contactame">
-      <div className="contenedor-img">
-        <h2>CONTÁCTAME</h2>
-        <img src={imgMessage} alt="" />
-      </div>
-      <div className="contenedor-contacto">
-        <div className="content-form">
+        <div className="contenedor-img">
+          <img src={imgMessage} alt="" />
+          <h1>Hablemos</h1>
+        </div>
+        <div className="contenedor-contacto">
+          <div className="anillos">
+            <i style={{'--clr': '#4f03fe'}}></i>
+            <i style={{'--clr': '#fb3900'}}></i>
+            <i style={{'--clr': '#fe03f7'}}></i>
+          </div>
           <form ref={form} onSubmit={sendEmail}>
             <input
               className="nombre"
@@ -27,7 +31,7 @@ export default function Contact() {
             <input
               className="correo"
               type="email"
-              placeholder="Correo electrónico"
+              placeholder="Correo"
               name="user_email"
               value={form.email}
               onChange={handleChange}
@@ -40,17 +44,16 @@ export default function Contact() {
               value={formData.message}
               onChange={handleChange}
               required
-              rows={15}
+              rows={5}
             ></textarea>
             <div className="wrapper-btn">
-              <button className="btn" type="submit">
+              <button type="submit">
                 <span>ENVIAR</span>
                 <img src={enviar} alt="" />
               </button>
             </div>
           </form>
         </div>
-      </div>
-    </section>
+      </section>
   );
 }

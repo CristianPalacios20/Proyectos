@@ -5,12 +5,16 @@ import useObservar from "../Hooks/useObservar";
 import "../Styles/acercaDemi.css";
 
 export default function About() {
-  useObservar('observando')
+  useObservar(".observando");
   return (
     <section id="acerca-de-mi">
-      <img className="imgAcercaDeMi observando" src={sobremi} alt="acerca de mí" />
+      <img
+        className="imgAcercaDeMi observando"
+        src={sobremi}
+        alt="acerca de mí"
+      />
       <div className="contenedor-des">
-        <div className="des observando">
+        <div className="descripcionn observando">
           <h2 className="observando">Acerca de mí</h2>
           <p className="observando">
             ¡Hey! Soy Cristian Stiven Palacios Perea, un explorador del mundo
@@ -24,23 +28,29 @@ export default function About() {
             Siempre estoy en busca de nuevos retos, aprendiendo herramientas
             nuevas y encontrando maneras de mejorar cada proyecto que toco.
             Fuera del código, me gusta explorar el diseño, planear ideas nuevas
-            y seguir soñando con mi próximo gran proyecto.
+            y seguir soñando con mi próximo gran proyecto
           </p>
         </div>
-        <div class="contenedor-formacion">
-          <h2 class="titulo-seccion observando">Formación.</h2>
-          <div class="formacion-item">
+        <div className="contenedor-formacion">
+          <h2 className="titulo-seccion observando">Formación.</h2>
+          <div className="formacion-item">
             <div className="contenedorImg observando">
-              <img class="formacion-img" src={iconGraduacion} alt="formación" />
+              <img
+                className="formacion-img"
+                src={iconGraduacion}
+                alt="formación"
+              />
             </div>
-            <div class="formacion-info">
+            <div className="formacion-info">
               <div>
-                <h3 class="formacion-titulo observando">Desarrollo de software.</h3>
+                <h3 className="formacion-titulo observando">
+                  Desarrollo de software.
+                </h3>
                 <p className="observando">2024 - Actualmente.</p>
               </div>
-              <p class="formacion-descripcion observando">
+              <p className="formacion-descripcion observando">
                 Me encuentro estudiando Desarrollo de Software en el Instituto
-                Tecnológico Metropolitano(ITM).
+                Tecnológico Metropolitano(ITM). Colombia-Medellín.
               </p>
             </div>
           </div>

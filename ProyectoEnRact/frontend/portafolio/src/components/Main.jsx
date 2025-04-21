@@ -10,12 +10,12 @@ export default function main() {
   return (
     <section id='main'>
       <Routes>
-        <Route>
+        {/* <Route> */}
           <Route path="/" element={<Inicio/>} />
           <Route path="/portafolio" element={<Portafolio/>} />
           <Route path="/acercaDeMi" element={<AcercaDeMi/>} />
           <Route path="/contactame" element={<Contactame/>} />
-        </Route>
+        {/* </Route> */}
       </Routes>
     </section>
   )

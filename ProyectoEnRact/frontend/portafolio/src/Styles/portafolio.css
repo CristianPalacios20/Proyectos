@@ -177,3 +177,57 @@
 .arrows button:hover {
   background-color: #ff6b00;
 }
+
+/* Escritorios 💻 */
+@media screen and (min-width: 1025px) and (max-width: 1279px) {
+  .projects .item {
+    width: 100px;
+    height: 140px;
+  }
+  /* Escritorio mediano */
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+
+  .projects .contenedor {
+    /* border: 1px solid red; */
+    left: 40px;
+  }
+
+  .projects .item {
+    width: 100px;
+    height: 140px;
+    left: 75%;
+  }
+
+  .projects .item:nth-child(3) {
+    opacity: 0;
+  }
+
+  .projects .contenedor .titulo,
+  .projects .contenedor .nombre {
+    font-size: 40px;
+  }
+
+  .projects .contenedor .des {
+    font-size: 14px;
+  }
+
+  .contenedor .btn button {
+    font-size: 14px;
+    width: 100px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+/* Móviles 📱 */
+@media screen and(max-width: 320px) {
+  /* Móvil pequeño */
+}

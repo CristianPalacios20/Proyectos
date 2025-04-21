@@ -1,23 +1,49 @@
 .footer {
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   width: 100%;
   padding: 5px 0;
   bottom: 0;
   z-index: 1000;
 }
 
-.footer .copyright {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
 
-.footer .copyright a:nth-child(1) {
+.footer a:nth-child(1) {
   color: #ff6b00;
 }
 
-.copyright a {
+.footer a {
   color: #fff;
+}
+
+/* Escritorios 💻 */
+@media screen and (min-width: 1281px) {
+  /* Escritorio grande */
+}
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  /* Escritorio mediano */
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+
+  .footer{
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+/* Móviles 📱 */
+@media screen and(max-width: 320px) {
+  /* Móvil pequeño */
 }

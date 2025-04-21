@@ -1,10 +1,11 @@
-.header {
+#header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: absolute;
   width: 100%;
   height: 45px;
+  gap: 10px;
   padding: 25px 0;
   margin-top: 10px;
   z-index: 2000;
@@ -12,21 +13,19 @@
   transition: background-color 0.8s ease, height 0.8s ease;
 }
 
-.header h1 {
+#header h1 {
   margin-right: 50px;
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
   color: #ff5722;
-  text-shadow: 0px 0px 5px #ff5722;
   cursor: pointer;
 }
 
 .nav-links {
   display: flex;
-  width: 45%;
+  width: 100%;
   margin-left: 30px;
-  border-radius: 0px 0px 20px 0px;
 }
 
 .nav-links ul {
@@ -40,7 +39,7 @@
 }
 
 .nav-links .link {
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .link a {
@@ -168,3 +167,58 @@ a.activo {
     font-weight: 500;
   }
 }
+
+/* Escritorios 💻 */
+@media screen and (min-width: 1281px) {
+  /* Escritorio grande */
+
+
+}
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  /* Escritorio mediano */
+
+  #header h1{
+    font-size: 15;
+  }
+
+  .nav-links .link {
+    margin-right: 0px;
+  }
+
+  .link a{
+    font-size: 15px;
+    padding: 5px 8px;
+  }
+
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+
+  #header h1{
+    display: none;
+  }
+  .nav-links ul li a{
+    font-size: 14px;
+    width: auto;
+  }
+
+  .nav-links, .nav-links .link{
+    justify-content: center;
+    margin-left: 0;
+  }
+
+}
+/* Móviles 📱 */
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+@media screen and(max-width: 320px) {
+  /* Móvil pequeño */
+}
+
+

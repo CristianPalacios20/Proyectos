@@ -1,105 +1,273 @@
-#contactame{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    padding: 70px 40px;
+#contactame {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 70px 40px;
 }
 
-.contenedor-img{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    border: 1px solid red;
+.contenedor-img {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  height: 380px;
 }
 
-.contenedor-img img{
-    width: 300px;
-    height: 300px;
-    margin-left: 100px;
+.contenedor-img img {
+  width: 100%;
+  height: 80%;
+  opacity: 0;
+  animation: rotate3 1s ease-in-out 0.5s 1 forwards;
 }
 
-.contenedor-contacto{
-    width: 100%;
-    height: 100%;
-    border: 1px solid red;
+.contenedor-img h1 {
+  font-size: 2rem;
+  font-weight: 100;
+  text-transform: uppercase;
 }
 
-.content-form form{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto auto;
-    grid-template-areas: 
+@keyframes rotate3 {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+    filter: blur(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(360deg);
+    filter: blur(0);
+  }
+}
+
+.contenedor-contacto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.contenedor-contacto .anillos {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(100%);
+  animation: aparecer1 1s ease-in-out 0.3s 1 forwards;
+}
+
+@keyframes aparecer1 {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anillos i {
+  position: absolute;
+  border: 2px solid #fff;
+  width: 90%;
+  height: 90%;
+}
+
+.anillos i:nth-child(1) {
+  border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+  animation: rotar 6s linear infinite;
+}
+
+.anillos i:nth-child(2) {
+  border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+  animation: rotar 4s linear infinite;
+}
+
+.anillos i:nth-child(3) {
+  border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+  animation: rotar2 10s linear infinite;
+}
+
+.anillos:hover i {
+  border: 3px solid var(--clr);
+  filter: drop-shadow(0 0 10px var(--clr));
+}
+
+@keyframes rotar {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotar2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.contenedor-contacto form {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
     "nombre correo"
     "mensaje mensaje"
     "btn btn";
-    gap: 10px;
+  gap: 10px;
+  width: 340px;
+  height: 300px;
+  padding: 10px 20px;
+  opacity: 0;
+  transform: translateX(100%);
+  animation: aparecer6 1s ease-in-out 0.8s 1 forwards;
 }
 
-form input[type = text]{
-    grid-area: nombre;
+@keyframes aparecer6 {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0px);
+  }
 }
 
-form input[type = email]{
-    grid-area: correo;
+form input[type="text"] {
+  grid-area: nombre;
 }
 
-form textarea{
-    grid-area: mensaje;
+form input[type="email"] {
+  grid-area: correo;
 }
 
-form .wrapper-btn{
-    grid-area: btn;
-    align-self: center;
+form textarea {
+  grid-area: mensaje;
 }
 
-.content-form form input{
-    outline: none;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 20px;
-    border-bottom: 1px solid black;
+.contenedor-contacto form input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  color: white;
+  border-bottom: 1px solid white;
 }
 
-.wrapper-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+.contenedor-contacto form textarea {
+  outline: none;
+  border: none;
+  resize: none;
+  background-color: transparent;
+  margin-bottom: 10px;
+  color: white;
+  border-bottom: 1px solid white;
 }
 
-.content-form form .btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    padding: 5px;
-    gap: 5px;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+.wrapper-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  grid-area: btn;
+  align-self: center;
 }
 
-.content-form form .btn:hover{
-    transform: scale(1.02);
-    box-shadow: -2px 5px 5px rgba(0,0,0,0.5);
+form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  padding: 8px 0;
+  gap: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.content-form form .btn img{
-    width: 15px;
-    height: 15px;
+form button:hover {
+  transform: scale(1.02);
+  box-shadow: 2px 5px 5px rgba(131, 129, 129, 0.198);
 }
 
-.content-form form textarea{
-    outline: none;
-    border: none;
-    resize: none;
-    margin-bottom: 10px;
-    border-bottom: 1px solid black;
+form button img {
+  width: 15px;
+  height: 15px;
 }
 
-@media (max-width: 900px) {
-    #section-contact{
-        padding: 10px ;
-    }
+/* Escritorios 💻 */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  /* Escritorio mediano */
+
+  .contenedor-img {
+    display: none;
+  }
+
+  .contenedor-contacto {
+    height: 100%;
+  }
+
+  .contenedor-contacto form {
+    height: 240px;
+  }
+
+  form input[type="text"],
+  input[type="email"] {
+    height: 40px;
+    margin: 0;
+  }
+
+  .anillos {
+    height: 200px;
+  }
+
+  .anillos i {
+    width: 80%;
+    height: 80%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+
+  #contactame {
+    padding: 0;
+  }
+
+  .contenedor-img {
+    display: none;
+  }
+}
+
+.contenedor-contacto {
+  /* border: 1px solid red; */
+}
+
+/* Móviles 📱 */
+@media screen and (max-width: 320px) {
+  /* Móvil pequeño */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
 }

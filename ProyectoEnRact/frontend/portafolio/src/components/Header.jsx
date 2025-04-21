@@ -10,7 +10,7 @@ export default function Header() {
   const location = useLocation();
   return (
     <>
-      <header className="header">
+      <header id="header">
         <nav className="nav-links">
           <ul>
             <li className="link">
@@ -42,7 +42,7 @@ export default function Header() {
                 to="/contactame"
                 className={location.pathname === "/contactame" ? "activo" : ""}
               >
-                Contactame
+                Contáctame
               </Link>
             </li>
           </ul>
@@ -50,13 +50,11 @@ export default function Header() {
         <h1>cristian</h1>
       </header>
 
-      <header className="header-movil">
+      {/* <header className="header-movil">
         <div className="div-menu">
           <h1>MPFW CSPP</h1>
           <img src={menuicon} onClick={toggleMenu} />
         </div>
-        {/* { */}
-        {/* isMenuOpen && ( */}
         <div className={`div-links ${isMenuOpen ? "div-links-active" : ""}`}>
           <div className="div-iconCerrar">
             <img src={iconCerrar} onClick={toggleMenu} />
@@ -83,8 +81,7 @@ export default function Header() {
             </nav>
           </div>
         </div>
-        {/* // )} */}
-      </header>
+      </header> */}
     </>
   );
 }

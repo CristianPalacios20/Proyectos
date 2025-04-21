@@ -19,3 +19,35 @@ section {
   width: 100%;
   height: 100%;
 }
+
+/* Escritorios 💻 */
+@media screen and (min-width: 1281px) {
+  /* Escritorio grande */
+}
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  /* Escritorio mediano */
+  .App {
+    padding: 10px 20px;
+    gap: 10px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+  .App {
+    padding: 10px 20px;
+    gap: 10px;
+  }
+}
+
+/* Móviles 📱 */
+@media screen and(max-width: 320px) {
+  /* Móvil pequeño */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
+}

@@ -1,7 +1,10 @@
+/* <---------------- Estilo base ----------------> */
+
 #informacion-personal {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   width: 300px;
   color: #fff;
@@ -16,7 +19,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 45%;
+  height: 40%;
   gap: 20px;
 }
 
@@ -44,9 +47,11 @@
 }
 
 .presentacion-principal .rol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  padding: 10px;
-  text-align: center;
+  padding: 10px 5px;
   border-radius: 10px;
   background-color: #2c2c2c;
   box-shadow: 2px 4px 2px #ff6b00;
@@ -55,15 +60,19 @@
 .seprarador {
   width: 100%;
   padding: 1px;
+  height: 1px;
   background-color: #ff6a007e;
+  /* border: 1px solid red; */
 }
 
 .contacto-contenedor {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
   width: 100%;
-  height: 55%;
+  height: 50%;
   padding: 20px 10px;
 }
 
@@ -100,4 +109,168 @@
 .contacto-detalle p:nth-child(1) {
   text-transform: uppercase;
   color: #ff6b00;
+}
+
+/* <---------------- Media query reponsives ----------------> */
+/* Escritorios 💻 */
+@media screen and (min-width: 1281px) {
+  /* Escritorio grande */
+  #informacion-personal {
+    width: 250px;
+    padding: 5px 10px;
+  }
+
+  .presentacion-principal {
+    gap: 20px;
+    /* height: 100%; */
+    padding: 5px 10px;
+  }
+
+  .contenedor-imagen {
+    width: 120px;
+    height: auto;
+  }
+
+  .contenedor-imagen img {
+    width: 120px;
+    /* height: auto; */
+  }
+
+  .presentacion-principal .nombre,
+  .rol {
+    padding: 5px;
+    font-size: 17px;
+  }
+
+  .presentacion-principal .rol {
+    height: 35px;
+    padding: 5px;
+    font-size: 14px;
+    box-shadow: 0px 2px 2px #ff6a009c;
+  }
+
+  .contacto-contenedor .contacto-item {
+    gap: 5px;
+  }
+
+  .contacto-contenedor .contacto-item img {
+    width: 20px;
+    height: auto;
+  }
+
+  .contacto-contenedor .contacto-item p {
+    font-size: 14px;
+  }
+
+  .seprarador{
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  /* Escritorio mediano */
+  #informacion-personal {
+    width: 200px;
+    padding: 5px 10px;
+  }
+
+  .presentacion-principal {
+    gap: 20px;
+    height: 40%;
+  }
+
+  .contenedor-imagen {
+    width: 100px;
+    height: 90px;
+  }
+
+  .contenedor-imagen img {
+    width: 100px;
+    height: auto;
+  }
+
+  .presentacion-principal .nombre,
+  .rol {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .presentacion-principal .rol {
+    padding: 5px;
+    font-size: 12px;
+    box-shadow: 0px 2px 2px #ff6a009c;
+  }
+
+  .contacto-contenedor .contacto-item {
+    gap: 5px;
+  }
+
+  .contacto-contenedor .contacto-item img {
+    width: 15px;
+    height: auto;
+  }
+
+  .contacto-contenedor .contacto-item p {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Escritorios pequeños o pantallas orizontales */
+  #informacion-personal {
+    width: 200px;
+    padding: 5px 10px;
+  }
+
+  .presentacion-principal {
+    gap: 20px;
+    height: 40%;
+  }
+
+  .contenedor-imagen {
+    width: 100px;
+    height: 90px;
+  }
+
+  .contenedor-imagen img {
+    width: 100px;
+    height: auto;
+  }
+
+  .presentacion-principal .nombre,
+  .rol {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .presentacion-principal .rol {
+    padding: 5px;
+    font-size: 12px;
+    box-shadow: 0px 2px 2px #ff6a009c;
+  }
+
+  .contacto-contenedor .contacto-item {
+    gap: 5px;
+  }
+
+  .contacto-contenedor .contacto-item img {
+    width: 15px;
+    height: auto;
+  }
+
+  .contacto-contenedor .contacto-item p {
+    font-size: 12px;
+  }
+}
+
+/* Móviles 📱 */
+@media screen and(max-width: 320px) {
+  /* Móvil pequeño */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Móvil mediano */
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  /* Móvil grande */
 }
