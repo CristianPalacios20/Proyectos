@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #lista-usuarios {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  </style>
+  <body>
+    <ul id="lista-usuarios"></ul>
+
+    <script>
+      const lista = document.getElementById("lista-usuarios");
+
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then(res => res.json())
+        .then(usuarios => {
+          usuarios.forEach(usuario => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <strong>Nombre: </strong>${usuario.name}<br>
+              <strong>User: </strong>${usuario.username}<br>
+              <strong>Email: </strong>${usuario.email}<br>
+              <strong>Phone: </strong>${usuario.phone}<br>
+              <strong>City: </strong>${usuario.address.city}<br>
+              <strong>Web site: </strong>${usuario.website}<br>
+              <strong>Company: </strong>${usuario.company.name}<br>
+            `;
+            lista.appendChild(li);
+          });
+        })
+        .catch(err =>{
+          console.log('Error al obtener los datos',err)
+        })
+    </script>
+  </body>
+</html>

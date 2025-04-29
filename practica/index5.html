@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    .contenedor-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: #222;
+      color: #fff;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
+  <body>
+    <h1>Rinck and Morty Personajes</h1>
+    <div id="contenedor" class="contenedor-cards"></div>
+
+    <script>
+      fetch("https://rickandmortyapi.com/api/character")
+        .then((res) => res.json())
+        .then((data) => mostrarPersonajes(data.results));
+
+      const mostrarPersonajes = (personajes) => {
+        const contendor = document.getElementById("contenedor");
+
+        personajes.forEach((personaje) => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+
+          card.innerHTML = `
+                <img src="${personaje.image}" alt="${personaje.image}">
+                <p>${personaje.name}</p>
+                <p>${personaje.species}</p>
+            `;
+          contendor.appendChild(card);
+        });
+      };
+    </script>
+  </body>
+</html>

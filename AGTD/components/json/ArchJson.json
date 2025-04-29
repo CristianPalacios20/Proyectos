@@ -1,0 +1,117 @@
+{
+    "chats": [
+      {
+        "chatId": "chat_001",
+        "title": "Lista para Mercar",
+        "createdBy": "usuario_123",
+        "createdAt": "2025-04-28T09:30:00Z",
+        "tasks": [
+          {
+            "taskId": "task_001",
+            "name": "Comprar leche",
+            "status": "pendiente",
+            "createdAt": "2025-04-28T09:31:00Z",
+            "priority": "alta",
+            "category": "lácteos"
+          },
+          {
+            "taskId": "task_002",
+            "name": "Comprar manzanas",
+            "status": "completado",
+            "createdAt": "2025-04-28T09:32:00Z",
+            "priority": "media",
+            "category": "frutas"
+          }
+        ],
+        "messages": [
+          {
+            "messageId": "msg_001",
+            "sender": "usuario_456",
+            "timestamp": "2025-04-28T10:00:00Z",
+            "content": "¿Agregamos arroz también?"
+          }
+        ]
+      },
+      {
+        "chatId": "chat_002",
+        "title": "Organizar Fiesta de Cumpleaños",
+        "createdBy": "usuario_456",
+        "createdAt": "2025-04-27T14:00:00Z",
+        "tasks": [
+          {
+            "taskId": "task_101",
+            "name": "Reservar salón de fiestas",
+            "status": "completado",
+            "createdAt": "2025-04-27T14:10:00Z",
+            "priority": "alta",
+            "category": "logística"
+          },
+          {
+            "taskId": "task_102",
+            "name": "Comprar decoración temática",
+            "status": "pendiente",
+            "createdAt": "2025-04-27T14:15:00Z",
+            "priority": "media",
+            "category": "decoración"
+          },
+          {
+            "taskId": "task_103",
+            "name": "Contratar fotógrafo",
+            "status": "pendiente",
+            "createdAt": "2025-04-27T14:20:00Z",
+            "priority": "baja",
+            "category": "servicios"
+          }
+        ],
+        "messages": [
+          {
+            "messageId": "msg_101",
+            "sender": "usuario_789",
+            "timestamp": "2025-04-27T15:00:00Z",
+            "content": "Yo puedo llevar globos 🎈"
+          }
+        ]
+      },
+      {
+        "chatId": "chat_003",
+        "title": "Plan de Viaje de Fin de Semana",
+        "createdBy": "usuario_789",
+        "createdAt": "2025-04-26T18:00:00Z",
+        "tasks": [
+          {
+            "taskId": "task_201",
+            "name": "Reservar hotel",
+            "status": "pendiente",
+            "createdAt": "2025-04-26T18:05:00Z",
+            "priority": "alta",
+            "category": "hospedaje"
+          },
+          {
+            "taskId": "task_202",
+            "name": "Comprar boletos de tren",
+            "status": "pendiente",
+            "createdAt": "2025-04-26T18:10:00Z",
+            "priority": "alta",
+            "category": "transporte"
+          },
+          {
+            "taskId": "task_203",
+            "name": "Hacer lista de lugares turísticos",
+            "status": "pendiente",
+            "createdAt": "2025-04-26T18:15:00Z",
+            "priority": "media",
+            "category": "actividades"
+          }
+        ],
+        "messages": [
+          {
+            "messageId": "msg_201",
+            "sender": "usuario_123",
+            "timestamp": "2025-04-26T19:00:00Z",
+            "content": "¿Qué tal si hacemos una parada en el mirador?"
+          }
+        ]
+      }
+    ]
+  }
+  
