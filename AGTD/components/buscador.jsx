@@ -10,7 +10,7 @@ export default function buscador({
 }) {
   return (
     <View style={stylesBuscador.inputContent}>
-      <Image source={imgSearch} style={stylesBuscador.iconSearch}/>
+      <Image source={imgSearch} style={stylesBuscador.iconSearch} />
       <TextInput
         style={stylesBuscador.inputSearch}
         placeholder={placeholder}
@@ -23,16 +23,16 @@ export default function buscador({
 
 const stylesBuscador = StyleSheet.create({
   inputContent: {
-    flexDirection:'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
-    paddingHorizontal: 10, 
+    paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 10,
   },
   iconSearch: {
-    width: 20, 
+    width: 20,
     height: 20,
     marginRight: 8,
   },

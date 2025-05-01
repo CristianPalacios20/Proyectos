@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import { Ionicons, FontAwesome, EvilIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 
@@ -27,9 +33,13 @@ export default function Navigationheader({ selectedTab, setSelectedTab }) {
         {tabs.map((tab) => (
           <TouchableOpacity
             key={tab.name}
-            style={[stylesNavigationHeader.navItem, {
-              backgroundColor : selectedTab === tab.name ? '#aed6f1' : 'transparent'
-            }]}
+            style={[
+              stylesNavigationHeader.navItem,
+              {
+                backgroundColor:
+                  selectedTab === tab.name ? "#aed6f1" : "transparent",
+              },
+            ]}
             onPress={() => {
               setSelectedTab(tab.name);
             }}
@@ -67,7 +77,6 @@ const stylesNavigationHeader = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 40,
     paddingRight: 40,
-    // borderWidth: 1,
   },
   nav: {
     display: "flex",
@@ -78,11 +87,19 @@ const stylesNavigationHeader = StyleSheet.create({
     gap: 20,
     height: 60,
     padding: 5,
-    // borderLeftWidth: 1,
-    // borderRightWidth: 1,
-    // borderTopWidth: 1,
-    backgroundColor: '#e5e7e9',
+    backgroundColor: "white",
     borderRadius: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   navItem: {
     display: "flex",
@@ -90,14 +107,11 @@ const stylesNavigationHeader = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: 90,
-    // padding: ,
     borderRadius: 10,
-    // borderWidth: 1,
   },
   texto: {
     fontSize: 10,
   },
-
   img: {
     width: 24,
     height: 24,

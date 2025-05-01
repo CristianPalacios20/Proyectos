@@ -3,14 +3,28 @@ import { View, StyleSheet } from "react-native";
 
 import HeaderHome from "./HeaderHome";
 import Main from "./Main";
-import Navigationheader from "./Navigationheader";
+import NavigationHeader from "./Navigationheader";
 
-export default function Layout({selectedTab, setSelectedTab, selectedChat}) {
+export default function Layout({
+  selectedTab,
+  setSelectedTab,
+  selectedChat,
+  setIsLoggedIn,
+  onLogout
+}) {
   return (
     <View style={styles.contenedor}>
       <HeaderHome />
-      <Main selectedTab={selectedTab} selectedChat={selectedChat}/>
-      <Navigationheader selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
+      <Main
+        selectedTab={selectedTab}
+        selectedChat={selectedChat}
+        setIsLoggedIn={setIsLoggedIn}
+        onLogout={onLogout}
+      />
+      <NavigationHeader
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
     </View>
   );
 }

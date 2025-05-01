@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import iconTareas from "../../assets/logo/logo-icon-tareas-transparent.png";
 
 export default function Tareas({ data, isLoading }) {
   // const { title } = data;
-  const [textoBusqueda, setTextoBusqueda] = useState('');
+  const [textoBusqueda, setTextoBusqueda] = useState("");
   return (
     <View style={stylesTareas.content}>
       <View style={stylesTareas.taskBody}>
@@ -23,7 +23,7 @@ export default function Tareas({ data, isLoading }) {
           <Buscador
             valor={textoBusqueda}
             onCambiarTexto={setTextoBusqueda}
-            placeholder="Buscar tareas..."
+            placeholder="Buscar en tareas..."
           />
         </View>
         {isLoading ? (
@@ -53,9 +53,14 @@ export default function Tareas({ data, isLoading }) {
                 </View>
                 <View style={stylesTareas.chatInfoContainer}>
                   <Text style={stylesTareas.chatTitle}>{chat.title}</Text>
-                  <Text style={stylesTareas.desTask}>
-                    {chat.tasks.length} tarea(s)
-                  </Text>
+                  <View style={stylesTareas.desTask}>
+                    <View style={stylesTareas.countTask}>
+                      <Text style={{ color: "white" }}>
+                        {chat.tasks.length}
+                      </Text>
+                    </View>
+                    <Text style={{ color: "#7b7d7d" }}>tarea(s)</Text>
+                  </View>
                 </View>
               </TouchableOpacity>
             ))}
@@ -75,19 +80,15 @@ const stylesTareas = StyleSheet.create({
   },
   taskBody: {
     flex: 1,
-    // borderWidth: 1,
   },
   title: {
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: "bold",
-    paddingTop: 5,
     paddingBottom: 5,
     marginBottom: 10,
-    // borderBottomWidth: 1,
     borderColor: "#d7dbdd",
   },
   contentSearch: {
-    // paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 16,
   },
@@ -108,27 +109,11 @@ const stylesTareas = StyleSheet.create({
     padding: 12,
   },
   task: {
-    paddingTop: 5,
-    paddingLeft: 5,
     display: "flex",
     flexDirection: "row",
+    paddingTop: 5,
+    paddingLeft: 5,
     gap: 10,
-  },
-  chatInfoContainer: {
-    width: "100%",
-    borderBottomWidth: 1,
-    borderColor: "#d7dbdd",
-  },
-  chatTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    // marginBottom: 5,
-  },
-  desTask: {
-    left: 10,
-    color: "#777",
-    height: 45,
-    // marginBottom: 30,
   },
   contentTask: {
     display: "flex",
@@ -142,6 +127,32 @@ const stylesTareas = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     backgroundColor: "#e5e7e9",
+  },
+  chatInfoContainer: {
+    width: "100%",
+    borderBottomWidth: 1,
+    gap: 5,
+    borderColor: "#d7dbdd",
+  },
+  chatTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  desTask: {
+    flexDirection: "row",
+    gap: 5,
+    left: 10,
+    color: "#777",
+    height: 45,
+  },
+  countTask: {
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 20,
+    height: 20,
+    borderRadius: 20,
+    backgroundColor: "#28a3f6",
   },
   iconTareas: {
     width: 30,

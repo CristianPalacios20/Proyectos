@@ -111,6 +111,54 @@
             "content": "¿Qué tal si hacemos una parada en el mirador?"
           }
         ]
+      },
+      {
+        "chatId": "chat_004",
+        "title": "Aprendiendo React Native",
+        "createdBy": "usuario_456",
+        "createdAt": "2025-04-27T14:00:00Z",
+        "tasks": [
+          {
+            "taskId": "task_101",
+            "name": "Reservar salón de fiestas",
+            "status": "completado",
+            "createdAt": "2025-04-27T14:10:00Z",
+            "priority": "alta",
+            "category": "logística"
+          },
+          {
+            "taskId": "task_102",
+            "name": "Comprar decoración temática",
+            "status": "pendiente",
+            "createdAt": "2025-04-27T14:15:00Z",
+            "priority": "media",
+            "category": "decoración"
+          },
+          {
+            "taskId": "task_103",
+            "name": "Contratar fotógrafo",
+            "status": "pendiente",
+            "createdAt": "2025-04-27T14:20:00Z",
+            "priority": "baja",
+            "category": "servicios"
+          },
+          {
+            "taskId": "task_104",
+            "name": "Contratar fotógrafo",
+            "status": "pendiente",
+            "createdAt": "2025-04-27T14:20:00Z",
+            "priority": "baja",
+            "category": "servicios"
+          }
+        ],
+        "messages": [
+          {
+            "messageId": "msg_101",
+            "sender": "usuario_789",
+            "timestamp": "2025-04-27T15:00:00Z",
+            "content": "Yo puedo llevar globos 🎈"
+          }
+        ]
       }
     ]
   }
