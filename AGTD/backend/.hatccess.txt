@@ -1,0 +1,10 @@
+# Permitir el acceso a los archivos PHP
+<Files "login.php">
+    Require all granted
+</Files>
+
+# O permitir acceso a todo el directorio backend
+<Directory "C:/wamp64/www/Proyectos/AGTD/backend">
+    AllowOverride All
+    Require all granted
+</Directory>

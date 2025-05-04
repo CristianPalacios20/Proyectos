@@ -14,9 +14,6 @@ export default function App() {
   const [selectedTab, setSelectedTab] = useState("Tareas");
   const [selectedChat, setSelectedChat] = useState("chat_001");
   const [isLoading, setIsLoading] = useState(true);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isLogin, setIsLogin] = useState(false);
-  // const [isRegister, setIsRegister] = useState(false);
   const [screen, setScreen] = useState("splash");
 
   useEffect(() => {
@@ -90,7 +87,6 @@ export default function App() {
 
   return (
     <SafeAreaView style={stylesApp.contenedor} edges={["top"]}>
-      {/* <StatusBar style="dark" /> */}
       {renderContent()}
     </SafeAreaView>
   );
@@ -99,7 +95,7 @@ export default function App() {
 const stylesApp = StyleSheet.create({
   contenedor: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F5F5F5",
   },
 
   contentLogo: {

@@ -42,6 +42,7 @@ export default function Login({ setIsLoggedIn, goToRegister }) {
 const stylesLogin = StyleSheet.create({
   content: {
     flex: 1,
+    backgroundColor: "#F5F5F5",
   },
   contentTitle: {
     padding: 20,

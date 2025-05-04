@@ -4,8 +4,9 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import Tareas from "./screen/Tareas";
 import Archivos from "./screen/Archivos";
 import Ajustes from "./screen/Ajustes";
+import CrearTarea from "./CrearTarea";
 
-const chatData = require("./json/ArchJson.json");
+const chatData = require("./json/Tareas.json");
 
 export default function Main({ selectedTab, selectedChat, onLogout }) {
   const [dataChats, setDataChats] = useState([]);
@@ -21,17 +22,13 @@ export default function Main({ selectedTab, selectedChat, onLogout }) {
   const renderContent = () => {
     switch (selectedTab) {
       case "Tareas":
-        return (
-          <Tareas
-            data={dataChats}
-            isLoading={isLoading}
-            
-          />
-        );
+        return <Tareas data={dataChats} isLoading={isLoading} />;
       case "Archivos":
         return <Archivos />;
       case "Ajustes":
-        return <Ajustes onLogout={onLogout}/>;
+        return <Ajustes onLogout={onLogout} />;
+      case 'CrearTarea':
+        return <CrearTarea />
       default:
         return <Tareas />;
     }
@@ -42,7 +39,6 @@ export default function Main({ selectedTab, selectedChat, onLogout }) {
 const stylesMain = StyleSheet.create({
   content: {
     flex: 1,
-    // borderWidth: 1,
   },
   text: {
     fontSize: 35,

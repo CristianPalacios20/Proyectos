@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import Buscador from "../buscador";
 // {setIsLoggedIn}
-export default function Ajustes({onLogout}) {
+export default function Ajustes({ onLogout }) {
   const [ajusteBusqueda, setAjusteBusqueda] = useState("");
   return (
     <View style={stylesAjustes.content}>
@@ -20,9 +20,9 @@ export default function Ajustes({onLogout}) {
           <Text>Otras cosas</Text>
         </View>
         <View style={stylesAjustes.logoutContainer}>
-          <TouchableOpacity 
-          style={stylesAjustes.logoutButton}
-          onPress={onLogout}
+          <TouchableOpacity
+            style={stylesAjustes.logoutButton}
+            onPress={onLogout}
           >
             <Text style={stylesAjustes.logoutText}>Cerrar sesión.</Text>
           </TouchableOpacity>
@@ -35,7 +35,6 @@ export default function Ajustes({onLogout}) {
 const stylesAjustes = StyleSheet.create({
   content: {
     flex: 1,
-    // borderWidth: 1,
   },
   title: {
     fontSize: 35,
@@ -63,16 +62,16 @@ const stylesAjustes = StyleSheet.create({
     // borderWidth: 1,
   },
   logoutButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     height: 40,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: '#28a3f6',
+    backgroundColor: "#28a3f6",
   },
-  logoutText:{
+  logoutText: {
     fontSize: 16,
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
 });

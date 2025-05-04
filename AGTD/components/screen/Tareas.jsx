@@ -75,8 +75,6 @@ const stylesTareas = StyleSheet.create({
   content: {
     flex: 1,
     paddingLeft: 16,
-    backgroundColor: "#fff",
-    // borderWidth: 1,
   },
   taskBody: {
     flex: 1,

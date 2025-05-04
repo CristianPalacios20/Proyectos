@@ -32,5 +32,6 @@ export default function Layout({
 const styles = StyleSheet.create({
   contenedor: {
     flex: 1,
+    // backgroundColor: "#F5F5F5",
   },
 });
