@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome, EvilIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
+
 
 export default function Navigationheader({ selectedTab, setSelectedTab }) {
   const tabs = [
@@ -39,6 +40,7 @@ export default function Navigationheader({ selectedTab, setSelectedTab }) {
                 backgroundColor:
                   selectedTab === tab.name ? "#aed6f1" : "transparent",
               },
+
             ]}
             onPress={() => {
               setSelectedTab(tab.name);
@@ -72,11 +74,13 @@ export default function Navigationheader({ selectedTab, setSelectedTab }) {
 const stylesNavigationHeader = StyleSheet.create({
   contenedor: {
     display: "flex",
-    alignItems: "cente",
+    alignItems: "center",
+    justifyContent: 'center', 
     height: 90,
     paddingTop: 5,
     paddingLeft: 40,
     paddingRight: 40,
+    // borderWidth: 1,
   },
   nav: {
     display: "flex",
@@ -87,7 +91,7 @@ const stylesNavigationHeader = StyleSheet.create({
     gap: 20,
     height: 60,
     padding: 5,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     borderRadius: 10,
     ...Platform.select({
       ios: {
@@ -96,9 +100,7 @@ const stylesNavigationHeader = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3,
       },
-      android: {
-        elevation: 2,
-      },
+      
     }),
   },
   navItem: {
@@ -106,8 +108,9 @@ const stylesNavigationHeader = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     alignItems: "center",
-    width: 90,
-    borderRadius: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 50,
   },
   texto: {
     fontSize: 10,

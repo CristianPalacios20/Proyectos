@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -16,39 +16,65 @@ import iconLockPassword from "../../assets/icons/iconLockPassword.png";
 import iconView from "../../assets/icons/iconView.png";
 import iconFacebook from "../../assets/icons/iconFacebook.png";
 import iconGmail from "../../assets/icons/iconGmail.png";
-
-import datasUser from "../json/Users.json";
+import vector from '../../assets/logo/Vector.png';
+import lineButtom from '../../assets/logo/LineButton.png';
 
 export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
   const [ocultar, setOcultar] = useState(true);
-  const [usuarios, setUsuarios] = useState(datasUser.usuarios || []);
+  // const [usuarios, setUsuarios] = useState(datasUser.usuarios || []);
+  const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
-  const registrarUser = () => {
-    if (correo.trim() === "" && contrasena.trim() === "") {
-      alert("Debes completar todos los campos");
+  const register = async () => {
+    if (
+      nombre.trim() === "" &&
+      correo.trim() === "" &&
+      contrasena.trim() === ""
+    ) {
+      setMensaje("Debes completar todos los campos");
       return;
     }
+    try {
+      const response = await fetch(
+        "http://192.168.1.7/Proyectos/AGTD/backend/register.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre, correo, contrasena }),
+        }
+      );
 
-    const userExiste = usuarios.some((u) => u.correo === correo);
-    if (userExiste) {
-      alert(`El correo: ${correo} ya existe.`);
+      if (!response.ok) {
+        throw new Error("¡Error en la respuesta del servidor!");
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        console.log("Bienvenido", data.usuario)
+        onRegisterSuccess(data.usuario);
+      } else {
+        setMensaje(data.message);
+      }
+    } catch (error) {
+      console.log("Error en la solicitud", error.message);
+      setMensaje(`Error: ${error.message}`);
     }
-
-    const nuevoUsuario = {
-      id: usuarios.length + 1,
-      correo,
-      contrasena,
-    };
-
-    setUsuarios([...usuarios, nuevoUsuario]);
-    setCorreo("");
-    setContrasena("");
+    // setMensaje("");
   };
+
+  useEffect(() =>{
+    const timer = setTimeout(() =>{
+      setMensaje("");
+    },5000);
+    return () => clearTimeout(timer); 
+  }, [mensaje]);
 
   return (
     <View style={sttyleregisterScreen.conteiner}>
+      <Image source={vector} style={sttyleregisterScreen.vector}/>
+      <Image source={lineButtom} style={sttyleregisterScreen.lineButton}/>
       <TouchableOpacity onPress={onGoBack} style={sttyleregisterScreen.return}>
         <Image source={iconArrowBack} style={{ width: 20, height: 20 }} />
         <Text style={{ fontSize: 18 }}>Volver</Text>
@@ -63,6 +89,15 @@ export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
           </Text>
         </View>
         <View style={sttyleregisterScreen.contentInputs}>
+          <View style={sttyleregisterScreen.contentInputUser}>
+            <Image source={iconUser} style={sttyleregisterScreen.iconUser} />
+            <TextInput
+              placeholder="Nombre"
+              value={nombre}
+              onChangeText={setNombre}
+              style={sttyleregisterScreen.input}
+            />
+          </View>
           <View style={sttyleregisterScreen.contentInputUser}>
             <Image source={iconUser} style={sttyleregisterScreen.iconUser} />
             <TextInput
@@ -95,19 +130,26 @@ export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
         </View>
         <TouchableOpacity
           onPress={() => {
-            // onRegisterSuccess();
-            registrarUser();
+            register();
           }}
           style={sttyleregisterScreen.buttonRegister}
         >
           <View style={sttyleregisterScreen.contentTextLogin}>
             <Text style={sttyleregisterScreen.textLogin}>Registrar</Text>
             <View style={sttyleregisterScreen.contentImg}>
-              <Image source={ArrowLeft} style={sttyleregisterScreen.imgRegister} />
+              <Image
+                source={ArrowLeft}
+                style={sttyleregisterScreen.imgRegister}
+              />
             </View>
           </View>
         </TouchableOpacity>
       </View>
+
+      {mensaje && (
+        <Text style={sttyleregisterScreen.messageError}>{mensaje}</Text>
+      )}
+
       <View style={sttyleregisterScreen.contentRedes}>
         <View style={sttyleregisterScreen.registerContainer}>
           <Text style={sttyleregisterScreen.textCreateAccount}>
@@ -139,9 +181,19 @@ const sttyleregisterScreen = StyleSheet.create({
   conteiner: {
     flex: 1,
   },
+  vector: {
+    position: 'absolute',
+    width: '100%',
+  },
+  lineButton: {
+    position: "absolute",
+    bottom: "-17",
+  },
   return: {
     flexDirection: "row",
     alignItems: "center",
+    position: 'absolute',
+    top: '5%',
     width: 100,
     padding: 10,
     gap: 10,
@@ -303,6 +355,14 @@ const sttyleregisterScreen = StyleSheet.create({
   imgRegister: {
     width: 28,
     height: 20,
+  },
+  messageError: {
+    position: 'absolute',
+    width: '100%',
+    top: "60%",
+    textAlign: 'center',
+    color: "red",
+    // borderWidth: 1,
   },
   registerContainer: {
     flexDirection: "row",

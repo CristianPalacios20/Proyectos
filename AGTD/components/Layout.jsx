@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import HeaderHome from "./HeaderHome";
 import Main from "./Main";
@@ -13,7 +14,7 @@ export default function Layout({
   onLogout
 }) {
   return (
-    <View style={styles.contenedor}>
+    <SafeAreaView  style={styles.contenedor}>
       <HeaderHome />
       <Main
         selectedTab={selectedTab}
@@ -25,7 +26,7 @@ export default function Layout({
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

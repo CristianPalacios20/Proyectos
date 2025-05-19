@@ -17,26 +17,28 @@ import iconLockPassword from "../../assets/icons/iconLockPassword.png";
 import iconView from "../../assets/icons/iconView.png";
 import iconFacebook from "../../assets/icons/iconFacebook.png";
 import iconGmail from "../../assets/icons/iconGmail.png";
+import vector from "../../assets/logo/Vector.png";
+import lineButton from "../../assets/logo/LineButton.png";
 
 export default function LoginScreen({ onLoginSuccess, onGoBack }) {
   const [ocultar, setOcultar] = useState(true);
-  const [correo, setCorreo] = useState("");
+  const [identificador, setIdentificador] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
 
   const login = async () => {
-    if (correo.trim() === "" || contrasena.trim() === "") {
+    if (identificador.trim() === "" || contrasena.trim() === "") {
       setMensaje("¡Por favor ingresa usuario y/o contraseña!");
       return;
     }
-    console.log("Enviando:", { correo, contrasena });
+    console.log("Enviando:", { correo: identificador, contrasena });
     try {
       const response = await fetch(
-        "http://192.168.1.3/Proyectos/AGTD/backend/login.php",
+        "http://192.168.1.7/Proyectos/AGTD/backend/login.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ correo, contrasena }),
+          body: JSON.stringify({ correo: identificador, contrasena }),
         }
       );
 
@@ -44,15 +46,12 @@ export default function LoginScreen({ onLoginSuccess, onGoBack }) {
         throw new Error("Error en la respuesta del servidor");
       }
 
-      setCorreo("");
-      setContrasena("");
-
       const data = await response.json();
-      console.log("Respuesta del servidor:", data);
+      // console.log("Respuesta del servidor:", data);
 
       if (data.success) {
         console.log("Bienvenido", data.usuario);
-        console.log(data.usuario);
+        onLoginSuccess(data.usuario);
       } else {
         setMensaje(data.message);
       }
@@ -60,6 +59,7 @@ export default function LoginScreen({ onLoginSuccess, onGoBack }) {
       console.error("Error al hacer la solictud:", error);
       setMensaje(`Error: ${error.message}`);
     }
+    setContrasena("");
   };
 
   useEffect(() => {
@@ -73,6 +73,8 @@ export default function LoginScreen({ onLoginSuccess, onGoBack }) {
 
   return (
     <View style={stylesLoginScreen.conteiner}>
+      <Image source={vector} style={stylesLoginScreen.vector} />
+      <Image source={lineButton} style={stylesLoginScreen.lineButton} />
       <TouchableOpacity onPress={onGoBack} style={stylesLoginScreen.return}>
         <Image source={iconArrowBack} style={stylesLoginScreen.iconArrowBack} />
         <Text style={{ fontSize: 18 }}>Volver</Text>
@@ -89,8 +91,8 @@ export default function LoginScreen({ onLoginSuccess, onGoBack }) {
             <Image source={iconUser} style={stylesLoginScreen.iconUser} />
             <TextInput
               placeholder="Usuario"
-              value={correo}
-              onChangeText={setCorreo}
+              value={identificador}
+              onChangeText={setIdentificador}
               style={stylesLoginScreen.input}
             />
           </View>
@@ -150,8 +152,15 @@ export default function LoginScreen({ onLoginSuccess, onGoBack }) {
           </TouchableOpacity>
         </View>
         <View style={stylesLoginScreen.contentIcons}>
-          <Image source={iconFacebook} style={stylesLoginScreen.iconFacebook} />
-          <Image source={iconGmail} style={stylesLoginScreen.iconGmail} />
+          <TouchableOpacity onPress={() => alert("Iniciar con facebook")}>
+            <Image
+              source={iconFacebook}
+              style={stylesLoginScreen.iconFacebook}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => alert("Iniciar con facebook")}>
+            <Image source={iconGmail} style={stylesLoginScreen.iconGmail} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -163,9 +172,19 @@ const stylesLoginScreen = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F5F5F5",
   },
+  vector: {
+    position: "absolute",
+    width: "100%",
+  },
+  lineButton: {
+    position: "absolute",
+    bottom: "-17",
+  },
   return: {
     flexDirection: "row",
     alignItems: "center",
+    position: "absolute",
+    top: "5%",
     width: 100,
     padding: 10,
     gap: 10,
@@ -203,13 +222,14 @@ const stylesLoginScreen = StyleSheet.create({
   },
   input: {
     width: "80%",
+    height: "100%",
   },
   contentInputs: {
     width: "100%",
     paddingLeft: 30,
     paddingRight: 30,
     gap: 20,
-    padding: 20
+    padding: 20,
   },
   contentInputUser: {
     flexDirection: "row",
@@ -218,7 +238,7 @@ const stylesLoginScreen = StyleSheet.create({
     ...Platform.select({
       ios: {
         height: 50,
-        padding: 15,
+        paddingLeft: 15,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
@@ -246,7 +266,7 @@ const stylesLoginScreen = StyleSheet.create({
     ...Platform.select({
       ios: {
         height: 50,
-        padding: 15,
+        paddingLeft: 15,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
@@ -267,13 +287,6 @@ const stylesLoginScreen = StyleSheet.create({
     marginRight: 5,
     resizeMode: "contain",
   },
-  buttonView: {
-    ...Platform.select({
-      ios: {
-        left: 10,
-      },
-    }),
-  },
   iconView: {
     width: 20,
     height: 20,
@@ -290,15 +303,10 @@ const stylesLoginScreen = StyleSheet.create({
   },
   menssageError: {
     position: "absolute",
+    width: "100%",
+    top: "75%",
+    textAlign: "center",
     color: "red",
-    ...Platform.select({
-      ios: {
-        top: "80%",
-      },
-      android: {
-        top: "84%",
-      },
-    }),
   },
   buttonLogin: {
     left: "22%",

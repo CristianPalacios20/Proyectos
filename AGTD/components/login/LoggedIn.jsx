@@ -1,11 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Logo from "../../assets/logo/logo-icon2-transparent.png";
 
 export default function Login({ setIsLoggedIn, goToRegister }) {
   return (
-    <View style={stylesLogin.content}>
+    <SafeAreaView style={stylesLogin.content}>
       <View style={stylesLogin.contentTitle}>
         <Text style={stylesLogin.title}>
           AGT<Text style={{ color: "#28a3f6" }}>D</Text>
@@ -35,7 +36,7 @@ export default function Login({ setIsLoggedIn, goToRegister }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -72,6 +73,7 @@ const stylesLogin = StyleSheet.create({
     justifyContent: "center",
     height: 100,
     gap: 10,
+    top: 20,
   },
   buttonRegister: {
     alignItems: "center",

@@ -4,7 +4,7 @@ $servername = "127.0.0.1";
 $port       = "3306";
 $username   = "root";
 $password   = "2008";
-$dbname     = "portafolio_csp";
+$dbname     = "agtd";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 

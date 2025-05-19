@@ -86,9 +86,9 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView style={stylesApp.contenedor} edges={["top"]}>
+    <View style={stylesApp.contenedor} >
       {renderContent()}
-    </SafeAreaView>
+    </View>
   );
 }
 

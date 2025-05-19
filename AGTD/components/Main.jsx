@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import Tareas from "./screen/Tareas";
 import Archivos from "./screen/Archivos";
@@ -33,7 +34,7 @@ export default function Main({ selectedTab, selectedChat, onLogout }) {
         return <Tareas />;
     }
   };
-  return <View style={stylesMain.content}>{renderContent()}</View>;
+  return <SafeAreaView edges={'top'} style={stylesMain.content}>{renderContent()}</SafeAreaView>;
 }
 
 const stylesMain = StyleSheet.create({

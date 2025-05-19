@@ -15,7 +15,8 @@ export default function HeaderHome() {
         <Image source={Edit} style={stylesHeaderHome.optionsImg} />
       </TouchableOpacity>
       {/* <View> */}
-      <Image source={Logo} style={stylesHeaderHome.imgLogo} />
+      <Text>AGT<Text>D</Text></Text>
+      {/* <Image source={Logo} style={stylesHeaderHome.imgLogo} /> */}
       {/* </View> */}
       <View style={stylesHeaderHome.quickActions}>
         <TouchableOpacity

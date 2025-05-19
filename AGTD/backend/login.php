@@ -6,17 +6,10 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 require_once 'conexion.php';
 
+ini_set('display_errors', 0);
+error_reporting(0);
+
 $data = json_decode(file_get_contents("php://input"), true);
-
-error_log("Datos recibidos: " . print_r($data, true));
-
-if ($data === null) {
-    echo json_encode([
-        "success" => false,
-        "message" => "No se recibieron datos válidos"
-    ]);
-    exit;
-}
 
 if (!isset($data["correo"]) || !isset($data["contrasena"])) {
     echo json_encode([
@@ -27,15 +20,15 @@ if (!isset($data["correo"]) || !isset($data["contrasena"])) {
 }
 
 
-$correo = $data["correo"];
+$identificador = $data["correo"];
 $contrasena = $data["contrasena"];
 
-$stmt = $conn -> prepare("SELECT id, nombre, apellidos, correo, contrasena FROM usuarios WHERE correo = ?");
-$stmt->bind_param("s", $correo);
+$stmt = $conn -> prepare("SELECT id, nombre, apellidos, correo, contrasena FROM usuarios WHERE correo = ? OR celular = ?");
+$stmt->bind_param("ss", $identificador, $identificador);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if($result->num_rows === 1){
+if( $result->num_rows === 1){
     $usuario = $result->fetch_assoc();
     if (password_verify ($contrasena, $usuario['contrasena'])) {
         echo json_encode([
@@ -46,16 +39,16 @@ if($result->num_rows === 1){
                 'correo' => $usuario['correo']
             ]
         ]);
-    }else{
+    }else {
         echo json_encode([
             "success" => false,
-            "message" => "Contraseña incorrecta",
+            "message" => "usuario y/o contraseña incorrecto "
         ]);
     }
 }else {
     echo json_encode([
         "success" => false,
-        "message" => "Usuario no encontrado"
+        "message" => "usuario y/o contraseña incorrecto "
     ]);
 }
 $stmt->close();
