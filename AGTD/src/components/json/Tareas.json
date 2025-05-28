@@ -1,0 +1,332 @@
+{
+  "chats": [
+    {
+      "chatId": "chat_001",
+      "title": "Fiesta de cumpleaños",
+      "createdBy": "usuario_123",
+      "createdAt": "2025-04-30T10:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_101",
+          "name": "Reservar salón de fiestas",
+          "status": "pendiente",
+          "createdAt": "2025-04-30T10:05:00Z",
+          "priority": "alta",
+          "category": "organización"
+        },
+        {
+          "taskId": "task_102",
+          "name": "Enviar invitaciones",
+          "status": "completada",
+          "createdAt": "2025-04-30T10:10:00Z",
+          "priority": "media",
+          "category": "comunicación"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_001",
+          "sender": "usuario_123",
+          "timestamp": "2025-04-30T10:15:00Z",
+          "content": "Recuerden que el salón se reserva con anticipación"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_002",
+      "title": "Viaje a la playa",
+      "createdBy": "usuario_456",
+      "createdAt": "2025-04-29T09:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_201",
+          "name": "Reservar hotel",
+          "status": "pendiente",
+          "createdAt": "2025-04-29T09:05:00Z",
+          "priority": "alta",
+          "category": "viaje"
+        },
+        {
+          "taskId": "task_202",
+          "name": "Empacar ropa",
+          "status": "pendiente",
+          "createdAt": "2025-04-29T09:10:00Z",
+          "priority": "baja",
+          "category": "preparación"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_201",
+          "sender": "usuario_456",
+          "timestamp": "2025-04-29T09:20:00Z",
+          "content": "No olviden protector solar"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_003",
+      "title": "Aprendiendo React Native",
+      "createdBy": "usuario_789",
+      "createdAt": "2025-04-28T08:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_301",
+          "name": "Instalar Node.js",
+          "status": "completada",
+          "createdAt": "2025-04-28T08:05:00Z",
+          "priority": "media",
+          "category": "setup"
+        },
+        {
+          "taskId": "task_302",
+          "name": "Crear proyecto con Expo",
+          "status": "pendiente",
+          "createdAt": "2025-04-28T08:10:00Z",
+          "priority": "alta",
+          "category": "desarrollo"
+        },
+        {
+          "taskId": "task_103",
+          "name": "Contratar fotógrafo",
+          "status": "pendiente",
+          "createdAt": "2025-04-28T08:15:00Z",
+          "priority": "media",
+          "category": "organización"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_301",
+          "sender": "usuario_789",
+          "timestamp": "2025-04-28T08:20:00Z",
+          "content": "Ya tengo Expo funcionando en mi celular"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_011",
+      "title": "Proyecto de Aplicación Móvil",
+      "createdBy": "usuario_999",
+      "createdAt": "2025-05-01T11:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_401",
+          "name": "Diseñar interfaz de usuario",
+          "status": "pendiente",
+          "createdAt": "2025-05-01T11:05:00Z",
+          "priority": "alta",
+          "category": "diseño"
+        },
+        {
+          "taskId": "task_402",
+          "name": "Configurar autenticación",
+          "status": "pendiente",
+          "createdAt": "2025-05-01T11:10:00Z",
+          "priority": "media",
+          "category": "backend"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_401",
+          "sender": "usuario_999",
+          "timestamp": "2025-05-01T11:15:00Z",
+          "content": "Empecemos por la pantalla de login"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_012",
+      "title": "Rutina de Ejercicio Semanal",
+      "createdBy": "usuario_123",
+      "createdAt": "2025-05-02T08:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_501",
+          "name": "Lunes: Cardio 30 min",
+          "status": "pendiente",
+          "createdAt": "2025-05-02T08:05:00Z",
+          "priority": "media",
+          "category": "ejercicio"
+        },
+        {
+          "taskId": "task_502",
+          "name": "Martes: Fuerza tren superior",
+          "status": "pendiente",
+          "createdAt": "2025-05-02T08:10:00Z",
+          "priority": "alta",
+          "category": "ejercicio"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_501",
+          "sender": "usuario_123",
+          "timestamp": "2025-05-02T08:20:00Z",
+          "content": "¡Vamos con todo esta semana!"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_013",
+      "title": "Planificación de Boda",
+      "createdBy": "usuario_222",
+      "createdAt": "2025-05-03T14:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_601",
+          "name": "Elegir lugar para la ceremonia",
+          "status": "pendiente",
+          "createdAt": "2025-05-03T14:05:00Z",
+          "priority": "alta",
+          "category": "evento"
+        },
+        {
+          "taskId": "task_602",
+          "name": "Enviar invitaciones",
+          "status": "pendiente",
+          "createdAt": "2025-05-03T14:10:00Z",
+          "priority": "media",
+          "category": "comunicación"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_601",
+          "sender": "usuario_222",
+          "timestamp": "2025-05-03T14:15:00Z",
+          "content": "El lugar debe tener jardín para la sesión de fotos"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_014",
+      "title": "Curso de Fotografía",
+      "createdBy": "usuario_333",
+      "createdAt": "2025-05-04T09:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_701",
+          "name": "Practicar fotografía de retrato",
+          "status": "pendiente",
+          "createdAt": "2025-05-04T09:05:00Z",
+          "priority": "media",
+          "category": "práctica"
+        },
+        {
+          "taskId": "task_702",
+          "name": "Editar fotos con Lightroom",
+          "status": "pendiente",
+          "createdAt": "2025-05-04T09:10:00Z",
+          "priority": "baja",
+          "category": "edición"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_701",
+          "sender": "usuario_333",
+          "timestamp": "2025-05-04T09:15:00Z",
+          "content": "Hoy practicaré en el parque con luz natural"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_015",
+      "title": "Reunión mensual de equipo",
+      "createdBy": "usuario_456",
+      "createdAt": "2025-05-05T16:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_801",
+          "name": "Preparar presentación trimestral",
+          "status": "pendiente",
+          "createdAt": "2025-05-05T16:05:00Z",
+          "priority": "alta",
+          "category": "trabajo"
+        },
+        {
+          "taskId": "task_802",
+          "name": "Coordinar almuerzo de equipo",
+          "status": "completada",
+          "createdAt": "2025-05-05T16:10:00Z",
+          "priority": "media",
+          "category": "logística"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_801",
+          "sender": "usuario_456",
+          "timestamp": "2025-05-05T16:15:00Z",
+          "content": "Les comparto el resumen antes de la reunión"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_016",
+      "title": "Mantenimiento del auto",
+      "createdBy": "usuario_888",
+      "createdAt": "2025-05-06T08:30:00Z",
+      "tasks": [
+        {
+          "taskId": "task_901",
+          "name": "Cambio de aceite",
+          "status": "pendiente",
+          "createdAt": "2025-05-06T08:35:00Z",
+          "priority": "alta",
+          "category": "mantenimiento"
+        },
+        {
+          "taskId": "task_902",
+          "name": "Revisión de frenos",
+          "status": "pendiente",
+          "createdAt": "2025-05-06T08:40:00Z",
+          "priority": "alta",
+          "category": "seguridad"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_901",
+          "sender": "usuario_888",
+          "timestamp": "2025-05-06T08:45:00Z",
+          "content": "Llevaré el auto al taller el viernes"
+        }
+      ]
+    },
+    {
+      "chatId": "chat_017",
+      "title": "Lista de lectura 2025",
+      "createdBy": "usuario_555",
+      "createdAt": "2025-05-07T19:00:00Z",
+      "tasks": [
+        {
+          "taskId": "task_1001",
+          "name": "Leer 'Sapiens' de Harari",
+          "status": "completada",
+          "createdAt": "2025-05-07T19:05:00Z",
+          "priority": "media",
+          "category": "lectura"
+        },
+        {
+          "taskId": "task_1002",
+          "name": "Leer '1984' de Orwell",
+          "status": "pendiente",
+          "createdAt": "2025-05-07T19:10:00Z",
+          "priority": "alta",
+          "category": "lectura"
+        }
+      ],
+      "messages": [
+        {
+          "messageId": "msg_1001",
+          "sender": "usuario_555",
+          "timestamp": "2025-05-07T19:15:00Z",
+          "content": "¿Alguna recomendación para después de 1984?"
+        }
+      ]
+    }
+  ]
+}

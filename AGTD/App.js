@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-import logo from "./assets/logo/logo-icon-transparent.png";
+import logo2 from "./assets/logo/LogoSample6.png";
 
-import Layout from "./components/Layout";
-import LoggenIn from "./components/login/LoggedIn";
-import LoginScreen from "./components/screen/LoginScreen";
-import RegisterScreen from "./components/screen/RegisterScreen";
+import Layout from "./src/components/Layout";
+import LoggenIn from "./src/components/login/LoggedIn";
+import LoginScreen from "./src/components/screen/LoginScreen";
+import RegisterScreen from "./src/components/screen/RegisterScreen";
 
 export default function App() {
   const [selectedTab, setSelectedTab] = useState("Tareas");
   const [selectedChat, setSelectedChat] = useState("chat_001");
   const [isLoading, setIsLoading] = useState(true);
   const [screen, setScreen] = useState("splash");
+  const [currentRoute, setCurrentRoute] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,10 +35,8 @@ export default function App() {
       case "splash":
         return (
           <View style={stylesApp.contentLogo}>
-            <Text style={stylesApp.text}>
-              Bienvenidos a AGT<Text style={{ color: "#28a3f6" }}>D</Text>
-            </Text>
-            <Image style={stylesApp.image} source={logo} />
+            <Text style={stylesApp.text}>Bienvenido a AGT</Text>
+            <Image style={stylesApp.image} source={logo2} />
           </View>
         );
 
@@ -55,6 +53,7 @@ export default function App() {
           <LoginScreen
             onLoginSuccess={() => setScreen("main")}
             onGoBack={() => setScreen("welcome")}
+            goToRegister={() => setScreen("register")}
           />
         );
 
@@ -69,13 +68,15 @@ export default function App() {
       case "main":
         return (
           <>
-            <StatusBar style="dark" />
+            {/* <StatusBar style="dark" /> */}
             <Layout
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
               selectedChat={selectedChat}
               setSelectedChat={setSelectedChat}
               onLogout={() => setScreen("welcome")}
+              currentRoute={currentRoute}
+              setCurrentRoute={setCurrentRoute}
             />
           </>
         );
@@ -85,17 +86,18 @@ export default function App() {
     }
   };
 
+  // const Stack = createStackNavigator();
   return (
-    <View style={stylesApp.contenedor} >
+    <SafeAreaProvider style={stylesApp.contenedor}>
       {renderContent()}
-    </View>
+    </SafeAreaProvider>
   );
 }
 
 const stylesApp = StyleSheet.create({
   contenedor: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    // backgroundColor: "white",
   },
 
   contentLogo: {
@@ -106,12 +108,16 @@ const stylesApp = StyleSheet.create({
     width: "100%",
   },
   text: {
-    fontSize: 30,
+    fontSize: 35,
+    fontWeight: "bold",
+    color: "#28a3f6",
   },
   image: {
-    height: 220,
-    transform: [{ rotate: "-140deg" }],
+    width: 280,
+    height: 300,
+    // transform: [{ rotate: "-140deg" }],
     marginTop: 50,
     resizeMode: "contain",
+    // borderWidth: 1,
   },
 });
