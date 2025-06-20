@@ -11,24 +11,20 @@ export default function Layout({
   onLogout,
   currentRoute,
   setCurrentRoute,
+  onLoginSuccess
 }) {
   const mostrarHeader = currentRoute !== "Chat";
   return (
     <View style={styles.contenedor}>
       <Main
         selectedTab={selectedTab}
-        // setSelectedTab={setSelectedTab}
+        setSelectedTab={setSelectedTab}
         selectedChat={selectedChat}
         setIsLoggedIn={setIsLoggedIn}
         onLogout={onLogout}
         setCurrentRoute={setCurrentRoute}
+        onLoginSuccess={onLoginSuccess}
       />
-      {mostrarHeader && (
-        <NavigationHeader
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
-        />
-      )}
     </View>
   );
 }

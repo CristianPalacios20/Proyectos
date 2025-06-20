@@ -18,23 +18,18 @@ import iconArrowBack from "../../../assets/icons/iconArrowBack.png";
 import iconPlus from "../../../assets/icons/iconPlus3.png";
 import iconSend from "../../../assets/icons/iconSend.png";
 
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView } from "react-native-safe-area-context";
-
 export default function ChatScreen({ route }) {
   const { userName, message } = route.params;
   const [mensaje, setMensaje] = useState("");
   const navigation = useNavigation();
 
   return (
-    // <SafeAreaView edges={['top']} style={{flex: 1,}}>
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? -35 : 0} // Ajusta según tu header
       style={stylesChatScreen.content}
     >
       {/* Aquí se renderiza los mensajes según el chatId */}
-      {/* <StatusBar translucent backgroundColor="transparent" style="dark" /> */}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1 }}>
           <View style={stylesChatScreen.headerChat}>
@@ -82,7 +77,6 @@ export default function ChatScreen({ route }) {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-    // </SafeAreaView>
   );
 }
 
@@ -95,7 +89,6 @@ const stylesChatScreen = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 100,
-    gap: 10,
     paddingLeft: 5,
     backgroundColor: "white",
   },
@@ -103,8 +96,8 @@ const stylesChatScreen = StyleSheet.create({
     marginTop: 60,
   },
   iconArrowBack: {
-    width: 25,
-    height: 25,
+    width: 45,
+    height: 20,
     resizeMode: "contain",
   },
   nameTask: {
@@ -132,7 +125,6 @@ const stylesChatScreen = StyleSheet.create({
   inputContainer1: {
     height: 80,
     backgroundColor: "#ecf0f1",
-    // borderWidth: 1,
   },
   inputContainer2: {
     flexDirection: "row",
@@ -141,7 +133,6 @@ const stylesChatScreen = StyleSheet.create({
     gap: 5,
     padding: 10,
     backgroundColor: "#ecf0f1",
-    // borderWidth: 1,
   },
   input: {
     width: "80%",
@@ -156,12 +147,11 @@ const stylesChatScreen = StyleSheet.create({
     width: 35,
     height: 35,
     resizeMode: "contain",
-    // borderWidth: 1,
   },
   sendContainer: {
     alignItems: "center",
     justifyContent: "center",
-    // padding: 4,
+    padding: 10,
     width: 30,
     height: 30,
     borderRadius: "50%",
@@ -169,8 +159,8 @@ const stylesChatScreen = StyleSheet.create({
   },
   iconSend: {
     width: 20,
-    height: 25,
+    height: 20,
     resizeMode: "contain",
-    // borderWidth: 1,
+    transform: [{ scaleY: 1.1 }],
   },
 });

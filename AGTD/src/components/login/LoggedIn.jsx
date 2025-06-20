@@ -1,19 +1,35 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import Logo3 from '../../../assets/logo/LogoSample6.png';
+import logo from "../../../assets/logo/Group23.png";
 
 export default function Login({ setIsLoggedIn, goToRegister }) {
+  const [loadingButton, setLoadingButton] = useState(null);
+
+  const handleDelayedAction = (action, buttonKey, delay = 2000) => {
+    setLoadingButton(buttonKey);
+    setTimeout(() => {
+      setLoadingButton(null);
+      action();
+    }, delay);
+  };
   return (
-    <SafeAreaView edges={['top']} style={stylesLogin.content}>
+    <SafeAreaView edges={["top"]} style={stylesLogin.content}>
       <View style={stylesLogin.contentTitle}>
         <Text style={stylesLogin.title}>
-          AGT<Text style={{ color: "#28a3f6" }}>D</Text>
+          AG<Text style={{ color: "#28a3f6" }}>T</Text>
         </Text>
       </View>
       <View style={stylesLogin.logoSection}>
-        <Image source={Logo3} style={stylesLogin.imgLogoLogin} />
+        <Image source={logo} style={stylesLogin.imgLogoLogin} />
         <View style={stylesLogin.motivationalTextContainer}>
           <Text style={stylesLogin.motivationalText}>
             Cada día cuenta. <Text style={{ color: "#00ADEF" }}>Organiza</Text>,{" "}
@@ -24,15 +40,29 @@ export default function Login({ setIsLoggedIn, goToRegister }) {
         <View style={stylesLogin.buttonContainer}>
           <TouchableOpacity
             style={stylesLogin.buttonLogin}
-            onPress={setIsLoggedIn}
+            disabled={loadingButton !== null}
+            onPress={() => handleDelayedAction(setIsLoggedIn, "login")}
           >
-            <Text style={stylesLogin.buttonText}>Iniciar sesión</Text>
+            {loadingButton === "login" ? (
+              <View>
+                <ActivityIndicator size="small" color="white" />
+              </View>
+            ) : (
+              <Text style={stylesLogin.buttonText}>Iniciar sesión</Text>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             style={stylesLogin.buttonRegister}
-            onPress={goToRegister}
+            disabled={loadingButton !== null}
+            onPress={() => handleDelayedAction(goToRegister, "register")}
           >
-            <Text style={stylesLogin.buttonText}>Registrar</Text>
+            {loadingButton === "register" ? (
+              <View>
+                <ActivityIndicator size="small" color="white" />
+              </View>
+            ) : (
+              <Text style={stylesLogin.buttonText}>Registrar</Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -59,11 +89,11 @@ const stylesLogin = StyleSheet.create({
     padding: 20,
   },
   imgLogoLogin: {
-    left: '20%',
+    left: "20%",
     height: 300,
     width: 300,
     bottom: 50,
-    resizeMode: "contain",
+    resizeMode: "cover",
     // borderWidth: 1,
   },
   motivationalTextContainer: {},

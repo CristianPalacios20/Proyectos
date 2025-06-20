@@ -1,0 +1,49 @@
+.carrusel-textos {
+  width: 100%;
+  overflow: hidden;
+  /* background-color: #f6a81b; */
+  padding: 20px 0;
+  /* border: 1px solid; */
+}
+
+.carrusel-track {
+  display: flex;
+  width: fit-content;
+  animation: scroll 20s linear infinite;
+}
+
+.carrusel-item {
+  display: flex;
+  align-items: center;
+  flex: none;
+  margin: 0 20px;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: black;
+  cursor: pointer;
+}
+
+.rotary {
+  width: 40px;
+}
+
+.icono-carrusel {
+  color: white;
+  font-size: 20px;
+}
+
+/* Animación infinita */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.carrusel-textos:hover .carrusel-track {
+  animation-play-state: paused;
+}

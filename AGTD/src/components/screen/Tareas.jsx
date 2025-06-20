@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Platform,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import HeaderHome from "../HeaderHome";
 import Buscador from "../buscador";
@@ -20,20 +20,59 @@ export default function Tareas({
   data = [],
   isLoading,
   navigation,
+  selectedTab,
+  setSelectedTab,
 }) {
   const [textoBusqueda, setTextoBusqueda] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filtros = [
+    { name: "Todos", value: "all" },
+    { name: "Pendientes", value: "pending" },
+    { name: "Finalizado", value: "done" },
+  ];
+
   return (
-    <SafeAreaView edges={['top']} style={stylesTareas.content}>
-      <HeaderHome />
-      <View style={stylesTareas.taskBody}>
-        <Text style={stylesTareas.title}>Tareas</Text>
-        <View style={stylesTareas.contentSearch}>
+    <View edges={["top"]} style={stylesTareas.content}>
+      <HeaderHome selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <ScrollView style={stylesTareas.taskBody}>
+        <View style={{ left: 20, top: 10 }}>
+          <Text style={stylesTareas.title}>Tus tareas</Text>
+        </View>
+        <View style={[stylesTareas.contentSearch]}>
           <Buscador
             valor={textoBusqueda}
             onCambiarTexto={setTextoBusqueda}
-            placeholder="Buscar en tareas..."
+            placeholder="Crear con IA o buscar"
           />
         </View>
+        <View style={stylesTareas.filterTabs}>
+          {filtros.map((filtro) => (
+            <TouchableOpacity
+              key={filtro.value}
+              onPress={() => setActiveFilter(filtro.value)}
+              style={[
+                stylesTareas.filterTab,
+                {
+                  backgroundColor:
+                    activeFilter === filtro.value ? "#28a3f6" : "#e5e7e9",
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  stylesTareas.textFiltertab,
+                  {
+                    color: activeFilter === filtro.value ? "white" : "#979a9a",
+                  },
+                ]}
+              >
+                {filtro.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         {isLoading ? (
           <ActivityIndicator size="large" color="#007BFF" style={{ flex: 1 }} />
         ) : !data || data.length === 0 ? (
@@ -49,7 +88,7 @@ export default function Tareas({
             </TouchableOpacity>
           </View>
         ) : (
-          <ScrollView>
+          <View style={stylesTareas.containerChats}>
             {data.map((chat) => (
               <TouchableOpacity
                 key={chat.chatId}
@@ -79,32 +118,51 @@ export default function Tareas({
                 </View>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </View>
         )}
-      </View>
-    </SafeAreaView>
+      </ScrollView>
+    </View>
   );
 }
 
 const stylesTareas = StyleSheet.create({
   content: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   taskBody: {
     flex: 1,
-    paddingLeft: 16,
   },
   title: {
-    fontSize: 35,
+    fontSize: 18,
     fontWeight: "bold",
     paddingBottom: 5,
     marginBottom: 10,
     borderColor: "#d7dbdd",
   },
   contentSearch: {
-    paddingBottom: 10,
+    height: 40,
+    paddingLeft: 16,
     paddingRight: 16,
+    paddingBottom: 10,
+    marginBottom: 20,
+  },
+  filterTabs: {
+    flexDirection: "row",
+    height: 40,
+    gap: 10,
+    left: 20,
+    marginTop: 5,
+    marginBottom: 20,
+  },
+  filterTab: {
+    justifyContent: "center",
+    padding: 8,
+    borderRadius: 18,
+  },
+  textFiltertab: {
+    fontWeight: "bold",
+    color: "#979a9a",
   },
   emptyState: {
     flex: 1,
@@ -123,6 +181,9 @@ const stylesTareas = StyleSheet.create({
     borderRadius: 50,
     padding: 12,
   },
+  containerChats: {
+    paddingLeft: 16,
+  },
   task: {
     display: "flex",
     flexDirection: "row",
@@ -136,11 +197,12 @@ const stylesTareas = StyleSheet.create({
     justifyContent: "center",
     width: 50,
     height: 50,
-    borderRadius: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    top: 8,
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
+    borderRadius: 30,
+    shadowColor: "#000",
     backgroundColor: "#e5e7e9",
   },
   chatInfoContainer: {

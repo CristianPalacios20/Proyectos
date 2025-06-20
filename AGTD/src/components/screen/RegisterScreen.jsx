@@ -21,7 +21,6 @@ import lineButtom from '../../../assets/logo/LineButton.png';
 
 export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
   const [ocultar, setOcultar] = useState(true);
-  // const [usuarios, setUsuarios] = useState(datasUser.usuarios || []);
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
@@ -38,7 +37,7 @@ export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
     }
     try {
       const response = await fetch(
-        "http://192.168.1.7/backend/register.php",
+        "http://192.168.1.4/backend/register.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -49,7 +48,6 @@ export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
       if (!response.ok) {
         throw new Error("¡Error en la respuesta del servidor!");
       }
-
       const data = await response.json();
       if (data.success) {
         console.log("Bienvenido", data.usuario)
@@ -61,7 +59,6 @@ export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
       console.log("Error en la solicitud", error.message);
       setMensaje(`Error: ${error.message}`);
     }
-    // setMensaje("");
   };
 
   useEffect(() =>{
@@ -177,6 +174,7 @@ export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
 const sttyleregisterScreen = StyleSheet.create({
   conteiner: {
     flex: 1,
+    backgroundColor: 'white',
   },
   vector: {
     position: 'absolute',

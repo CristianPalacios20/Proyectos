@@ -1,9 +1,18 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, Platform } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 import Buscador from "../buscador";
 
+import iconArrowBack from "../../../assets/icons/iconArrowBack.png";
 import perfil from "../../../assets/icons/Perfil.png";
 import iconArrowLeft from "../../../assets/icons/iconArrowLeft.png";
 import iconKey from "../../../assets/icons/iconKey.png";
@@ -11,12 +20,20 @@ import iconPadlock from "../../../assets/icons/iconPadlock.png";
 import iconNotification from "../../../assets/icons/iconNotification.png";
 import iconHelp from "../../../assets/icons/iconHelp.png";
 import iconFriends from "../../../assets/icons/iconFriends.png";
-import iconLogOut from '../../../assets/icons/iconLogOut1.png';
+import iconLogOut from "../../../assets/icons/iconLogOut1.png";
 
-export default function Ajustes({ onLogout }) {
+export default function Ajustes({ onLogout, setSelectedTab }) {
   const [ajusteBusqueda, setAjusteBusqueda] = useState("");
+  const navigation = useNavigation();
   return (
-    <SafeAreaView edges={['top']} style={stylesAjustes.content}>
+    <SafeAreaView edges={["top"]} style={stylesAjustes.content}>
+      <TouchableOpacity
+        onPress={()=>setSelectedTab("Tareas")}
+        style={stylesAjustes.buttonBack}
+      >
+        <Image source={iconArrowBack} style={stylesAjustes.iconArrowBack} />
+        <Text style={{ fontSize: 18 }}>Volver</Text>
+      </TouchableOpacity>
       <Text style={stylesAjustes.title}>Ajustes</Text>
       <View style={stylesAjustes.contentSearch}>
         <Buscador
@@ -85,15 +102,14 @@ export default function Ajustes({ onLogout }) {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={stylesAjustes.logoutContainer}>
+        {/* <View style={stylesAjustes.logoutContainer}>
           <TouchableOpacity
             style={stylesAjustes.logoutButton}
             onPress={onLogout}
           >
-            <Image source={iconLogOut} style={stylesAjustes.img}/>
-             {/* <Text style={stylesAjustes.logoutText}>Cerrar sesión.</Text> */}
+            <Image source={iconLogOut} style={stylesAjustes.img} />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
@@ -103,6 +119,24 @@ const stylesAjustes = StyleSheet.create({
   content: {
     flex: 1,
     paddingTop: 50,
+  },
+  buttonBack: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    top: 58,
+    left: 10,
+  },
+  iconArrowBack: {
+    width: 30,
+    height: 20,
+    resizeMode: "contain",
+  },
+  nameTask: {
+    marginTop: 60,
+    fontSize: 18,
+    fontWeight: "bold",
   },
   title: {
     fontSize: 35,
@@ -125,7 +159,6 @@ const stylesAjustes = StyleSheet.create({
   extraOptions: {
     flex: 1,
     gap: 30,
-    // borderWidth: 1,
   },
   optionGroup: {
     alignSelf: "flex-start",
@@ -141,7 +174,6 @@ const stylesAjustes = StyleSheet.create({
     height: 80,
     gap: 20,
     paddingLeft: 20,
-    // borderWidth: 1,
   },
   perfil: {
     width: 40,
@@ -151,7 +183,6 @@ const stylesAjustes = StyleSheet.create({
   optionText: {
     height: 20,
     fontSize: 16,
-    // borderWidth: 1,
   },
   optionButton: {
     flexDirection: "row",
@@ -182,7 +213,7 @@ const stylesAjustes = StyleSheet.create({
     resizeMode: "contain",
   },
   logoutContainer: {
-    position: 'absolute',
+    position: "absolute",
     width: 40,
     height: 40,
     bottom: 10,
@@ -191,22 +222,17 @@ const stylesAjustes = StyleSheet.create({
     borderRadius: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
-        shadowOffset: {width: 0, height: 2,},
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 4,
       },
-    })
+    }),
   },
   logoutButton: {
     alignItems: "center",
     justifyContent: "center",
     height: 40,
     padding: 10,
-  },
-  logoutText: {
-    fontSize: 16,
-    color: "white",
-    fontWeight: "bold",
   },
 });

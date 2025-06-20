@@ -1,0 +1,74 @@
+.carrusel-equipo {
+  position: relative;
+  width: 600px;
+  height: 250px;
+  perspective: 450px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-equipo {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  transform: rotateY(0deg) translateZ(150px);
+  transform-origin: center center;
+  animation: girar 20s linear infinite;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.item-equipo img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.nombre-equipo {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #333;
+  text-align: center;
+}
+
+@keyframes girar {
+  0% {
+    transform: rotateY(0deg) translateZ(200px);
+    z-index: 1;
+  }
+  50% {
+    z-index: -1;
+  }
+  100% {
+    transform: rotateY(360deg) translateZ(200px);
+  }
+}
+
+/* Delays por item */
+.item-equipo:nth-child(1) { animation-delay: -2s; }
+.item-equipo:nth-child(2) { animation-delay: -4s; }
+.item-equipo:nth-child(3) { animation-delay: -6s; }
+.item-equipo:nth-child(4) { animation-delay: -8s; }
+.item-equipo:nth-child(5) { animation-delay: -10s; }
+.item-equipo:nth-child(6) { animation-delay: -12s; }
+.item-equipo:nth-child(7) { animation-delay: -14s; }
+.item-equipo:nth-child(8) { animation-delay: -16s; }
+.item-equipo:nth-child(9) { animation-delay: -18s; }
+.item-equipo:nth-child(10) { animation-delay: -20s; }
+
+/* Detener animación al pasar el mouse */
+.carrusel-equipo:hover .item-equipo,
+.carrusel-equipo:active .item-equipo {
+  animation-play-state: paused;
+}
+

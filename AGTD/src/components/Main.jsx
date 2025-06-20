@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -8,7 +7,6 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Tareas from "./screen/Tareas";
-import Archivos from "./screen/Archivos";
 import Ajustes from "./screen/Ajustes";
 import CrearTarea from "./CrearTarea";
 import ChatScreen from "./screen/ChatScreen";
@@ -22,6 +20,7 @@ export default function Main({
   onLogout,
   setSelectedTab,
   setCurrentRoute,
+  onLoginSuccess
 }) {
   const [dataChats, setDataChats] = useState([]);
   const [isLoading, setIsloading] = useState(true);
@@ -35,6 +34,7 @@ export default function Main({
       setIsloading(false);
     }, 2000);
   }, [selectedChat]);
+
   const renderContent = () => {
     switch (selectedTab) {
       case "Tareas":
@@ -51,16 +51,14 @@ export default function Main({
             )}
           </Stack.Screen>
         );
-      case "Archivos":
-        return <Stack.Screen name="Archivos" component={Archivos} />;
       case "Ajustes":
         return (
           <Stack.Screen name="Ajustes">
-            {(props) => <Ajustes {...props} onLogout={onLogout} />}
+            {(props) => <Ajustes {...props} onLogout={onLogout} setSelectedTab={setSelectedTab}/>}
           </Stack.Screen>
         );
       case "CrearTarea":
-        return <Stack.Screen name="Tareas" component={CrearTarea} />;
+        return <Stack.Screen name="CrearTarea" component={CrearTarea} />;
       default:
         return (
           <Stack.Screen>

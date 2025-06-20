@@ -20,7 +20,11 @@ import iconGmail from "../../../assets/icons/iconGmail.png";
 import vector from "../../../assets/logo/Vector.png";
 import lineButton from "../../../assets/logo/LineButton.png";
 
-export default function LoginScreen({ onLoginSuccess, onGoBack, goToRegister }) {
+export default function LoginScreen({
+  onLoginSuccess,
+  onGoBack,
+  goToRegister,
+}) {
   const [ocultar, setOcultar] = useState(true);
   const [identificador, setIdentificador] = useState("");
   const [contrasena, setContrasena] = useState("");
@@ -33,24 +37,17 @@ export default function LoginScreen({ onLoginSuccess, onGoBack, goToRegister }) 
     }
     // console.log("Enviando:", { correo: identificador, contrasena });
     try {
-      const response = await fetch(
-        "http://192.168.1.9/backend/login.php",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ correo: identificador, contrasena }),
-        }
-      );
+      const response = await fetch("http://192.168.1.4/backend/login.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo: identificador, contrasena }),
+      });
 
-      if (!response.ok) {
-        throw new Error("Error en la respuesta del servidor");
-      }
+      if (!response.ok) throw new Error("Error en la respuesta del servidor");
 
       const data = await response.json();
-      // console.log("Respuesta del servidor:", data);
 
       if (data.success) {
-        console.log("Bienvenido", data.usuario);
         onLoginSuccess(data.usuario);
       } else {
         setMensaje(data.message);
@@ -131,7 +128,7 @@ export default function LoginScreen({ onLoginSuccess, onGoBack, goToRegister }) 
           <Text style={stylesLoginScreen.menssageError}>{mensaje}</Text>
         )}
 
-        {/* Boton login */}
+        {/* Botón login */}
         <TouchableOpacity onPress={login} style={stylesLoginScreen.buttonLogin}>
           <View style={stylesLoginScreen.contentTextLogin}>
             <Text style={stylesLoginScreen.textLogin}>Iniciar</Text>
@@ -147,9 +144,10 @@ export default function LoginScreen({ onLoginSuccess, onGoBack, goToRegister }) 
           <Text style={stylesLoginScreen.textCreateAccount}>
             Inicia sesión con o
           </Text>
-          <TouchableOpacity 
-          onPress={goToRegister}
-          style={stylesLoginScreen.registerButton}>
+          <TouchableOpacity
+            onPress={goToRegister}
+            style={stylesLoginScreen.registerButton}
+          >
             <Text style={stylesLoginScreen.textButton}>Crea una</Text>
           </TouchableOpacity>
         </View>

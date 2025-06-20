@@ -1,6 +1,12 @@
-import { View, TextInput, StyleSheet, Image } from "react-native";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
-import imgSearch from "../../assets/icons/Search.png";
+import IA from "../../assets/img/IA.jpg";
 
 export default function buscador({
   placeholder = "buscar",
@@ -9,7 +15,9 @@ export default function buscador({
 }) {
   return (
     <View style={stylesBuscador.inputContent}>
-      <Image source={imgSearch} style={stylesBuscador.iconSearch} />
+      <TouchableOpacity>
+        <Image source={IA} style={stylesBuscador.iconIA} />
+      </TouchableOpacity>
       <TextInput
         style={stylesBuscador.inputSearch}
         placeholder={placeholder}
@@ -19,21 +27,23 @@ export default function buscador({
     </View>
   );
 }
-
 const stylesBuscador = StyleSheet.create({
   inputContent: {
     flexDirection: "row",
     alignItems: "center",
+    gap: 5,
+    marginTop: 10,
     marginBottom: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 10,
   },
-  iconSearch: {
-    width: 20,
-    height: 20,
+  iconIA: {
+    width: 28,
+    height: 28,
     marginRight: 8,
+    borderRadius: 20,
   },
   inputSearch: {
     flex: 1,

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrusel 3D interactivo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        background:  white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .carrusel {
+        position: relative;
+        width: 300px;
+        height: 150px;
+        perspective: 250px;
+      }
+
+      .item {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        top: 35px;
+        left: 125px;
+        cursor: pointer;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        animation: girar 20s linear infinite;
+      }
+
+      .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+      }
+
+      @keyframes girar {
+        from {
+          transform: rotateY(360deg) translateZ(150px);
+          z-index: 10;
+        }
+        50% {
+          z-index: -10;
+        }
+        to {
+          transform: rotateX(0deg) translateZ(150px);
+        }
+      }
+
+      .item:nth-child(1) {
+        animation-delay: -2s;
+      }
+      .item:nth-child(2) {
+        animation-delay: -4s;
+      }
+      .item:nth-child(3) {
+        animation-delay: -6s;
+      }
+      .item:nth-child(4) {
+        animation-delay: -8s;
+      }
+      .item:nth-child(5) {
+        animation-delay: -10s;
+      }
+      .item:nth-child(6) {
+        animation-delay: -12s;
+      }
+      .item:nth-child(7) {
+        animation-delay: -14s;
+      }
+      .item:nth-child(8) {
+        animation-delay: -16s;
+      }
+      .item:nth-child(9) {
+        animation-delay: -18s;
+      }
+      .item:nth-child(10) {
+        animation-delay: -20s;
+      }
+
+      /* Pausar animación con mouse o dedo */
+      .carrusel:hover .item,
+      .carrusel:active .item {
+        animation-play-state: paused;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carrusel" id="carrusel">
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+      <div class="item">
+        <img src="Children-pana.svg" />
+      </div>
+    </div>
+
+    <!-- <script>
+    const contenedor = document.getElementById("contenedor");
+    let rotacionY = 0;
+    let mouseDown = false;
+    let startX = 0;
+
+    const girarCarrusel = (delta) => {
+      rotacionY += delta;
+      contenedor.style.transform = `rotateY(${rotacionY}deg)`;
+      contenedor.style.animation = "none"; // Detiene animación automática
+    };
+
+    // Mouse
+    carrusel.addEventListener("mousedown", (e) => {
+      mouseDown = true;
+      startX = e.clientX;
+    });
+
+    document.addEventListener("mouseup", () => {
+      mouseDown = false;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (mouseDown) {
+        const delta = (e.clientX - startX) * 0.5;
+        girarCarrusel(delta);
+        startX = e.clientX;
+      }
+    });
+
+    // Touch
+    carrusel.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    carrusel.addEventListener("touchmove", (e) => {
+      const delta = (e.touches[0].clientX - startX) * 0.5;
+      girarCarrusel(delta);
+      startX = e.touches[0].clientX;
+    });
+  </script> -->
+  </body>
+</html>

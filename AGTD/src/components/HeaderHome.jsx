@@ -1,27 +1,37 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+} from "react-native";
 
-import Edit from "../../assets/icons/opciones.png";
+import Edit from "../../assets/icons/iconEdit.png";
+import iconSetting from "../../assets/icons/iconSetting.png";
 
-export default function HeaderHome() {
+export default function HeaderHome({ setSelectedTab }) {
   return (
     <View style={stylesHeaderHome.content}>
-      <TouchableOpacity
-        style={stylesHeaderHome.options}
-        onPress={() => alert("Opciones")}
-      >
-        <Image source={Edit} style={stylesHeaderHome.optionsImg} />
-      </TouchableOpacity>
-      <Text style={{fontWeight: 'bold',}}>
-        AGT<Text style={{color: '#28a3f6'}}>D</Text>
-      </Text>
-      <View style={stylesHeaderHome.quickActions}>
-        <TouchableOpacity
-          style={stylesHeaderHome.button}
-          onPress={() => alert("Agregar tarea")}
-        >
-          <MaterialIcons name="add" size={23} color={"white"} />
-        </TouchableOpacity>
+      <StatusBar backgroundColor="#007BFF" barStyle="dark-content" />
+      <View style={stylesHeaderHome.headerButtons}>
+        <Text style={stylesHeaderHome.nameApp}>
+          AG<Text style={{ color: "#28a3f6" }}>T</Text>
+        </Text>
+        <View style={stylesHeaderHome.quickActions}>
+          <TouchableOpacity
+            onPress={() => setSelectedTab("Ajustes")}
+            style={stylesHeaderHome.bottomSetting}
+          >
+            <Image source={iconSetting} style={stylesHeaderHome.iconSetting} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={stylesHeaderHome.options}
+            onPress={() => alert("Opciones")}
+          >
+            <Image source={Edit} style={stylesHeaderHome.optionsImg} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -29,14 +39,32 @@ export default function HeaderHome() {
 
 const stylesHeaderHome = StyleSheet.create({
   content: {
-    display: "flex",
+    height: 90,
+    paddingTop: 50,
+    paddingLeft: 20,
+    paddingRight: 20,
+    overflow: "hidden",
+  },
+  headerButtons: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
-    // borderWidth: 1,
+  },
+  nameApp: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  bottomSetting: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 30,
+    height: 30,
+  },
+  iconSetting: {
+    width: 25,
+    height: 25,
+    resizeMode: "cover",
   },
   options: {
     display: "flex",
@@ -77,6 +105,15 @@ const stylesHeaderHome = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    gap: 20,
+    gap: 10,
+  },
+  userContainer: {
+    position: "absolute",
+    left: 20,
+    bottom: 10,
+  },
+  textUser: {
+    fontSize: 30,
+    // color: "white",
   },
 });

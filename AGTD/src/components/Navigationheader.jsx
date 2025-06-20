@@ -4,18 +4,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform,
 } from "react-native";
-import { Ionicons, FontAwesome, EvilIcons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 
 export default function Navigationheader({ selectedTab, setSelectedTab }) {
   const tabs = [
-    // {
-    //   name: "Archivos",
-    //   icon: <EvilIcons name="archive" size={30} />,
-    //   animation: "bounceIn",
-    // },
     {
       name: "Tareas",
       icon: <FontAwesome name="tasks" size={20} />,
@@ -71,12 +65,10 @@ const stylesNavigationHeader = StyleSheet.create({
   contenedor: {
     display: "flex",
     alignItems: "center",
-    // justifyContent: "center",
     height: 90,
     paddingLeft: 40,
     paddingRight: 40,
     backgroundColor: "#F5F5F5",
-    // borderWidth: 1,
   },
   nav: {
     display: "flex",
@@ -88,7 +80,6 @@ const stylesNavigationHeader = StyleSheet.create({
     width: 120,
     padding: 5,
     marginTop: 10,
-    // backgroundColor: "#F5F5F5",
   },
   button: {
     textAlign: "center",

@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-import logo2 from "./assets/logo/LogoSample6.png";
+import logo from "./assets/logo/Group23.png";
+import Vector3 from "./assets/img/Vector3.png";
 
 import Layout from "./src/components/Layout";
 import LoggenIn from "./src/components/login/LoggedIn";
 import LoginScreen from "./src/components/screen/LoginScreen";
 import RegisterScreen from "./src/components/screen/RegisterScreen";
+
+import Modal from "./pruebas/modal";
 
 export default function App() {
   const [selectedTab, setSelectedTab] = useState("Tareas");
@@ -19,7 +22,7 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false); // primero desactiva la carga
-    }, 2000);
+    }, 4000);
 
     return () => clearTimeout(timer); // limpia si el componente se desmonta
   }, []);
@@ -30,21 +33,29 @@ export default function App() {
     }
   }, [isLoading]);
 
+  const delayScreenChange = (nextScreen, delay = 1000) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setScreen(nextScreen);
+      setIsLoading(false);
+    }, delay);
+  };
+
   const renderContent = () => {
     switch (screen) {
       case "splash":
         return (
           <View style={stylesApp.contentLogo}>
             <Text style={stylesApp.text}>Bienvenido a AGT</Text>
-            <Image style={stylesApp.image} source={logo2} />
+            <Image source={Vector3} style={stylesApp.vector3} />
           </View>
         );
 
       case "welcome":
         return (
           <LoggenIn
-            setIsLoggedIn={() => setScreen("login")}
-            goToRegister={() => setScreen("register")}
+            setIsLoggedIn={() => delayScreenChange("login")}
+            goToRegister={() => delayScreenChange("register")}
           />
         );
 
@@ -68,7 +79,6 @@ export default function App() {
       case "main":
         return (
           <>
-            {/* <StatusBar style="dark" /> */}
             <Layout
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
@@ -80,16 +90,14 @@ export default function App() {
             />
           </>
         );
-
       default:
         return null;
     }
   };
-
-  // const Stack = createStackNavigator();
   return (
     <SafeAreaProvider style={stylesApp.contenedor}>
       {renderContent()}
+      {/* <Modal /> */}
     </SafeAreaProvider>
   );
 }
@@ -97,27 +105,32 @@ export default function App() {
 const stylesApp = StyleSheet.create({
   contenedor: {
     flex: 1,
-    // backgroundColor: "white",
+    backgroundColor: "#0099FF",
   },
-
   contentLogo: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     height: "100%",
     width: "100%",
   },
   text: {
+    top: "40%",
     fontSize: 35,
     fontWeight: "bold",
-    color: "#28a3f6",
+    color: "white",
   },
   image: {
     width: 280,
     height: 300,
-    // transform: [{ rotate: "-140deg" }],
     marginTop: 50,
     resizeMode: "contain",
-    // borderWidth: 1,
+  },
+  vector3: {
+    position: "absolute",
+    width: "100%",
+    height: "40%",
+    bottom: 0,
+    resizeMode: "cover",
   },
 });

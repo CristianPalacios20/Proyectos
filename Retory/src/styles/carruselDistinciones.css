@@ -1,0 +1,54 @@
+.carrusel-distinciones {
+  overflow: hidden;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.carrusel-track {
+  display: flex;
+  width: max-content;
+  animation: moverCarrusel 60s linear infinite;
+}
+
+.item-distincion {
+  flex: 0 0 auto;
+  width: 350px;
+  margin: 0 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.item-distincion .icono {
+  font-size: 30px;
+  color: #f6a81b;
+  margin-bottom: 10px;
+}
+
+.item-distincion h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.item-distincion p {
+  font-size: 14px;
+  color: gray;
+}
+
+/* Animación */
+@keyframes moverCarrusel {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pausa en hover */
+.carrusel-distinciones:hover .carrusel-track {
+  animation-play-state: paused;
+}

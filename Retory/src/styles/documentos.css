@@ -1,0 +1,27 @@
+#documentos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    /* height: 50vh; */
+    padding-top: 50px;
+    border: 1px solid red;
+}
+
+.tarjeta-documento{
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    padding: 20px;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5);
+    /* border: 1px solid; */
+    
+}
+
+.tarjeta-documento .icono-documento{
+    width: 100%;
+    object-fit: cover;
+}
