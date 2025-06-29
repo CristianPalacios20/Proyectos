@@ -1,0 +1,71 @@
+#footer {
+  display: flex;
+  height: 330px;
+  padding: 2rem;
+  background-color: #1a1a1a;
+  color: white;
+
+  font-family: sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 500px;
+}
+
+.footer-logo img {
+  width: 350px;
+}
+
+.footer-logo .footer-descripcion {
+  position: relative;
+  left: 40px;
+  margin-bottom: 1.5rem;
+}
+
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  /* justify-content: space-between; */
+  /* border: 1px solid; */
+}
+
+.footer-titulo {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.footer-redes{
+    height: 70px;
+    /* border: 1px solid; */
+}
+
+.footer-iconos a img {
+  width: 30px;
+  margin-right: 10px;
+  transition: transform 0.3s;
+}
+.footer-iconos a img:hover {
+  transform: scale(1.1);
+}
+
+.footer-contacto{
+    /* border: 1px solid; */
+}
+
+.footer-contacto p,
+.footer-horario p {
+  margin: 0.2rem 0;
+}

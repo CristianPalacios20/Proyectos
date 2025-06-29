@@ -1,0 +1,199 @@
+#ryla {
+  padding-top: 65px;
+  overflow-x: hidden;
+}
+
+.ryla-banner {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  background-attachment: fixed;
+}
+
+.fondo-oscuro {
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: darken;
+}
+
+.ryla-banner-info {
+  position: absolute;
+  top: 20%;
+  left: 8%;
+  max-width: 500px;
+}
+
+.ryla-banner-info img {
+  width: 350px;
+}
+
+.ryla-logo {
+  position: absolute;
+  top: 80%;
+  left: 85%;
+  width: 50%;
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: rylaEntradaBanner 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes rylaEntradaBanner {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ryla-logo {
+  width: 200px;
+}
+
+.ryla-banner-info .ryla-banner-descripcion {
+  color: #cccc;
+  width: 550px;
+}
+
+.ryla-banner-info .ryla-boton-leer-mas {
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.ryla-boton-leer-mas:hover {
+  color: #d78d11;
+}
+
+.ryla-banner-etiqueta {
+  font-size: 1rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.ryla-carrusel-submenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  top: 85%;
+  transition: all 0.3s ease-in;
+}
+
+.ryla-botones-carrusel {
+  display: flex;
+  gap: 15px;
+}
+
+.ryla-botones-carrusel button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 1rem;
+  text-align: center;
+  border: none;
+  border-radius: 50%;
+  color: #17438c;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.ryla-carrusel-submenu button:hover {
+  color: #efa51e;
+}
+
+/* Galería de Video */
+.ryla-galeria-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+}
+
+.ryla-galeria-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80%;
+  gap: 40px;
+  border-radius: 20px;
+  background: linear-gradient(
+    to left bottom,
+    #0099ff 0%,
+    #efa51e 20%,
+    #019392 80%,
+    #d11b58 100%
+  );
+}
+
+.ryla-galeria-descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 40%;
+  color: white;
+}
+
+.ryla-galeria-descripcion h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.ryla-galeria-descripcion p {
+  width: 70%;
+}
+
+.ryla-video-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 500px;
+  height: 80%;
+  max-width: 800px;
+}
+
+.ryla-video-item {
+  position: absolute;
+  width: 500px;
+  max-width: 90vw;
+}
+
+.ryla-video-player {
+  width: 100%;
+  height: 250px;
+  border-radius: 15px;
+}
+
+.ryla-video-botones {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  top: 88%;
+  gap: 20px;
+  padding-left: 20px;
+  background-color: black;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 1;
+}
+
+.ryla-video-botones button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+}

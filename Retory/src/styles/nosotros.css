@@ -24,7 +24,7 @@ section {
   width: 50px;
 }
 
-.contenido-textual .subtitulo-nosotros{
+.contenido-textual .subtitulo-nosotros {
   font-size: 13px;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -69,7 +69,14 @@ section {
 
 #carrusel-clubs-fundados {
   display: flex;
-  height: 25vh;
+  gap: 20px;
+  height: auto;
+  padding: 0 20px;
+  /* border: 1px solid; */
+}
+
+.contedor-des {
+  width: 30%;
 }
 
 .contedor-des .descripcion-clubs-fundados {
@@ -94,13 +101,16 @@ section {
 }
 
 .contenedor-carrusel-clubs {
-  width: 60%;
+  width: 70%;
 }
 
 #distinciones {
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
   height: 40vh;
+  gap: 20px;
 }
 
 .encabezado-distinciones {
@@ -211,9 +221,8 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 75vh;
+  height: 60vh;
   padding: 3rem 1rem;
-  border: 1px solid; /* Puedes quitarlo si ya no lo necesitas */
 }
 
 .cabecera-socios .titulo-socios {
@@ -235,4 +244,3 @@ section {
   justify-content: center;
   margin-top: 50px;
 }
-

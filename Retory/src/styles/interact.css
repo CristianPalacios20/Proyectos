@@ -1,0 +1,283 @@
+#interact {
+  padding-top: 65px;
+  overflow-x: hidden;
+}
+
+.interact-banner {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  background-attachment: fixed;
+}
+
+.fondo-oscuro {
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: darken;
+}
+
+.interact-banner-info {
+  position: absolute;
+  top: 20%;
+  left: 8%;
+  max-width: 500px;
+}
+
+.interact-banner-info p {
+  position: relative;
+  left: 8%;
+  color: #ccc;
+}
+
+.interact-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 80%;
+  left: 85%;
+  width: 50%;
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: interactLogoEntrada 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes interactLogoEntrada {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.interact-logo {
+  width: 200px;
+}
+
+.interact-banner-info .interact-banner-descripcion {
+  color: #cccc;
+  width: 550px;
+}
+
+.interact-banner-info .interact-boton-leer-mas {
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.interact-boton-leer-mas:hover {
+  color: #d78d11;
+}
+
+.interact-banner-etiqueta {
+  font-size: 1rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.interact-carrusel-submenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 40px;
+  top: 84%;
+  left: 50%;
+  transition: all 0.3s ease-in;
+  /* border: 1px solid; */
+}
+
+.interact-botones-carrusel {
+  display: flex;
+  gap: 15px;
+}
+
+.interact-botones-carrusel button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 1rem;
+  text-align: center;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.interact-carrusel-submenu button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #0099ffb2;
+}
+
+/* Junta Directiva */
+.interact-junta-seccion {
+  padding: 40px 0;
+  background-color: #f9f9f9;
+}
+
+.interact-junta-contenedor {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.interact-junta-titulo {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #d78d11;
+}
+
+.interact-junta-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.interact-junta-item {
+  padding: 1rem;
+  border-radius: 12px;
+  width: 200px;
+  height: 300px;
+  transition: transform 0.3s ease;
+}
+
+.interact-junta-item:hover {
+  transform: translateY(-5px);
+}
+
+.interact-junta-imagen-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70%;
+}
+
+.interact-junta-imagen-wrapper {
+  width: 150px;
+  height: 150px;
+  border: 4px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.interact-junta-imagen-wrapper:hover {
+  border: 4px solid #0099ffb2;
+}
+
+.interact-junta-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.interact-junta-nombre {
+  height: 34px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.interact-junta-cargo {
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: #666;
+  margin-top: 20px;
+}
+
+/* Galería de Video */
+.interact-galeria-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+}
+
+.interact-galeria-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80%;
+  gap: 40px;
+  border-radius: 20px;
+  background-color: #0099ff;
+}
+
+.interact-galeria-descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 40%;
+  color: white;
+}
+
+.interact-galeria-descripcion h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.interact-galeria-descripcion p {
+  width: 70%;
+}
+
+.interact-video-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 500px;
+  height: 80%;
+  max-width: 800px;
+}
+
+.interact-video-item {
+  position: absolute;
+  width: 500px;
+  max-width: 90vw;
+}
+
+.interact-video-player {
+  width: 100%;
+  height: 250px;
+  border-radius: 15px;
+  /* border-top-right-radius: 15px; */
+}
+
+.interact-video-botones {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  top: 88%;
+  gap: 20px;
+  padding-left: 20px;
+  background-color: black;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 1;
+}
+
+.interact-video-botones button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+}

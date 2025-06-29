@@ -1,0 +1,149 @@
+#centroEducativoEnvigado {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 50px;
+}
+
+.banner-centro {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.intro-centro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  height: 100%;
+  color: white;
+  text-align: center;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: darken;
+}
+
+.intro-centro h2 {
+  font-size: 40px;
+  text-transform: uppercase;
+  color: #ffc107;
+}
+
+.intro-centro p {
+  width: 50%;
+}
+
+.cards-centro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.bloque-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 450px;
+  height: 300px;
+  padding: 20px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.objetivo-general h2,
+.mision h2,
+.vision h2 {
+  text-transform: uppercase;
+}
+
+.objetivo-general {
+  color: white;
+  background-color: blue;
+}
+
+.objetivo-general h2 {
+  color: #ffc107;
+}
+
+.mision {
+  color: white;
+  background-color: #ffc107;
+}
+
+.mision h2 {
+  color: blue;
+}
+
+.perfil-ninos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  border: 1px solid;
+}
+
+.perfil-titulo {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.perfil-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  gap: 20px;
+}
+
+.perfil-card {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  width: 400px;
+  min-height: 200px;
+  gap: 10px;
+  /* border: 1px solid; */
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen */
+.perfil-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Texto */
+.perfil-descripcion {
+  flex: 1;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .perfil-grid {
+    grid-template-columns: 1fr; /* ✅ Solo una columna en móvil */
+  }
+
+  .perfil-card {
+    flex-direction: column; /* ✅ Imagen arriba, texto abajo */
+    align-items: center;
+    text-align: center;
+  }
+
+  .perfil-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .perfil-descripcion {
+    font-size: 14px;
+  }
+}
+

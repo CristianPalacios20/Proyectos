@@ -5,6 +5,7 @@
   justify-content: center;
   overflow: hidden;
   padding: 2rem 2rem;
+  width: 100%;
 }
 
 .carrusel2 {
@@ -31,12 +32,6 @@
   transition: transform 0.4s ease;
 }
 
-/* .carrusel-item2 img:hover {
-  transform: perspective(800px) translateZ(20px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-} */
-
 .arrow2 {
   display: flex;
   align-items: center;
@@ -52,7 +47,6 @@
   cursor: pointer;
   z-index: 10;
   background-color: white;
-  /* border: 1px solid; */
 }
 
 .arrow2.left2 {

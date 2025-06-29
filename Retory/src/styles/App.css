@@ -2,13 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", Montserrat-Bold;
   list-style: none;
   text-decoration: none;
 }
 
-/* body,
-html {
-  width: 100vw;
-  height: 100vh;
-} */

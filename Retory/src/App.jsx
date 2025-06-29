@@ -6,9 +6,14 @@ import Documentos from "./pages/Documentos";
 import JuventudRotary from "./pages/JuventudRotatoria";
 import Programas from "./pages/Programas";
 import Blog from "./pages/Blog";
+import Equipo from "./pages/Equipo";
 import Interac from "./pages/Interact";
 import Rotaract from "./pages/Rotaract";
 import Ryla from "./pages/Ryla";
+import CentroEducativoEnvigado from "./pages/CentroEducativoEnvigado";
+import Donar from "./pages/Donar";
+import Bazar from "./pages/Bazar";
+import Footer from "./components/Footer"
 
 import "../src/styles/App.css";
 
@@ -23,11 +28,19 @@ const App = () => {
         <Route path="/juventudRotary" element={<JuventudRotary />} />
         <Route path="/programas" element={<Programas />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/interact" element={Interac} />
-        <Route path="/rotaract" element={Rotaract} />
-        <Route path="/ryla" element={Ryla} />
+        <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/equipo" element={<Equipo />} />
+        <Route path="/interact" element={<Interac />} />
+        <Route path="/rotaract" element={<Rotaract />} />
+        <Route path="/ryla" element={<Ryla />} />
+        <Route
+          path="/centroEducativoEnvigado"
+          element={<CentroEducativoEnvigado />}
+        />
+        <Route path="/donar" element={<Donar />} />
+        <Route path="/bazar" element={<Bazar />} />
       </Routes>
-      {/* <Header2/> */}
+      <Footer/>
     </Router>
   );
 };

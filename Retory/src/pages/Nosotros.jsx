@@ -1,7 +1,5 @@
-import CarruselEquipo from "../components/CarruselEquipo";
 import CarruselClubsFun from "../components/CarruselClubsFun";
 import CarruselDistinciones from "../components/CarruselDistinciones";
-import CarruselSocios from "../components/CarruselSocios";
 
 import image3 from "../assets/img/Frame39.png";
 import camping from "../assets/img/camping1.png";
@@ -50,17 +48,6 @@ export default function Nosotros() {
         </div>
         <div className="contenedor-carrusel-clubs">
           <CarruselClubsFun />
-        </div>
-      </section>
-
-      <section className="seccion-distinciones" id="distinciones">
-        <div className="encabezado-distinciones">
-          <h2 className="titulo-distinciones">DISTINCIONES Y RECOCIMIENTOS</h2>
-          <span></span>
-        </div>
-
-        <div className="contenido-distinciones">
-          <CarruselDistinciones />
         </div>
       </section>
       <section className="seccion-historia" id="historia">
@@ -133,15 +120,14 @@ export default function Nosotros() {
           </p>
         </div>
       </section>
-
-      <section className="seccion-socios" id="nuestros-socios">
-        <div className="cabecera-socios">
-          <h2 className="titulo-socios">Nuestros socios</h2>
-          <p className="subtitulo-socios">Los que hacen que pase</p>
+      <section className="seccion-distinciones" id="distinciones">
+        <div className="encabezado-distinciones">
+          <h2 className="titulo-distinciones">DISTINCIONES Y RECOCIMIENTOS</h2>
+          <span></span>
         </div>
 
-        <div className="contenedor-carrusel-socios">
-          <CarruselSocios />
+        <div className="contenido-distinciones">
+          <CarruselDistinciones />
         </div>
       </section>
     </>

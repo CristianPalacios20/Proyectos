@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 import Logo from "../assets/img/Rotary.png";
@@ -8,7 +7,6 @@ import iconDonar from "../assets/icons/iconDonar.png";
 import "../styles/header.css";
 
 const Header = () => {
-  const [isActive, setIsActive] = useState(true);
   const menuItems = [
     {
       label: "Inicio",
@@ -17,6 +15,11 @@ const Header = () => {
     {
       label: "Nosotros",
       path: "/nosotros",
+      submenu: [
+        { label2: "Nosotros", path2: "/nosotros" },
+        { label2: "Equipo", path2: "/equipo" },
+      ],
+      submenuClass: "submenu-nosotros",
     },
     {
       label: "Juventud rotatoria",
@@ -33,18 +36,14 @@ const Header = () => {
       path: "/programas",
       icon: IconArrowLeft,
       submenu: [
-        { label2: "Centro educativo", path2: "/interact" },
-        { label2: "Bazar del usado", path2: "/rotaract" },
+        { label2: "Centro educativo", path2: "/CentroEducativoEnvigado" },
+        { label2: "Bazar del usado", path2: "/bazar" },
       ],
       submenuClass: "submenu-programas",
     },
     {
       label: "Documentos legales",
       path: "/documentos",
-    },
-    {
-      label: "Blog",
-      path: "/blog",
     },
   ];
 
@@ -84,10 +83,10 @@ const Header = () => {
         </ul>
 
         <div className="bottomContent">
-          <button>
+          <NavLink to="donar">
             <p>Donar</p>
-            <img src={iconDonar} alt="icon donar" />
-          </button>
+            <span></span>
+          </NavLink>
         </div>
 
         <div className="menu">

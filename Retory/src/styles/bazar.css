@@ -1,0 +1,158 @@
+#bazar {
+  padding-top: 50px;
+}
+
+.bazar-banner {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  margin-bottom: 2rem;
+  background-attachment: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: darken;
+}
+
+.bazar-banner-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  top: 30%;
+  left: 10%;
+  width: 50%;
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: entradaBanner 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes entradaBanner {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.bazar-banner-info .bazar-banner-descripcion {
+  color: #ccc;
+  width: 420px;
+}
+
+.bazar-banner-info .bazar-boton-leer-mas {
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.bazar-boton-leer-mas:hover {
+  color: #d78d11;
+}
+
+.bazar-banner-etiqueta {
+  font-size: 1rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.carrusel-submenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 40px;
+  width: 100%;
+  top: 60%;
+  transition: all 0.3s ease-in;
+}
+
+.botones-carrusel {
+  display: flex;
+  gap: 15px;
+}
+
+.botones-carrusel button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  padding: 1rem;
+  text-align: center;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.carrusel-submenu button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: black;
+}
+
+.bazar-banner-titulo {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0 1rem;
+}
+
+.bazar-contenido {
+  padding: 3rem 2rem;
+  background-color: #fff7e6;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 4rem auto;
+  scroll-margin-top: 80px; /* para cuando haces scroll con scrollIntoView */
+}
+
+.bazar-descripcion {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.8;
+  color: #333;
+  font-weight: 400;
+  text-align: justify;
+  text-wrap: pretty;
+  padding: 1rem;
+}
+
+.bazar-descripcion::first-line {
+  font-weight: bold;
+  color: #c2780f;
+}
+
+.bazar-descripcion::first-letter {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f6a81b;
+}
+
+.bazar-contenido {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .bazar-contenido {
+    padding: 2rem 1rem;
+  }
+
+  .bazar-descripcion {
+    font-size: 1rem;
+  }
+}

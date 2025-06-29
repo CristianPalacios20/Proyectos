@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/carrusel2.css";
 
-import Rotaract from "../assets/img/Rotaract.png"
+import Rotaract from "../assets/img/Rotaract-logo.png"
 
 const data = [
   {
