@@ -41,28 +41,44 @@ export default function Bazar() {
   return (
     <div id="bazar">
       <div
-        className="bazar-banner"
+        className={`bazar-banner ${indice === 0 ? "fondo-oscuro" : ""}`}
         style={{ backgroundImage: `url(${imagenesBazar[indice]})` }}
       >
-        <div className="bazar-banner-info">
-          <h3 className="bazar-banner-titulo">Bazar del usado</h3>
-          <p className="bazar-banner-descripcion">
-            Bazar del Usado ¿Qué es? El «Bazar del Usado» es un evento
-            organizado por el Club Rotario de Envigado en el que se ofrecen a la
-            venta artículos de segunda mano que están en buen estado o incluso
-            nuevos.{" "}
-            <button
-              className="bazar-boton-leer-mas"
-              onClick={scroollDetalles}
-            >
-              Leer más
-            </button>
-          </p>
-        </div>
-        <div className="carrusel-submenu">
+        {indice === 0 && (
+          <div className="bazar-banner-info">
+            <h3 className="bazar-banner-titulo">Bazar del usado</h3>
+            <p className="bazar-banner-descripcion">
+              Bazar del Usado ¿Qué es? El «Bazar del Usado» es un evento
+              organizado por el Club Rotario de Envigado en el que se ofrecen a
+              la venta artículos de segunda mano que están en buen estado o
+              incluso nuevos.{" "}
+              <button
+                className="bazar-boton-leer-mas"
+                onClick={scroollDetalles}
+              >
+                Leer más
+              </button>
+            </p>
+          </div>
+        )}
+        <div className={`carrusel-submenu`}>
           <div className="botones-carrusel">
-            <button onClick={anterior}>&#10094;</button>
-            <button onClick={siguiente}>&#10095;</button>
+            <button
+              className={`${
+                indice >= 1 ? "botones-carrusel oscuro" : "botones-carrusel"
+              }`}
+              onClick={anterior}
+            >
+              &#10094;
+            </button>
+            <button
+              className={`${
+                indice >= 1 ? "botones-carrusel oscuro" : "botones-carrusel"
+              }`}
+              onClick={siguiente}
+            >
+              &#10095;
+            </button>
           </div>
         </div>
       </div>

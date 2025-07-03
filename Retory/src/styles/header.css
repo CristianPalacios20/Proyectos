@@ -5,7 +5,7 @@
   width: 100%;
   height: 65px;
   padding: 0 40px;
-  z-index: 1000;
+  z-index: 800;
   background-color: white;
 }
 
@@ -214,14 +214,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 3px;
+  gap: 5px;
   right: 50px;
   cursor: pointer;
 }
 
 .menu span {
   width: 30px;
-  height: 4px;
+  height: 3px;
   border-radius: 8px;
   background-color: black;
   transition: width 0.3s ease, left 0.3s ease;
@@ -239,4 +239,22 @@
 .menu:hover span {
   width: 30px;
   left: 0;
+}
+
+.oculto{
+  opacity: 0;
+  transform: all 0.8s ease-in-out;
+}
+
+.mostrar{
+  opacity: 1;
+  /* transform: none !important; */
+}
+
+[data-anim="slide-left"].oculto {
+  transform: translateX(-100px);
+}
+
+[data-anim="slide-right"].oculto {
+  transform: translateX(100px);
 }

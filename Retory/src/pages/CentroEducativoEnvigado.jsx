@@ -1,8 +1,15 @@
+import useAnimacionScroll from "../hooks/useAnimacionScroll";
+
 import centroImg from "../assets/img/centroEnvigadoImg.jpg";
+import iconCerebro from "../assets/icons/iconCerebro.png";
+import iconPincel from "../assets/icons/iconPincel.png";
+import iconChil from "../assets/icons/iconChild.png";
+import iconCubiertos from "../assets/icons/iconCubiertos.png";
 
 import "../styles/CentroEducativoEnvigado.css";
 
 export default function CentroEducativoEnvigado() {
+  useAnimacionScroll(".oculto");
   const contenidoCentro = [
     {
       titulo: "Objetivo general",
@@ -26,21 +33,21 @@ export default function CentroEducativoEnvigado() {
 
   const perfilNinos = [
     {
-      image: "",
+      image: iconCerebro,
       descripcion:
         "Niños y niñas que sean capaces de tomar sus decisiones y sean autónomos en la medida de sus posibilidades.",
     },
     {
-      image: "",
+      image: iconPincel,
       descripcion:
         "Amplíen sus conocimientos del mundo para actuar sobre él, desarrollando su capacidad de creación y transformación para que puedan comunicar y expresar sus ideas, sentimientos y experiencias creativas",
     },
     {
-      image: "",
+      image: iconChil,
       descripcion: "Que reconozcan su cuerpo y la importancia de cuidarlo.",
     },
     {
-      image: "",
+      image: iconCubiertos,
       descripcion:
         "Adquieran hábitos de higiene, salud, alimentación y seguridad.",
     },
@@ -52,9 +59,13 @@ export default function CentroEducativoEnvigado() {
           className="intro-centro"
           style={{ backgroundImage: `url(${centroImg})` }}
         >
-          <h2>centro educativo rotarorio envigado</h2>
-          <p>Nace el 4 de marzo del 2010</p>
-          <p className="centro-des">
+          <h2 className="oculto" data-anim="slide-left">
+            centro educativo rotarorio envigado
+          </h2>
+          <p className="oculto" data-anim="slide-left">
+            Nace el 4 de marzo del 2010
+          </p>
+          <p className="centro-des oculto" data-anim="slide-right">
             El Centro Educativo Rotario Envigado es un programa con proyección
             social de la CORPORACIÓN CLUB ROTARIO ENVIGADO de carácter mixto,
             que ofrece servicios de atención integral: educativos, de
@@ -68,7 +79,7 @@ export default function CentroEducativoEnvigado() {
         {contenidoCentro.map((item, index) => (
           <div
             key={index}
-            className={`bloque-info ${
+            className={`bloque-info oculto ${
               item.titulo === "Misión"
                 ? "mision"
                 : item.titulo === "Visión"
@@ -77,6 +88,16 @@ export default function CentroEducativoEnvigado() {
                 ? "objetivo-general"
                 : ""
             }`}
+            data-anim={
+              item.titulo === "Misión"
+                ? "slide-left"
+                : item.titulo === "Visión"
+                ? "slide-right"
+                : item.titulo === "Objetivo general"
+                ? "fade-up"
+                : "fade-in"
+            }
+            style={{ transitionDelay: `${index * 0.2}s` }} //retrasa cada tarjeta
           >
             <img src={item.img} alt={item.titulo} />
             <h2>{item.titulo}</h2>
@@ -85,11 +106,16 @@ export default function CentroEducativoEnvigado() {
         ))}
       </div>
       <div className="perfil-ninos">
-        <h2 className="perfil-titulo">Perfil de nuestros niños y niñas</h2>
+        <h2 className="perfil-titulo">perfil de nuestros niños y niñas</h2>
 
         <div className="perfil-grid">
           {perfilNinos.map((item, index) => (
-            <div key={index} className={`perfil-card `}>
+            <div
+              key={index}
+              className="perfil-card oculto"
+              data-anim="fade-up"
+              style={{ transitionDelay: `${index * 0.2}s` }} // retrasa cada tarjeta
+            >
               <img
                 src={item.image}
                 alt={`Perfil ${index + 1}`}

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "../src/components/Header";
 import Inicio from "./pages/Inicio";
@@ -13,34 +15,42 @@ import Ryla from "./pages/Ryla";
 import CentroEducativoEnvigado from "./pages/CentroEducativoEnvigado";
 import Donar from "./pages/Donar";
 import Bazar from "./pages/Bazar";
-import Footer from "./components/Footer"
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import MenuGlobal from "./components/menuGlobal";
 
 import "../src/styles/App.css";
 
 const App = () => {
+  const [onOpenMenu, setOnOpenMenu] = useState(false);
+  // useAnimacionScroll();
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route path="/nosotros" element={<Nosotros />} />
-        <Route path="/documentos" element={<Documentos />} />
-        <Route path="/juventudRotary" element={<JuventudRotary />} />
-        <Route path="/programas" element={<Programas />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/nosotros" element={<Nosotros />} />
-        <Route path="/equipo" element={<Equipo />} />
-        <Route path="/interact" element={<Interac />} />
-        <Route path="/rotaract" element={<Rotaract />} />
-        <Route path="/ryla" element={<Ryla />} />
-        <Route
-          path="/centroEducativoEnvigado"
-          element={<CentroEducativoEnvigado />}
-        />
-        <Route path="/donar" element={<Donar />} />
-        <Route path="/bazar" element={<Bazar />} />
-      </Routes>
-      <Footer/>
+      <Header onOpenMenu={onOpenMenu} setonOpenMenu={setOnOpenMenu} />
+      <MenuGlobal onOpenMenu={onOpenMenu} setonOpenMenu={setOnOpenMenu} />
+      <ScrollToTop />
+      <main onClick={()=>setOnOpenMenu(false)}>
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/documentos" element={<Documentos />} />
+          <Route path="/juventudRotary" element={<JuventudRotary />} />
+          <Route path="/programas" element={<Programas />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/equipo" element={<Equipo />} />
+          <Route path="/interact" element={<Interac />} />
+          <Route path="/rotaract" element={<Rotaract />} />
+          <Route path="/ryla" element={<Ryla />} />
+          <Route
+            path="/centroEducativoEnvigado"
+            element={<CentroEducativoEnvigado />}
+          />
+          <Route path="/donar" element={<Donar />} />
+          <Route path="/bazar" element={<Bazar />} />
+        </Routes>
+      </main>
+      <Footer />
     </Router>
   );
 };

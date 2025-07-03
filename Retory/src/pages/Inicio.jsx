@@ -3,11 +3,10 @@ import { useEffect, useRef } from "react";
 import Carrusel from "../components/Carrusel";
 import CarruselEventos from "../components/CarruselEventos";
 import CarruselNoticias from "../components/CarruselNoticias";
+import useAnimacionScroll from "../hooks/useAnimacionScroll";
 
 import imagen1 from "../assets/img/imagen1.png";
 import image3 from "../assets/img/Frame39.png";
-import frame from "../assets/img/Frame34.png";
-import vector2 from "../assets/img/Vector2.png";
 import iconConocerMas from "../assets/icons/iconConocerMas.png";
 
 import "../styles/inicio.css";
@@ -67,6 +66,8 @@ export default function Inicio() {
     imagen1,
   ];
 
+  useAnimacionScroll(".oculto, .contenido-seccion-oculto");
+
   useEffect(() => {
     iniciarAutoNext();
     return detenerAutoNext;
@@ -114,10 +115,17 @@ export default function Inicio() {
         </div>
       </div>
       <div className="acerca-de-club-rotary">
-        <img src={image3} alt="frame 39" />
+        <img
+          className="oculto"
+          src={image3}
+          alt="frame 39 "
+          data-anim="slide-left"
+        />
         <div className="contenido-seccion">
-          <h2>Título</h2>
-          <p>
+          <h2 className="oculto" data-anim="slide-right-h2">
+            Título
+          </h2>
+          <p className="oculto" data-anim="slide-right-p">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
             unde illo minus. Nostrum laudantium dolores ab quaerat quis, amet
             repellendus dolorum impedit aliquid unde sit inventore magni, optio
@@ -126,37 +134,49 @@ export default function Inicio() {
             quaerat quis, amet repellendus dolorum impedit aliquid unde sit
             inventore magni, optio iste magnam.
           </p>
-          <button>Leer más</button>
+          <button className="oculto" data-anim="slide-right-buttom">
+            Leer más
+          </button>
         </div>
       </div>
       <div className="contenedor-beneficios">
-        <h2>TÍTULO</h2>
-        <p className="des">
-          {" "}
+        <h2 className="oculto" data-anim="slide-up">
+          TÍTULO
+        </h2>
+
+        <p className="des oculto" data-anim="fade">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
           unde illo minus. Nostrum laudantium dolores ab quaerat quis, amet
           repellendus dolorum impedit aliquid unde sit inventore magni, optio
           iste magnam.
         </p>
-        <img className="image3" src={image3} alt="" />
+
+        <img
+          className="image3 oculto"
+          src={image3}
+          alt="decorativo"
+          data-anim="zoom-in"
+        />
+
         <div className="beneficios">
-          <div>
+          <div className="oculto" data-anim="slide-left">
             <img src="img" alt="diamante" />
             <h3>Beneficio 1</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
           </div>
-          <div>
+          <div className="oculto" data-anim="zoom-in">
             <img src="img" alt="diamante" />
-            <h3>Beneficio 1</h3>
+            <h3>Beneficio 2</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
           </div>
-          <div>
+          <div className="oculto" data-anim="slide-right">
             <img src="img" alt="diamante" />
-            <h3>Beneficio 1</h3>
+            <h3>Beneficio 3</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
           </div>
         </div>
       </div>
+
       <div id="juventudRotatoria">
         <div className="content-juventudRotatoria">
           <h2>Juventud Rotatoria</h2>

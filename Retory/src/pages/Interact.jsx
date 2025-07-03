@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useAnimacionScroll from "../hooks/useAnimacionScroll";
 
 import Interact1 from "../assets/img/interact1.jpg";
 import interact2 from "../assets/img/interact2.jpg";
@@ -10,6 +11,7 @@ import interactLogo from "../assets/img/interact-logo.png";
 import "../styles/interact.css";
 
 export default function Interact() {
+  useAnimacionScroll(".oculto");
   const [indice, setIndice] = useState(0);
 
   const imagenesInteract = [
@@ -34,15 +36,25 @@ export default function Interact() {
   return (
     <div id="interact">
       <div
-        className={`interact-banner ${indice === 0 ? 'fondo-oscuro' : ''}`}
+        className={`interact-banner ${indice === 0 ? "fondo-oscuro" : ""}`}
         style={{ backgroundImage: `url(${imagenesInteract[indice]})` }}
+        data-anime="slide-up"
       >
         {indice === 0 && (
           <div className="interact-banner-info">
-            <img src={interactLogo} alt="logo interact" />
-            <p>
-              Somos un club patrocinado por Rotary International, que
-              invita a jóvenes entre los 12 y los 18 años a que fortalezcan sus
+            <img
+              className="oculto"
+              src={interactLogo}
+              alt="logo interact"
+              data-anim="slide-left"
+            />
+            <p
+              className="oculto"
+              data-anim="slide-left"
+              style={{ transitionDelay: "450ms" }}
+            >
+              Somos un club patrocinado por Rotary International, que invita a
+              jóvenes entre los 12 y los 18 años a que fortalezcan sus
               capacidades de liderazgo, siempre trabajando en pro de la
               comunidad. La amistad, el compañerismo y las ansias de ser parte
               del cambio, son nuestro motor para realizar proyectos que impacten
@@ -71,7 +83,10 @@ export default function Interact() {
 
       <div className="interact-galeria-video">
         <div className="interact-galeria-contenedor">
-          <div className="interact-galeria-descripcion">
+          <div
+            className="interact-galeria-descripcion oculto"
+            data-anim="slide-left"
+          >
             <h2>Nosotros</h2>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quam
@@ -80,7 +95,7 @@ export default function Interact() {
             </p>
           </div>
 
-          <div className="interact-video-items">
+          <div className="interact-video-items oculto" data-anim="slide-right">
             <div className="interact-video-item">
               <iframe
                 className="interact-video-player"

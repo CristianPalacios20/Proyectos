@@ -1,4 +1,10 @@
+import { NavLink } from "react-router-dom";
+
 import rotaryLogo from "../assets/img/Rotary.png";
+import iconFacebook from "../assets/icons/iconFacebook.png";
+import iconInstagram from "../assets/icons/iconInstagram.png";
+import iconTwitter from "../assets/icons/iconTwitter.png";
+import iconYoutube from "../assets/icons/iconYoutube.png";
 
 import "../styles/footer.css";
 
@@ -23,18 +29,18 @@ export default function Footer() {
             <div className="footer-redes">
               <p className="footer-titulo">Redes</p>
               <div className="footer-iconos">
-                <a href="https://facebook.com" target="_blank">
-                  <img src="facebook.svg" alt="Facebook" />
-                </a>
-                <a href="https://instagram.com" target="_blank">
-                  <img src="instagram.svg" alt="Instagram" />
-                </a>
-                <a href="https://twitter.com" target="_blank">
-                  <img src="twitter.svg" alt="Twitter" />
-                </a>
-                <a href="https://youtube.com" target="_blank">
-                  <img src="youtube.svg" alt="YouTube" />
-                </a>
+                <NavLink to="https://facebook.com" target="_blank">
+                  <img src={iconFacebook} alt="Facebook" />
+                </NavLink>
+                <NavLink to="https://instagram.com" target="_blank">
+                  <img src={iconInstagram} alt="Instagram" />
+                </NavLink>
+                <NavLink to="https://twitter.com" target="_blank">
+                  <img src={iconTwitter} alt="Twitter" />
+                </NavLink>
+                <NavLink to="https://youtube.com" target="_blank">
+                  <img src={iconYoutube} alt="YouTube" />
+                </NavLink>
               </div>
             </div>
 

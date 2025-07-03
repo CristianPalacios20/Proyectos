@@ -1,7 +1,3 @@
-section {
-  height: 100vh;
-}
-
 #nosotros {
   display: flex;
   flex-direction: column;
@@ -46,6 +42,9 @@ section {
 .bloque-informativo .imagen-lateral {
   width: 300px;
   height: 200px;
+  border-radius: 5px;
+  object-fit: cover;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .bloque-video {
@@ -59,8 +58,9 @@ section {
 
 .video {
   width: 450px;
-  background-size: cover;
-  background-position: center;
+  border-radius: 5px;
+  object-fit: cover;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .descripcion-video {
@@ -72,7 +72,7 @@ section {
   gap: 20px;
   height: auto;
   padding: 0 20px;
-  /* border: 1px solid; */
+  margin-top: 40px;
 }
 
 .contedor-des {
@@ -109,8 +109,8 @@ section {
   flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
-  height: 40vh;
   gap: 20px;
+  margin-bottom: 50px;
 }
 
 .encabezado-distinciones {
@@ -135,12 +135,11 @@ section {
 }
 
 #historia {
-  padding: 80px 20px;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   gap: 40px;
-  height: 120vh;
+  padding: 80px 20px;
+  background-color: #fff;
 }
 
 .historia-encabezado {
@@ -154,12 +153,11 @@ section {
 }
 
 .historia-texto {
-  flex: 1;
-  min-width: 300px;
-  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 300px;
+  max-width: 600px;
 }
 
 .historia-titulo h2 {
@@ -215,6 +213,20 @@ section {
   margin-bottom: 20px;
 }
 
+.historia-descripcion::-webkit-scrollbar {
+  width: 2px;
+}
+.historia-descripcion::-webkit-scrollbar-track {
+  background: transparent;
+}
+.historia-descripcion::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+.historia-descripcion::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 #nuestros-socios {
   position: relative;
   display: flex;
@@ -243,4 +255,29 @@ section {
   align-items: center;
   justify-content: center;
   margin-top: 50px;
+}
+
+.oculto {
+  opacity: 0;
+  transition: all 0.8s ease;
+}
+.mostrar {
+  opacity: 1;
+  transform: none !important;
+}
+
+[data-anim="slide-left"].oculto {
+  transform: translateX(-100px);
+}
+[data-anim="slide-right"].oculto {
+  transform: translateX(100px);
+}
+[data-anim="slide-up"].oculto {
+  transform: translateY(50px);
+}
+[data-anim="zoom-in"].oculto {
+  transform: scale(0.5);
+}
+[data-anim="fade"].oculto {
+  transform: scale(0.95);
 }

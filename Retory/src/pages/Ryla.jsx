@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import useAnimacionScroll from "../hooks/useAnimacionScroll";
+
 import ryla1 from "../assets/img/ryla1.jpg";
 import ryla2 from "../assets/img/ryla2.jpg";
 import ryla3 from "../assets/img/ryla3.jpg";
@@ -10,6 +12,7 @@ import RylaLogo from "../assets/img/RylaLogo.png";
 import "../styles/ryla.css";
 
 export default function Ryla() {
+  useAnimacionScroll(".oculto");
   const [indice, setIndice] = useState(0);
 
   const siguiente = () => {
@@ -30,8 +33,13 @@ export default function Ryla() {
       >
         {indice === 0 && (
           <div className="ryla-banner-info">
-            <img src={RylaLogo} alt="" />
-            <p>
+            <img
+              className="oculto"
+              src={RylaLogo}
+              alt="logo Ryla"
+              data-anim="slide-left"
+            />
+            <p className="oculto" data-anim="slide-right">
               Es más conocido como RYLA, es un seminario que se realiza
               anualmente. Se enfoca en la formación de adolescentes y adultos
               para fomentar y reconocer las cualidades de liderazgo, con énfasis
@@ -58,7 +66,7 @@ export default function Ryla() {
 
       <div className="ryla-galeria-video">
         <div className="ryla-galeria-contenedor">
-          <div className="ryla-galeria-descripcion">
+          <div className="ryla-galeria-descripcion oculto" data-anim="slide-left">
             <h2>Nosotros</h2>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quam
@@ -68,7 +76,7 @@ export default function Ryla() {
           </div>
 
           <div className="ryla-video-items">
-            <div className="ryla-video-item">
+            <div className="ryla-video-item oculto" data-anim="slide-right">
               <iframe
                 className="ryla-video-player"
                 width="560"

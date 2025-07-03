@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-import CarruselRotaract from "../components/CarruselRotaract";
-import Carrusel3D from "../components/Carrusel3D";
+import useAnimacionScroll from "../hooks/useAnimacionScroll";
 
 import rotaractLogo from "../assets/img/Rotaract-logo.png";
 import rotaract1 from "../assets/img/rotaract1.jpg";
@@ -16,6 +15,7 @@ import imgWhite from "../assets/img/Frame39.png";
 import "../styles/rotaract.css";
 
 export default function Rotaract() {
+  useAnimacionScroll(".oculto");
   const [indice, setIndice] = useState(0);
   const [indiceVideo, setIndiceVideo] = useState(0);
   const imagenesRotaract = [
@@ -89,8 +89,13 @@ export default function Rotaract() {
       >
         {indice === 0 && (
           <div className="rotaract-banner-info">
-            <img src={rotaractLogo} alt="rotaract logo" />
-            <p>
+            <img
+              className="oculto"
+              src={rotaractLogo}
+              alt="rotaract logo"
+              data-anim="slide-left"
+            />
+            <p className="oculto" data-anim="slide-right">
               Nuestro grupo Rotaract tiene como propósito ofrecer una
               oportunidad a las personas jóvenes, mayores de 18, para aumentar
               los conocimientos y condiciones que les ayuden en su desarrollo
@@ -127,7 +132,12 @@ export default function Rotaract() {
           <h2 className="junta-directiva-titulo">Nuestra junta directiva</h2>
           <div className="junta-directiva-items">
             {juntaDirectiva.map((item, index) => (
-              <div className="junta-directiva-item" key={index}>
+              <div
+                className="junta-directiva-item oculto"
+                data-anim="fade-up"
+                style={{ transitionDelay: `${index * 0.2}s` }}
+                key={index}
+              >
                 <p className="junta-directiva-nombre">{item.nombre}</p>
                 <div className="junta-directiva-imagen-contenedor">
                   <div className="junta-directiva-imagen-wrapper">
@@ -146,7 +156,7 @@ export default function Rotaract() {
       </div>
       <div className="galeria-video">
         <div className="contenedor-videos">
-          <div className="galeria-descripcion">
+          <div className="galeria-descripcion oculto" data-anim="slide-left">
             <h2>Nosotros</h2>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quam
@@ -155,7 +165,7 @@ export default function Rotaract() {
             </p>
           </div>
           <div className="video-items">
-            <div className="video-item">
+            <div className="video-item oculto" data-anim="slide-right">
               <iframe
                 className="video-player"
                 width="560"
@@ -167,7 +177,7 @@ export default function Rotaract() {
                 allowFullScreen
               ></iframe>
             </div>
-            <div className="button-galeria">
+            <div className="button-galeria oculto" data-anim="slide-right">
               <button onClick={siguienteVideo}>&#10094;</button>
               <button onClick={anteriorVideo}>&#10095;</button>
             </div>

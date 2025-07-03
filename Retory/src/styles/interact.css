@@ -88,7 +88,6 @@
   top: 84%;
   left: 50%;
   transition: all 0.3s ease-in;
-  /* border: 1px solid; */
 }
 
 .interact-botones-carrusel {
@@ -257,7 +256,6 @@
   width: 100%;
   height: 250px;
   border-radius: 15px;
-  /* border-top-right-radius: 15px; */
 }
 
 .interact-video-botones {

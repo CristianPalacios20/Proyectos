@@ -197,3 +197,23 @@
   color: white;
   cursor: pointer;
 }
+
+.oculto {
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.mostrar {
+  opacity: 1;
+  transform: none !important;
+}
+
+/* Animación desde la izquierda */
+[data-anim="slide-left"].oculto {
+  transform: translateX(-100px);
+}
+
+/* Animación desde la derecha */
+[data-anim="slide-right"].oculto {
+  transform: translateX(100px);
+}

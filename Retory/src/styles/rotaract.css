@@ -254,7 +254,6 @@
   background-color: black;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  /* display: none; */
   z-index: 1;
 }
 
@@ -264,4 +263,23 @@
   outline: none;
   color: white;
   cursor: pointer;
+}
+
+.oculto {
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.mostrar {
+  opacity: 1;
+}
+
+/* Animación desde la izquierda */
+[data-anim="slide-left"].oculto {
+  transform: translateX(-100px);
+}
+
+/* Animación desde la derecha */
+[data-anim="slide-right"].oculto {
+  transform: translateX(100px);
 }

@@ -1,6 +1,6 @@
 #seccion-donaciones {
   padding-top: 65px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .donacion-contenido-secundario {
@@ -23,7 +23,7 @@
   flex-direction: column;
   gap: 25px;
   position: relative;
-  width: 50%;
+  width: 60%;
   top: 40%;
   left: 10%;
 }
@@ -131,12 +131,10 @@
 }
 
 .donacion-llamado {
-  background-color: #fff;
   padding: 3rem 2rem;
   border-radius: 12px;
   text-align: center;
   margin-top: 2rem;
-  /* box-shadow: 0 0 12px rgba(0, 0, 0, 0.05); */
 }
 
 .donacion-llamado-contenido {
@@ -178,7 +176,6 @@
   margin-top: 3rem;
   padding: 2rem 5rem;
   border-radius: 12px;
-  border: 1px solid;
 }
 
 .donacion-formas-header {
@@ -188,7 +185,7 @@
 
 .donacion-formas-titulo {
   font-size: 1.8rem;
-letter-spacing: 2px;
+  letter-spacing: 2px;
   margin-bottom: 10px;
   color: #f6a81b;
 }
@@ -354,4 +351,34 @@ letter-spacing: 2px;
 .donacion-boton-icono {
   width: 24px;
   height: 24px;
+}
+
+.oculto {
+  opacity: 0;
+  transition: all 0.8s ease-in-out;
+}
+
+.mostrar {
+  opacity: 1;
+  /* transform: none !important; */
+}
+
+[data-anim="slide-left"].oculto {
+  transform: translateX(-100px);
+}
+[data-anim="slide-right"].oculto {
+  transform: translateX(80px);
+}
+[data-anim="slide-up"].oculto {
+  transform: translateY(80px);
+}
+[data-anim="slide-down"].oculto {
+  transform: translateY(-80px);
+}
+[data-anim="fade"].oculto {
+  transform: scale(0.95);
+}
+
+[data-anim="slide-up"].oculto {
+  transform: translateY(80px);
 }

@@ -1,27 +1,49 @@
+import { NavLink } from "react-router-dom";
+import useAnimacionScroll from "../hooks/useAnimacionScroll";
+
 import iconDoc from "../assets/icons/iconDoc.png";
 import imgDocs from "../assets/img/imgDocs.jpg";
 
 import "../styles/documentos.css";
 
 export default function Documentos() {
+  useAnimacionScroll(".oculto");
   const documentos = [
     {
       icono: iconDoc,
-      nombre: "sobre royary",
-      documentos: ["#1", "#2", "#3", "#4", "#5"],
-      claseIcon: ""
+      titulo: "sobre royary",
+      documentos: [
+        "Documento#1",
+        "Documento#2",
+        "Documento#3",
+        "Documento#4",
+        "Documento#5",
+      ],
+      claseIcon: "",
     },
     {
       icono: iconDoc,
-      nombre: "sobre primera infancia",
-      documentos: ["#1", "#2", "#3", "#4", "#5"],
-      claseIcon: ""
+      titulo: "sobre primera infancia",
+      documentos: [
+        "Documento#1",
+        "Documento#2",
+        "Documento#3",
+        "Documento#4",
+        "Documento#5",
+      ],
+      claseIcon: "",
     },
     {
       icono: iconDoc,
-      nombre: "sobre nuestros sedes",
-      documentos: ["#1", "#2", "#3", "#4", "#5"],
-      claseIcon: ""
+      titulo: "sobre nuestras sedes",
+      documentos: [
+        "Documento#1",
+        "Documento#2",
+        "Documento#3",
+        "Documento#4",
+        "Documento#5",
+      ],
+      claseIcon: "",
     },
   ];
   return (
@@ -34,19 +56,48 @@ export default function Documentos() {
       </div>
       <div className="documentos-seccion">
         {documentos.map((item, index) => (
-          <div key={index} className="tarjeta-documento">
-            <div className="icono-documento-contenedor">
+          <div
+            key={index}
+            className="tarjeta-documento oculto"
+            data-anim="fade-up"
+            style={{ transitionDelay: `${index * 0.2}s` }}
+          >
+            <div
+              className={`icono-documento-contenedor ${
+                item.titulo === "sobre royary"
+                  ? "sobre-royary"
+                  : item.titulo === "sobre primera infancia"
+                  ? "sobre-primera-infancia"
+                  : item.titulo === "sobre nuestras sedes"
+                  ? "sobre-nuestras-sedes"
+                  : ""
+              }`}
+            >
               <img
                 src={item.icono}
-                alt={item.nombre}
+                alt={item.titulo}
                 className="icono-documento"
               />
             </div>
             <div>
-              <h2 className="titulo-documento">{item.nombre}</h2>
+              <h2
+                className={`titulo-documento ${
+                  item.titulo === "sobre royary"
+                    ? "sobre-royary-h2"
+                    : item.titulo === "sobre primera infancia"
+                    ? "sobre-primera-infancia-h2"
+                    : item.titulo === "sobre nuestras sedes"
+                    ? "sobre-nuestras-sedes-h2"
+                    : ""
+                }`}
+              >
+                {item.titulo}
+              </h2>
               <ul className="lista-documentos">
                 {item.documentos.map((doc, idx) => (
-                  <li key={idx}>{doc}</li>
+                  <li key={idx}>
+                    <NavLink>-{doc}</NavLink>
+                  </li>
                 ))}
               </ul>
             </div>

@@ -1,12 +1,11 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import Logo from "../assets/img/Rotary.png";
 import IconArrowLeft from "../assets/icons/IconArrowLeft.png";
-import iconDonar from "../assets/icons/iconDonar.png";
 
 import "../styles/header.css";
 
-const Header = () => {
+const Header = ({ setonOpenMenu }) => {
   const menuItems = [
     {
       label: "Inicio",
@@ -89,7 +88,7 @@ const Header = () => {
           </NavLink>
         </div>
 
-        <div className="menu">
+        <div className="menu" onClick={() => setonOpenMenu(true)}>
           <span className=""></span>
           <span className=""></span>
           <span className=""></span>

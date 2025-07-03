@@ -1,5 +1,6 @@
 import CarruselClubsFun from "../components/CarruselClubsFun";
 import CarruselDistinciones from "../components/CarruselDistinciones";
+import useAnimacionScroll from "../hooks/useAnimacionScroll";
 
 import image3 from "../assets/img/Frame39.png";
 import camping from "../assets/img/camping1.png";
@@ -7,16 +8,26 @@ import camping from "../assets/img/camping1.png";
 import "../styles/nosotros.css";
 
 export default function Nosotros() {
+  useAnimacionScroll(".oculto");
   return (
     <>
-      <section className="seccion-nosotros" id="nosotros">
+      <div id="nosotros">
         <div className="bloque-informativo">
           <div className="contenido-textual">
-            <img src={camping} className="imagen-camping" alt="camping" />
-            <p className="subtitulo-nosotros">acerca de nuestro club</p>
-            <h2 className="titulo-nosotros">el club rotatorio envigado</h2>
+            <img
+              src={camping}
+              className="imagen-camping oculto"
+              data-anim="slide-left"
+              alt="camping"
+            />
+            <p className="subtitulo-nosotros oculto" data-anim="slide-up">
+              acerca de nuestro club
+            </p>
+            <h2 className="titulo-nosotros oculto" data-anim="slide-up">
+              el club rotatorio envigado
+            </h2>
             <div>
-              <p className="descripcion-nosotros">
+              <p className="descripcion-nosotros oculto" data-anim="fade">
                 es una organización que desarrolla proyectos de impacto social
                 para la comunidad bajo los lineamientos de Rotary International.
                 Lo que pretendemos es aportar a la comunidad en general espacios
@@ -25,12 +36,23 @@ export default function Nosotros() {
               </p>
             </div>
           </div>
-          <img src={image3} alt="frame 39" className="imagen-lateral" />
+
+          <img
+            src={image3}
+            alt="frame 39"
+            className="imagen-lateral oculto"
+            data-anim="slide-right"
+          />
         </div>
 
         <div className="bloque-video">
-          <img className="video" src={image3} />
-          <p className="descripcion-video">
+          <img
+            className="video oculto"
+            src={image3}
+            data-anim="zoom-in"
+            alt="video decorativo"
+          />
+          <p className="descripcion-video oculto" data-anim="slide-up">
             Buscamos ser líderes en programas de formación, promoción,
             prevención y atención a las necesidades que sean identificadas en
             los diferentes grupos poblacionales. Generando estrategias y
@@ -39,8 +61,9 @@ export default function Nosotros() {
             privadas del ámbito local e internacional.
           </p>
         </div>
-      </section>
-      <section className="seccion-clubs-fundados" id="carrusel-clubs-fundados">
+      </div>
+
+      <div id="carrusel-clubs-fundados">
         <div className="contedor-des">
           <p className="descripcion-clubs-fundados">así crecemos</p>
           <h2 className="titulo-clubs-fundados">clubes fundados</h2>
@@ -49,10 +72,10 @@ export default function Nosotros() {
         <div className="contenedor-carrusel-clubs">
           <CarruselClubsFun />
         </div>
-      </section>
-      <section className="seccion-historia" id="historia">
+      </div>
+      <div className="seccion-historia" id="historia">
         <div className="historia-encabezado">
-          <div className="historia-texto">
+          <div className="historia-texto oculto" data-anim="slide-left">
             <div className="historia-titulo">
               <h2>historia</h2>
               <span className="decoracion-titulo"></span>
@@ -69,12 +92,12 @@ export default function Nosotros() {
             </p>
           </div>
 
-          <div className="historia-imagen">
+          <div className="historia-imagen oculto" data-anim="slide-right">
             <img src={image3} alt="" />
           </div>
         </div>
 
-        <div className="historia-descripcion">
+        <div className="historia-descripcion oculto" data-anim="fade">
           <span></span>
           <p>
             Además de ser una iniciativa surgida en el seno del Club Rotario
@@ -119,8 +142,9 @@ export default function Nosotros() {
             para el municipio de Envigado.
           </p>
         </div>
-      </section>
-      <section className="seccion-distinciones" id="distinciones">
+      </div>
+
+      <div id="distinciones">
         <div className="encabezado-distinciones">
           <h2 className="titulo-distinciones">DISTINCIONES Y RECOCIMIENTOS</h2>
           <span></span>
@@ -129,7 +153,7 @@ export default function Nosotros() {
         <div className="contenido-distinciones">
           <CarruselDistinciones />
         </div>
-      </section>
+      </div>
     </>
   );
 }
