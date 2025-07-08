@@ -1,9 +1,6 @@
 .carrusel-textos {
   width: 100%;
-  overflow: hidden;
-  /* background-color: #f6a81b; */
-  padding: 20px 0;
-  /* border: 1px solid; */
+  padding: 20px;
 }
 
 .carrusel-track {

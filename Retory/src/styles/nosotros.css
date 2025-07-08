@@ -2,10 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  padding-top: 100px;
+  padding-top: 65px;
   gap: 20px;
-  overflow: hidden;
+  width: 100vw;
 }
 
 .bloque-informativo {
@@ -14,6 +13,10 @@
   height: 310px;
   gap: 20px;
   padding: 20px;
+}
+
+.contenido-textual {
+  width: 100%;
 }
 
 .contenido-textual .camping {
@@ -35,13 +38,12 @@
 }
 
 .bloque-informativo .contenido-textual {
-  width: 60%;
   padding-right: 20px;
 }
 
 .bloque-informativo .imagen-lateral {
-  width: 300px;
-  height: 200px;
+  width: 350px;
+  height: auto;
   border-radius: 5px;
   object-fit: cover;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
@@ -51,13 +53,14 @@
   display: flex;
   justify-content: center;
   width: 70%;
-  height: 250px;
+  height: auto;
   gap: 20px;
   padding: 20px 0;
 }
 
 .video {
   width: 450px;
+  height: 250px;
   border-radius: 5px;
   object-fit: cover;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
@@ -69,7 +72,9 @@
 
 #carrusel-clubs-fundados {
   display: flex;
+  flex-direction: column;
   gap: 20px;
+  width: 100%;
   height: auto;
   padding: 0 20px;
   margin-top: 40px;
@@ -101,20 +106,36 @@
 }
 
 .contenedor-carrusel-clubs {
-  width: 70%;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.contenedor-carrusel-clubs::-webkit-scrollbar {
+  background-color: transparent;
 }
 
 #distinciones {
   display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  width: 100%;
   gap: 20px;
+  padding: 0 20px;
   margin-bottom: 50px;
 }
 
 .encabezado-distinciones {
-  width: 20%;
+  position: relative;
+  width: 550px;
+  left: 64%;
+}
+
+.contenido-distinciones {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.contenido-distinciones::-webkit-scrollbar {
+  background-color: transparent;
 }
 
 .encabezado-distinciones h2 {
@@ -127,11 +148,6 @@
   width: 100px;
   height: 2px;
   background-color: #f6a81b;
-}
-
-.contenido-distinciones {
-  left: 400px;
-  width: 70%;
 }
 
 #historia {
@@ -280,4 +296,66 @@
 }
 [data-anim="fade"].oculto {
   transform: scale(0.95);
+}
+
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px) {
+  .bloque-informativo {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+
+  .contenido-textual .titulo-nosotros {
+    font-size: 30px;
+  }
+
+  .contenido-textual .imagen-lateral {
+    width: 100%;
+  }
+
+  .bloque-video {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .video {
+    width: 350px;
+  }
+
+  .contenedor-video {
+    width: 100%;
+  }
+
+  .bloque-video .descripcion-video{
+    width: 100%;
+  }
+
+  #historia{
+    padding: 20px;
+  }
+
+  #distinciones .encabezado-distinciones{
+    left: 0%;
+  }
+
+  .encabezado-distinciones .titulo-distinciones{
+    width: 340px;
+    font-size: 30px;
+  }
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
 }

@@ -18,18 +18,28 @@ import Bazar from "./pages/Bazar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import MenuGlobal from "./components/menuGlobal";
+import MenuMovil from "./components/menuMovilTemp";
 
 import "../src/styles/App.css";
 
 const App = () => {
   const [onOpenMenu, setOnOpenMenu] = useState(false);
-  // useAnimacionScroll();
+  const [onOpenMenuMovil, setOnOpenMenuMovil] = useState(false);
   return (
     <Router>
-      <Header onOpenMenu={onOpenMenu} setonOpenMenu={setOnOpenMenu} />
+      <Header
+        onOpenMenu={onOpenMenu}
+        setonOpenMenu={setOnOpenMenu}
+        onOpenMenuMovil={onOpenMenuMovil}
+        setOnOpenMenuMovil={setOnOpenMenuMovil}
+      />
       <MenuGlobal onOpenMenu={onOpenMenu} setonOpenMenu={setOnOpenMenu} />
+      <MenuMovil
+        onOpenMenuMovil={onOpenMenuMovil}
+        setOnOpenMenuMovil={setOnOpenMenuMovil}
+      />
       <ScrollToTop />
-      <main onClick={()=>setOnOpenMenu(false)}>
+      <main onClick={() => setOnOpenMenu(false)}>
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/nosotros" element={<Nosotros />} />

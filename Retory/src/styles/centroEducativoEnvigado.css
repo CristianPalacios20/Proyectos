@@ -124,6 +124,88 @@
   font-size: 16px;
 }
 
+/* Galería de Video - Centro Educativo */
+.centro-educativo-galeria-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+}
+
+.centro-educativo-galeria-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80%;
+  gap: 40px;
+  border-radius: 20px;
+  background-color: #0099ff;
+}
+
+.centro-educativo-galeria-descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 40%;
+  color: white;
+}
+
+.centro-educativo-galeria-descripcion h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.centro-educativo-galeria-descripcion p {
+  width: 70%;
+}
+
+.centro-educativo-video-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 500px;
+  height: 80%;
+  max-width: 800px;
+}
+
+.centro-educativo-video-item {
+  position: absolute;
+  width: 500px;
+  max-width: 90vw;
+}
+
+.centro-educativo-video-player {
+  width: 100%;
+  height: 250px;
+  border-radius: 15px;
+}
+
+.centro-educativo-video-botones {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  top: 88%;
+  gap: 20px;
+  padding-left: 20px;
+  background-color: black;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  z-index: 1;
+}
+
+.centro-educativo-video-botones button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+}
+
+
 .oculto {
   opacity: 0;
   transition: all 0.8s ease-in-out;
@@ -149,6 +231,8 @@
 [data-anim="slide-right"].oculto {
   transform: translateX(80px);
 }
+
+
 
 @media (max-width: 768px) {
   .perfil-grid {

@@ -88,3 +88,17 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+@media (min-width: 360px) and (max-width: 480px){
+  .arrow{
+    background-color: transparent;
+  }
+
+  .arrow:hover{
+    background-color: transparent;
+  }
+  
+  .cards-wrapper{
+    width: 100%;
+  }
+}

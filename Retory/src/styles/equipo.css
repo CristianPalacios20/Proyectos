@@ -64,6 +64,7 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
+  width: 100%;
 }
 
 .tarjeta-persona {
@@ -108,4 +109,58 @@
 
 .tarjeta-persona p {
   font-size: 18px;
+}
+
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px) {
+  .integrantes {
+    gap: 20px;
+  }
+
+  .bloque-equipo {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contenedor-title {
+    left: 0;
+    text-align: center;
+  }
+
+  .contenedor-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .fundadores,
+  .junta-directiva,
+  .miembros {
+    justify-content: initial;
+    gap: 12px;
+    padding: 1rem;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch; /* 🆕 Para scroll suave en iOS */
+  }
+
+  .tarjeta-persona {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    pointer-events: none;
+  }
+
+  .contenedor-image {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
 }

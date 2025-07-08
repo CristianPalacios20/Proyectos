@@ -6,6 +6,31 @@ import CarruselNoticias from "../components/CarruselNoticias";
 import useAnimacionScroll from "../hooks/useAnimacionScroll";
 
 import imagen1 from "../assets/img/imagen1.png";
+import inicio1 from "../assets/img/inicio1.jpg";
+import inicio2 from "../assets/img/inicio2.jpg";
+import inicio3 from "../assets/img/inicio3.jpg";
+import inicio4 from "../assets/img/inicio4.jpg";
+import inicio5 from "../assets/img/inicio5.jpg";
+import inicio6 from "../assets/img/inicio6.jpg";
+import inicio7 from "../assets/img/inicio7.jpg";
+import inicio8 from "../assets/img/inicio8.jpg";
+import inicio9 from "../assets/img/inicio9.jpg";
+import inicio10 from "../assets/img/inicio10.jpg";
+import inicio11 from "../assets/img/inicio11.jpg";
+import inicio12 from "../assets/img/inicio12.jpg";
+import inicio13 from "../assets/img/inicio13.jpg";
+import inicio14 from "../assets/img/inicio14.jpg";
+import inicio15 from "../assets/img/inicio15.jpg";
+import inicio16 from "../assets/img/inicio16.jpg";
+import inicio17 from "../assets/img/inicio17.jpg";
+import inicio18 from "../assets/img/inicio18.jpg";
+import inicio19 from "../assets/img/inicio19.jpg";
+import inicio20 from "../assets/img/inicio20.jpg";
+import programas1 from "../assets/img/programas1.jpg";
+import eventos1 from "../assets/img/eventos1.jpg";
+import eventos2 from "../assets/img/eventos2.jpg";
+import eventos3 from "../assets/img/eventos3.jpg";
+import eventos4 from "../assets/img/eventos4.jpg";
 import image3 from "../assets/img/Frame39.png";
 import iconConocerMas from "../assets/icons/iconConocerMas.png";
 
@@ -46,6 +71,15 @@ export default function Inicio() {
     }
   };
 
+  const comprobarDispositivo = () => {
+    const esMovil = window.innerWidth <= 768;
+    if (esMovil) {
+      detenerAutoNext();
+    } else {
+      iniciarAutoNext();
+    }
+  };
+
   const scroll = (direction) => {
     const contenedor = carruselProgramasRef.current;
     if (direction === "left2") {
@@ -55,22 +89,49 @@ export default function Inicio() {
     }
   };
 
+  const imagenesInicio = [
+    imagen1,
+    inicio1,
+    inicio2,
+    inicio3,
+    inicio4,
+    inicio5,
+    inicio6,
+    inicio7,
+    inicio8,
+    inicio9,
+    inicio10,
+    inicio11,
+    inicio12,
+    inicio13,
+    inicio14,
+    inicio15,
+    inicio16,
+    inicio17,
+    inicio18,
+    inicio19,
+    inicio20,
+  ];
+
   const imagenes = [
-    imagen1,
-    imagen1,
-    imagen1,
-    imagen1,
-    imagen1,
-    imagen1,
-    imagen1,
-    imagen1,
+    { src: imagen1, des: "Atención prenatal" },
+    { src: inicio1, des: "Sala cunas" },
+    { src: inicio2, des: "Pre-Jardín" },
+    { src: inicio2, des: "Jardín transición" },
+    { src: inicio2, des: "Párvulos" },
+    { src: inicio2, des: "Caminadores" },
+    { src: inicio2, des: "Acompañamiento en tareas" },
   ];
 
   useAnimacionScroll(".oculto, .contenido-seccion-oculto");
 
   useEffect(() => {
-    iniciarAutoNext();
-    return detenerAutoNext;
+    comprobarDispositivo();
+    window.addEventListener("resize", comprobarDispositivo);
+    return () => {
+      window.removeEventListener("resize", comprobarDispositivo);
+      detenerAutoNext();
+    };
   }, []);
 
   return (
@@ -81,26 +142,32 @@ export default function Inicio() {
         onMouseLeave={iniciarAutoNext}
       >
         <div className="list" ref={carruselInicioRef}>
-          {[...Array(7)].map((_, index) => (
+          {[...Array(21)].map((_, index) => (
             <div
               key={index}
-              className="item"
-              style={{ backgroundImage: `url(${imagen1})` }}
+              className={`item ${index === 1 ? "fondo-oscuro" : ""}`}
+              style={{
+                backgroundImage: `url(${imagenesInicio[index]})`,
+              }}
             >
-              <div className="content">
-                <h1>TITLE</h1>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Cumque necessitatibus voluptates inventore suscipit neque
-                  asperiores nobis nulla illum, officiis repudiandae, ipsum
-                  porro nostrum quibusdam commodi, assumenda cum hic animi
-                  ipsam.
-                </p>
-                <div className="btn">
-                  <button>Ver más</button>
-                  <button>Escríbenos</button>
+              {index === 1 && (
+                <div className={`content`}>
+                  <p className="nombre">Club Rotario Envigado</p>
+                  <h1>¿Quiénes somos?</h1>
+                  <p>
+                    Desde los primeros pasos, en el Centro Educativo Club
+                    Rotario Envigado acompañamos a cada niño con afecto, juego y
+                    aprendizajes que fortalecen su desarrollo integral. Nuestro
+                    propósito es brindarles un entorno seguro, alegre y lleno de
+                    valores, donde puedan crecer, descubrir y soñar con un
+                    futuro mejor
+                  </p>
+                  <div className="btn">
+                    <button>Ver más</button>
+                    <button>Escríbenos</button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           ))}
         </div>
@@ -114,80 +181,41 @@ export default function Inicio() {
           </button>
         </div>
       </div>
-      <div className="acerca-de-club-rotary">
-        <img
-          className="oculto"
-          src={image3}
-          alt="frame 39 "
-          data-anim="slide-left"
-        />
-        <div className="contenido-seccion">
-          <h2 className="oculto" data-anim="slide-right-h2">
-            Título
-          </h2>
-          <p className="oculto" data-anim="slide-right-p">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
-            unde illo minus. Nostrum laudantium dolores ab quaerat quis, amet
-            repellendus dolorum impedit aliquid unde sit inventore magni, optio
-            iste magnam. Lorem ipsum dolor sit amet consectetur, adipisicing
-            elit. Mollitia unde illo minus. Nostrum laudantium dolores ab
-            quaerat quis, amet repellendus dolorum impedit aliquid unde sit
-            inventore magni, optio iste magnam.
-          </p>
-          <button className="oculto" data-anim="slide-right-buttom">
-            Leer más
-          </button>
-        </div>
-      </div>
-      <div className="contenedor-beneficios">
-        <h2 className="oculto" data-anim="slide-up">
-          TÍTULO
-        </h2>
-
-        <p className="des oculto" data-anim="fade">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
-          unde illo minus. Nostrum laudantium dolores ab quaerat quis, amet
-          repellendus dolorum impedit aliquid unde sit inventore magni, optio
-          iste magnam.
-        </p>
-
-        <img
-          className="image3 oculto"
-          src={image3}
-          alt="decorativo"
-          data-anim="zoom-in"
-        />
-
-        <div className="beneficios">
-          <div className="oculto" data-anim="slide-left">
-            <img src="img" alt="diamante" />
-            <h3>Beneficio 1</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-          </div>
-          <div className="oculto" data-anim="zoom-in">
-            <img src="img" alt="diamante" />
-            <h3>Beneficio 2</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-          </div>
-          <div className="oculto" data-anim="slide-right">
-            <img src="img" alt="diamante" />
-            <h3>Beneficio 3</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-          </div>
-        </div>
-      </div>
-
-      <div id="juventudRotatoria">
-        <div className="content-juventudRotatoria">
-          <h2>Juventud Rotatoria</h2>
-          <h3>Nos matenemos jóvenes</h3>
-        </div>
-        <Carrusel />
-      </div>
       <div id="programass">
         <div className="content-titles">
           <h2>Programas</h2>
           <h3>sueños hechos realidad</h3>
+        </div>
+        <div className="contenedor-beneficios">
+          <p className="des oculto" data-anim="fade">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Mollitia
+            unde illo minus. Nostrum laudantium dolores ab quaerat quis, amet
+            repellendus dolorum impedit aliquid unde sit inventore magni, optio
+            iste magnam.
+          </p>
+          <img
+            className="programasImg oculto"
+            src={programas1}
+            alt="decorativo"
+            data-anim="zoom-in"
+          />
+          <div className="beneficios">
+            <div className="oculto" data-anim="slide-left">
+              <img src="img" alt="diamante" />
+              <h3>Beneficio 1</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
+            <div className="oculto" data-anim="zoom-in">
+              <img src="img" alt="diamante" />
+              <h3>Beneficio 2</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
+            <div className="oculto" data-anim="slide-right">
+              <img src="img" alt="diamante" />
+              <h3>Beneficio 3</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
         </div>
         <div className="content-programas">
           <div className="carrusel-container2">
@@ -196,9 +224,13 @@ export default function Inicio() {
             </button>
             <div className="num1"></div>
             <div className="carrusel2" ref={carruselProgramasRef}>
-              {imagenes.map((img, i) => (
-                <div className="carrusel-item2" key={i}>
-                  <img src={img} alt={`programa-${i}`} />
+              {imagenes.map((item, i) => (
+                <div
+                  className="carrusel-item2"
+                  key={i}
+                  style={{ backgroundImage: `url(${item.src})` }}
+                >
+                  <div className="carrusel-item2-des">{item.des}</div>
                 </div>
               ))}
             </div>
@@ -209,19 +241,38 @@ export default function Inicio() {
           </div>
         </div>
       </div>
-      {/* style={{ backgroundImage: `url(${frame})` }} */}
+      <div id="juventudRotatoria">
+        <div className="content-juventudRotatoria">
+          <h2>Juventud Rotatoria</h2>
+          <h3>Nos matenemos jóvenes</h3>
+        </div>
+        <Carrusel />
+      </div>
       <div id="eventos">
         <div className="banner-eventos">
           <div className="carrusel-eventos">
             <CarruselEventos
               imagenes={[
-                imagen1,
-                imagen1,
-                imagen1,
-                imagen1,
-                imagen1,
-                image3,
-                image3,
+                {
+                  src: eventos1,
+                  titulo: "Trabajador Meritorio",
+                  des: "Reconocimiento a quienes realizan una labor incansable y dedicada",
+                },
+                {
+                  src: eventos2,
+                  titulo: "Siembra de Arboles",
+                  des: "Premium – Banner te ofrece un amplio rango de estilos y opciones con los que te enamorarás perdidamente",
+                },
+                {
+                  src: eventos3,
+                  titulo: "Bingo Rotario",
+                  des: "Participa en nuestros eventos programados y pasa un rato divertido en buena compañía.",
+                },
+                {
+                  src: eventos4,
+                  titulo: "Bazar del Usado",
+                  des: "Se realiza tradicionalmente cada año entre los meses de octubre o noviembre el cual dura 2 días.",
+                },
               ]}
             />
           </div>
@@ -229,47 +280,21 @@ export default function Inicio() {
             <p className="des1">nos encanta hacer que sucedan</p>
             <h2>Eventos</h2>
             <p className="des">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam
-              tempora explicabo quia magnam labore minus reprehenderit eos
-              quaerat. Neque aspernatur, odio cumque nemo id perspiciatis! Eius
-              facilis et tempora dolorum excepturi recusandae dolore
-              necessitatibus quisquam totam. Similique dicta expedita sequi!
-              Ullam tempora explicabo quia magnam labore minus reprehenderit eos
-              quaerat. Neque aspernatur, odio cumque nemo id perspiciatis! Eius
-              facilis et tempora dolorum excepturi recusandae dolore
-              necessitatibus quisquam totam. Similique dicta expedita sequi!
+              El club Rotario Envigado se enorgullece de llevar a cabo eventos
+              anuales destinados a beneficiar a la comunidad. Cada año,
+              organizamos diversas actividades con el firme propósito de
+              contribuir al bienestar de nuestros ciudadanos. Estos eventos no
+              solo son una manifestación de nuestro compromiso social, sino
+              también una oportunidad para generar un impacto positivo en la
+              comunidad que servimos. Estamos dedicados a crear iniciativas
+              significativas que promueven el bien común y mejoran la calidad de
+              vida de aquellos que nos rodean.
             </p>
             <button>
               <img src={iconConocerMas} alt="icon evento" />
               <p>conoce más</p>
             </button>
           </div>
-        </div>
-        {/* <div className="conetendor-vector2" style={{backgroundImage: `url(${vector2})`}}>
-          <img className="vector2"  alt="" />
-        </div> */}
-      </div>
-      <div className="section" id="noticias">
-        <div className="noticias-header">
-          <h2>Noticias y Novedades</h2>
-          <p>lo último de nuestro blog</p>
-        </div>
-        <div className="fondoBlue"></div>
-        <div id="carruselNoticias">
-          <CarruselNoticias
-            imagenes={[
-              image3,
-              image3,
-              image3,
-              image3,
-              image3,
-              image3,
-              image3,
-              image3,
-              image3,
-              image3,
-            ]}
-          />
         </div>
       </div>
     </div>

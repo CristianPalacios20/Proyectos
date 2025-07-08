@@ -1,44 +1,41 @@
 import { NavLink } from "react-router-dom";
 
+// import MenuMovil from "./menuMovil";
+
 import Logo from "../assets/img/Rotary.png";
 import IconArrowLeft from "../assets/icons/IconArrowLeft.png";
 
 import "../styles/header.css";
 
-const Header = ({ setonOpenMenu }) => {
+const Header = ({ setonOpenMenu, setOnOpenMenuMovil }) => {
   const menuItems = [
     {
       label: "Inicio",
       path: "/",
     },
     {
-      label: "Nosotros",
+      label: "¿quiénes somos?",
       path: "/nosotros",
-      submenu: [
-        { label2: "Nosotros", path2: "/nosotros" },
-        { label2: "Equipo", path2: "/equipo" },
-      ],
+      submenu: [{ label2: "Equipo", path2: "/equipo" }],
       submenuClass: "submenu-nosotros",
     },
     {
+      label: "centro educativo",
+      path: "/CentroEducativoEnvigado",
+      submenuClass: "submenu-programas",
+    },
+    {
+      label: "Bazar",
+      path: "/bazar",
+    },
+    {
       label: "Juventud rotatoria",
-      path: "/juventudRotary",
       icon: IconArrowLeft,
       submenu: [
         { label2: "Interact", path2: "/interact" },
         { label2: "Rotaract", path2: "/rotaract" },
         { label2: "Ryla", path2: "/ryla" },
       ],
-    },
-    {
-      label: "Programas",
-      path: "/programas",
-      icon: IconArrowLeft,
-      submenu: [
-        { label2: "Centro educativo", path2: "/CentroEducativoEnvigado" },
-        { label2: "Bazar del usado", path2: "/bazar" },
-      ],
-      submenuClass: "submenu-programas",
     },
     {
       label: "Documentos legales",
@@ -56,15 +53,22 @@ const Header = ({ setonOpenMenu }) => {
         <ul className="menu-principal">
           {menuItems.map((item, index) => (
             <li key={index} className="menu-item">
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  `link-menu${isActive ? " active" : ""}`
-                }
-              >
-                {item.label}
-                {item.icon && <img src={item.icon} />}
-              </NavLink>
+              {item.path ? (
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `link-menu${isActive ? " active" : ""}`
+                  }
+                >
+                  {item.label}
+                  {item.icon && <img src={item.icon} />}
+                </NavLink>
+              ) : (
+                <span className="link-menu">
+                  {item.label}
+                  {item.icon && <img src={item.icon} />}
+                </span>
+              )}
 
               {item.submenu && (
                 <ul className={`submenu ${item.submenuClass || ""}`}>
@@ -92,6 +96,13 @@ const Header = ({ setonOpenMenu }) => {
           <span className=""></span>
           <span className=""></span>
           <span className=""></span>
+        </div>
+      </nav>
+      <nav className="nav-movil">
+        <div className="menu-movil" onClick={() => setOnOpenMenuMovil(true)}>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </nav>
     </header>

@@ -3,64 +3,75 @@ import CarruselDistinciones from "../components/CarruselDistinciones";
 import useAnimacionScroll from "../hooks/useAnimacionScroll";
 
 import image3 from "../assets/img/Frame39.png";
+import somos from "../assets/img/somos1.jpg";
+import somo2 from "../assets/img/somos2.jpg";
 import camping from "../assets/img/camping1.png";
 
 import "../styles/nosotros.css";
 
 export default function Nosotros() {
   useAnimacionScroll(".oculto");
+
+  const videoHimno = "https://www.youtube.com/embed/3zZUieAp9Zo";
   return (
-    <>
-      <div id="nosotros">
-        <div className="bloque-informativo">
-          <div className="contenido-textual">
-            <img
-              src={camping}
-              className="imagen-camping oculto"
-              data-anim="slide-left"
-              alt="camping"
-            />
-            <p className="subtitulo-nosotros oculto" data-anim="slide-up">
-              acerca de nuestro club
-            </p>
-            <h2 className="titulo-nosotros oculto" data-anim="slide-up">
-              el club rotatorio envigado
-            </h2>
-            <div>
-              <p className="descripcion-nosotros oculto" data-anim="fade">
-                es una organización que desarrolla proyectos de impacto social
-                para la comunidad bajo los lineamientos de Rotary International.
-                Lo que pretendemos es aportar a la comunidad en general espacios
-                de bienestar donde la formación y el interés por el ideal de
-                servicio sean los pilares fundamentales.
-              </p>
-            </div>
-          </div>
-
+    <div id="nosotros">
+      <div className="bloque-informativo">
+        <div className="contenido-textual">
           <img
-            src={image3}
-            alt="frame 39"
-            className="imagen-lateral oculto"
+            src={camping}
+            className="imagen-camping oculto"
             data-anim="slide-right"
+            alt="camping"
           />
+          <p className="subtitulo-nosotros oculto" data-anim="slide-up">
+            acerca de nuestro club
+          </p>
+          <h2 className="titulo-nosotros oculto" data-anim="slide-up">
+            el club rotatorio envigado
+          </h2>
+          <div>
+            <p className="descripcion-nosotros oculto" data-anim="fade">
+              es una organización que desarrolla proyectos de impacto social
+              para la comunidad bajo los lineamientos de Rotary International.
+              Lo que pretendemos es aportar a la comunidad en general espacios
+              de bienestar donde la formación y el interés por el ideal de
+              servicio sean los pilares fundamentales.
+            </p>
+          </div>
         </div>
 
-        <div className="bloque-video">
-          <img
-            className="video oculto"
-            src={image3}
-            data-anim="zoom-in"
-            alt="video decorativo"
-          />
-          <p className="descripcion-video oculto" data-anim="slide-up">
-            Buscamos ser líderes en programas de formación, promoción,
-            prevención y atención a las necesidades que sean identificadas en
-            los diferentes grupos poblacionales. Generando estrategias y
-            proyectos para contribuir a la creación de mejoras, logrando
-            convenios y alianzas estratégicas con organizaciones públicas y
-            privadas del ámbito local e internacional.
-          </p>
+        <img
+          src={somos}
+          alt="frame 39"
+          className="imagen-lateral oculto"
+          data-anim="slide-right"
+        />
+      </div>
+
+      <div className="bloque-video">
+        <div className="contenedor-video oculto" data-anim="zoom-in">
+          <iframe
+            className="video"
+            src={videoHimno}
+            controls
+            poster={somo2}
+            preload="metadata"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          >
+            Tu navegador no soporta el video.
+          </iframe>
         </div>
+
+        <p className="descripcion-video oculto" data-anim="slide-up">
+          Buscamos ser líderes en programas de formación, promoción, prevención
+          y atención a las necesidades que sean identificadas en los diferentes
+          grupos poblacionales. Generando estrategias y proyectos para
+          contribuir a la creación de mejoras, logrando convenios y alianzas
+          estratégicas con organizaciones públicas y privadas del ámbito local e
+          internacional.
+        </p>
       </div>
 
       <div id="carrusel-clubs-fundados">
@@ -93,7 +104,7 @@ export default function Nosotros() {
           </div>
 
           <div className="historia-imagen oculto" data-anim="slide-right">
-            <img src={image3} alt="" />
+            <img src={somo2} alt="" />
           </div>
         </div>
 
@@ -154,6 +165,6 @@ export default function Nosotros() {
           <CarruselDistinciones />
         </div>
       </div>
-    </>
+    </div>
   );
 }

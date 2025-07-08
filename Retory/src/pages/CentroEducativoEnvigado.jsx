@@ -52,6 +52,8 @@ export default function CentroEducativoEnvigado() {
         "Adquieran hábitos de higiene, salud, alimentación y seguridad.",
     },
   ];
+
+  const videoCentroEducativo = ["https://www.youtube.com/embed/O0WuZQtrBng"];
   return (
     <div id="centroEducativoEnvigado">
       <div className="banner-centro">
@@ -124,6 +126,38 @@ export default function CentroEducativoEnvigado() {
               <p className="perfil-descripcion">{item.descripcion}</p>
             </div>
           ))}
+        </div>
+      </div>
+      <div className="centro-educativo-galeria-video" id="centro-educativo">
+        <div className="centro-educativo-galeria-contenedor">
+          <div
+            className="centro-educativo-galeria-descripcion oculto"
+            data-anim="slide-left"
+          >
+            <h2>Nosotros</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quam
+              repellat quis, commodi fuga soluta optio natus culpa nihil vitae
+              amet, tenetur in minus harum debitis ipsam rerum nisi numquam.
+            </p>
+          </div>
+
+          <div
+            className="centro-educativo-video-items oculto"
+            data-anim="slide-right"
+          >
+            <div className="centro-educativo-video-item">
+              <iframe
+                className="centro-educativo-video-player"
+                width="560"
+                height="315"
+                src={videoCentroEducativo}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
         </div>
       </div>
     </div>

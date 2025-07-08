@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  /* width: 100vw; */
+  width: 100%;
+  padding-top: 65px;
   overflow-x: hidden;
 }
 
@@ -17,8 +18,8 @@
   height: 200px;
   position: absolute;
   top: 85%;
-  transform: translateY(-70%);
   left: 90%;
+  /* transform: translateY(-80%); */
   border-radius: 20px;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   background-position: 50% 50%;
@@ -53,22 +54,25 @@
   left: calc(67% + 450px);
   opacity: 0;
 }
-.carrusel .list .item:nth-child(7) {
+.carrusel .list .item:nth-child(n + 7) {
   left: calc(67% + 600px);
   opacity: 0;
 }
 
 .item .content {
-  display: flex;
   flex-direction: column;
   gap: 10px;
   position: absolute;
-  top: 40%;
+  top: 20%;
   left: 100px;
-  width: 400px;
+  width: 500px;
   text-align: left;
   color: white;
   display: none;
+}
+
+.fondo-oscuro {
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .list .item:nth-child(1) .content {
@@ -79,6 +83,11 @@
   display: block;
 }
 
+.content .nombre {
+  color: blue;
+  font-weight: bold;
+}
+
 .content h1 {
   font-size: 50px;
   text-transform: uppercase;
@@ -87,15 +96,15 @@
 }
 
 .content p {
-  font-size: 16px;
-  margin-left: 5px;
+  font-size: 18px;
+  margin-left: 15px;
   opacity: 0;
   animation: animate 1s ease-in-out 0.6s forwards;
 }
 
 .content .btn {
   display: flex;
-  margin-left: 5px;
+  margin-left: 15px;
   height: 50px;
   gap: 5px;
   margin-top: 20px;
@@ -142,7 +151,7 @@
   justify-content: center;
   width: 300px;
   gap: 10px;
-  top: 85%;
+  top: 80%;
   left: 40%;
   z-index: 100;
 }
@@ -172,48 +181,6 @@
   background-color: #f6a91b88;
 }
 
-.acerca-de-club-rotary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  height: auto;
-  padding: 40px 0px;
-}
-
-.contenido-seccion {
-  width: 500px;
-  height: 330px;
-  padding: 0px 20px;
-}
-
-.contenido-seccion img {
-  width: 600px;
-}
-
-.contenido-seccion h2 {
-  font-size: 40px;
-  margin-bottom: 20px;
-}
-
-.contenido-seccion p {
-  width: 400px;
-}
-
-.contenido-seccion button {
-  position: relative;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  width: 100px;
-  font-weight: bold;
-  top: 30px;
-  padding: 10px;
-  color: white;
-  border-radius: 8px;
-  background-color: #f6a81b;
-}
-
 .contenedor-beneficios {
   display: flex;
   flex-direction: column;
@@ -228,8 +195,9 @@
   width: 550px;
 }
 
-.contenedor-beneficios .image3 {
-  width: 400px;
+.contenedor-beneficios .programasImg {
+  width: 500px;
+  border-radius: 10px;
 }
 
 .beneficios {
@@ -318,14 +286,29 @@
   display: none;
 }
 
-.carrusel-item2 img {
-  width: 250px;
-  height: 170px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-  transition: transform 0.4s ease;
+.carrusel-item2 {
+  position: relative;
+  width: 350px;
+  height: 250px;
+  flex-shrink: 0;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.carrusel-item2-des {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0%;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: rgba(0, 0, 0, 0.438);
+  border: 1px solid;
 }
 
 .arrow2 {
@@ -379,6 +362,8 @@
   height: 50px;
   background-color: white;
   border-radius: 50%;
+  z-index: 1;
+  /* border: 1px solid; */
 }
 
 .num2 {
@@ -388,6 +373,8 @@
   height: 50px;
   background-color: white;
   border-radius: 50%;
+  z-index: 1;
+  /* border: 1px solid; */
 }
 
 #eventos {
@@ -406,13 +393,14 @@
 }
 
 .carrusel-eventos {
-  width: 50%;
+  width: 40%;
+  /* border: 1px solid; */
 }
 
 .des-eventos {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 50%;
   height: 70%;
 }
 
@@ -459,51 +447,6 @@
   background-position: center;
 }
 
-#noticias {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 80vh;
-  overflow: hidden;
-}
-
-.noticias-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.noticias-header h2 {
-  font-size: 50px;
-  color: blue;
-}
-
-.noticias-header p {
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: #f6a81b;
-}
-
-.fondoBlue {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  top: 45%;
-  left: 0;
-  background-color: blue;
-  border-radius: 30px 30px 0 0;
-}
-
-#carruselNoticias {
-  position: absolute;
-  top: 30%;
-  width: 80%;
-}
-
 #nuestro-equipo {
   position: relative;
   display: flex;
@@ -543,7 +486,7 @@
 
 .mostrar {
   opacity: 1;
-  /* transform: none !important; */
+  transform: none !important;
 }
 
 [data-anim="slide-left"].oculto {
@@ -563,8 +506,156 @@
   transition: all 2s ease-in-out;
 }
 
-[data-anim="slide-up"].oculto { transform: translateY(50px); }
-[data-anim="fade"].oculto { transform: scale(0.95); }
-[data-anim="zoom-in"].oculto { transform: scale(0.5); }
-[data-anim="slide-left"].oculto { transform: translateX(-100%); }
-[data-anim="slide-right"].oculto { transform: translateX(100%); }
+[data-anim="slide-up"].oculto {
+  transform: translateY(50px);
+}
+[data-anim="fade"].oculto {
+  transform: scale(0.95);
+}
+[data-anim="zoom-in"].oculto {
+  transform: scale(0.5);
+}
+[data-anim="slide-left"].oculto {
+  transform: translateX(-100%);
+}
+[data-anim="slide-right"].oculto {
+  transform: translateX(100%);
+}
+
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px) {
+  #inicio {
+    padding-top: 50px;
+    gap: 10px;
+  }
+
+  .item .content {
+    display: flex;
+    width: 100%;
+    top: 10%;
+    left: 0;
+    padding: 0 20px;
+    /* border: 1px solid; */
+  }
+
+  .content p {
+    margin-left: 0;
+  }
+
+  .item .btn button {
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .arrows {
+    width: 100%;
+    left: 0%;
+  }
+
+  .arrows button {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .acerca-de-club-rotary {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .acerca-de-club-rotary img {
+    width: 350px;
+  }
+
+  .acerca-de-club-rotary .contenido-seccion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .acerca-de-club-rotary .contenido-seccion p {
+    width: 350px;
+    text-align: center;
+  }
+
+  .contenedor-beneficios .programasImg {
+    width: 350px;
+  }
+
+  .contenedor-beneficios .des {
+    width: 350px;
+  }
+
+  .contenedor-beneficios .beneficios {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* si el ultimo elemento del grid no tiene pareja, ocupa las dos columnas */
+  .contenedor-beneficios .beneficios > :last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .contenedor-beneficios .beneficios p {
+    width: 150px;
+  }
+
+  #juventudRotatoria {
+    padding: 10px 0;
+  }
+
+  #juventudRotatoria .content-juventudRotatoria {
+    text-align: center;
+  }
+
+  #eventos {
+    height: auto;
+    padding: 0;
+    /* margin-bottom: 20px; */
+  }
+
+  #eventos .banner-eventos {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    border-radius: 15px 15px 0 0;
+  }
+
+  .banner-eventos .carrusel-eventos {
+    width: 100%;
+  }
+
+  .des-eventos {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .des-eventos .des {
+    width: 100%;
+  }
+
+  #carruselNoticias {
+    width: 100%;
+  }
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
+}

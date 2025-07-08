@@ -4,6 +4,10 @@ import "../styles/carruselNoticias.css";
 export default function CarruselNoticias({ imagenes = [] }) {
   const carruselRef = useRef(null);
 
+  const descripcion = [
+    {des: "Celebrando el Día del Trabajador Meritorio: Un Homenaje a trabajadores de Nuestra Comunidad"}
+  ]
+
   const scroll = (direction) => {
     const contenedor = carruselRef.current;
     if (direction === "left4") {
@@ -22,10 +26,10 @@ export default function CarruselNoticias({ imagenes = [] }) {
         &#8249;
       </button>
       <div className="lista-imagenes-noticias" ref={carruselRef}>
-        {imagenes.map((img, i) => (
+        {imagenes.map((item, i) => (
           <div className="item-noticias" key={i}>
-            <img src={img} alt={`programa-${i}`} />
-            <p>celebrando el día del trabajador</p>
+            <img src={item.src} alt={`programa-${i}`} />
+              <p>{item.des}</p>
             <button >Ir al contenido</button>
           </div>
         ))}
