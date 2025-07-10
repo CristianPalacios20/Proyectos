@@ -83,7 +83,7 @@ export default function Donar() {
 
         <div className="donacion-razones">
           <h3
-            className="donacion-titulo oculto"
+            className="donacion-titulo "
             data-anim="slide-up"
             style={{ transitionDelay: "0ms" }}
           >

@@ -107,3 +107,54 @@
 [data-anim="fade-up"].mostrar {
   transform: translateY(0);
 }
+
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px){
+  #documentos{
+    padding: 50px 0 0 0;
+  }
+
+  .banner-documentos p{
+    left: 20%;
+  }
+
+  .documentos-seccion{
+    padding: 80px 0 20px 40px;
+  }
+
+  .tarjeta-documento{
+    flex-direction: column;
+    gap: 20px;
+    /* border: 1px solid; */
+  }
+
+  .icono-documento-contenedor{
+    border-radius: 10px;
+    width: 300px;
+  }
+
+  .icono-documento{
+    width: 230px;
+    object-fit: cover;
+  }
+
+  .contendor-icono{
+    width: auto;
+  }
+
+  .lista-documentos li a{
+    font-size: 20px;
+  }
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
+}

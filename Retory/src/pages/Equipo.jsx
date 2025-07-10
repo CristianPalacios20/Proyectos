@@ -32,8 +32,13 @@ export default function Equipo() {
           imagen: frame39,
         },
         {
-          nombre: "Persona B",
+          nombre: "Persona C",
           cargo: "Desarrollador",
+          imagen: frame39,
+        },
+        {
+          nombre: "Persona D",
+          cargo: "Logística",
           imagen: frame39,
         },
       ],

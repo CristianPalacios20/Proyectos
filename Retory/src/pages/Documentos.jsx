@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import useAnimacionScroll from "../hooks/useAnimacionScroll";
 
-import iconDoc from "../assets/icons/iconDoc.png";
+import RotaryLogo from "../assets/img/RotaryLogo.png";
 import imgDocs from "../assets/img/imgDocs.jpg";
 
 import "../styles/documentos.css";
@@ -10,7 +10,7 @@ export default function Documentos() {
   useAnimacionScroll(".oculto");
   const documentos = [
     {
-      icono: iconDoc,
+      icono: RotaryLogo,
       titulo: "sobre royary",
       documentos: [
         "Documento#1",
@@ -22,7 +22,7 @@ export default function Documentos() {
       claseIcon: "",
     },
     {
-      icono: iconDoc,
+      icono: RotaryLogo,
       titulo: "sobre primera infancia",
       documentos: [
         "Documento#1",
@@ -34,7 +34,7 @@ export default function Documentos() {
       claseIcon: "",
     },
     {
-      icono: iconDoc,
+      icono: RotaryLogo,
       titulo: "sobre nuestras sedes",
       documentos: [
         "Documento#1",
@@ -79,7 +79,7 @@ export default function Documentos() {
                 className="icono-documento"
               />
             </div>
-            <div>
+            <div className="contendor-icono">
               <h2
                 className={`titulo-documento ${
                   item.titulo === "sobre royary"

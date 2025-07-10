@@ -1,8 +1,8 @@
 import React from "react";
 
-import "../styles/carruselClubFun.css"
+import "../styles/carruselClubFun.css";
 
-import setting from "../assets/img/setting.png"
+import RotaryLogo from "../assets/img/RotaryLogo.png";
 
 export default function CarruselClubsFun() {
   const mensajes = [
@@ -17,7 +17,7 @@ export default function CarruselClubsFun() {
       <div className="carrusel-track">
         {[...mensajes, ...mensajes].map((texto, index) => (
           <div className="carrusel-item" key={index}>
-            <img src={setting} className="rotary" alt="" />
+            <img src={RotaryLogo} className="rotary" alt="" />
             <span>{texto}</span>
           </div>
         ))}

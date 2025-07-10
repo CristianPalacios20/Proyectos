@@ -115,8 +115,24 @@ export default function Rotaract() {
 
         <div className="rotaract-carrusel-submenu">
           <div className="rotaract-botones-carrusel">
-            <button onClick={anterior}>&#10094;</button>
-            <button onClick={siguiente}>&#10095;</button>
+            <button
+              onClick={anterior}
+              style={{
+                color: indice >= 1 ? "black" : "white",
+                backgroundColor: indice >= 1 ? "rgba(255, 255, 255, 0.55)" : "",
+              }}
+            >
+              &#10094;
+            </button>
+            <button
+              onClick={siguiente}
+              style={{
+                color: indice >= 1 ? "black" : "white",
+                backgroundColor: indice >= 1 ? "rgba(255, 255, 255, 0.55)" : "",
+              }}
+            >
+              &#10095;
+            </button>
           </div>
         </div>
         {indice >= 1 && (
@@ -176,10 +192,10 @@ export default function Rotaract() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
-            </div>
-            <div className="button-galeria oculto" data-anim="slide-right">
-              <button onClick={siguienteVideo}>&#10094;</button>
-              <button onClick={anteriorVideo}>&#10095;</button>
+              <div className="button-galeria oculto" data-anim="slide-right">
+                <button onClick={siguienteVideo}>&#10094;</button>
+                <button onClick={anteriorVideo}>&#10095;</button>
+              </div>
             </div>
           </div>
         </div>

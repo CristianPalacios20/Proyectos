@@ -104,7 +104,6 @@
 
 .tarjeta-persona h3 {
   font-size: 28px;
-  color: #ffc107;
 }
 
 .tarjeta-persona p {
@@ -145,6 +144,10 @@
     flex: 0 0 auto;
     scroll-snap-align: start;
     pointer-events: none;
+  }
+
+  .tarjeta-persona h3{
+    font-size: 20px;
   }
 
   .contenedor-image {

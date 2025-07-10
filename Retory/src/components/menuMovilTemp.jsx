@@ -40,29 +40,22 @@ function MenuMovil({ onOpenMenuMovil, setOnOpenMenuMovil }) {
       label: "Documentos legales",
       path: "/documentos",
     },
-    {
-      label: "donar",
-      path: "/documentos",
-    },
   ];
 
   const [openSubMenu, setOpenSubMenu] = useState(null);
 
   return (
-    <div id="menuMovil" className={onOpenMenuMovil ? "visible" : "oculto"}>
-      <nav className="menu-movil-nav">
-        <div className="cerrar-menu">
-          <div
-            className="contenedor-barras"
-            onClick={() => {
-              setOnOpenMenuMovil(false);
-              setOpenSubMenu(null);
-            }}
-          >
-            <span className="barra"></span>
-            <span className="barra"></span>
-          </div>
-        </div>
+    <div
+      id="menuMovil"
+      className={onOpenMenuMovil ? "visible" : ""}
+      onClick={() => setOnOpenMenuMovil(false)}
+    >
+      <nav
+        className="menu-movil-nav"
+        onClick={(e) =>
+          e.stopPropagation()
+        } /*Evita cerrar al hacer click dentro*/
+      >
         <ul className="menu-movil-lista">
           {menuItemsMovil.map((item, index) => (
             <li key={index} className="menu-movil-item">
@@ -71,7 +64,7 @@ function MenuMovil({ onOpenMenuMovil, setOnOpenMenuMovil }) {
                 className="menu-movil-link"
                 onClick={(e) => {
                   if (item.submenu) {
-                    e.preventDefault(); // Evita navegar
+                    e.preventDefault();
                     setOpenSubMenu(openSubMenu === index ? null : index);
                   } else {
                     setOnOpenMenuMovil(false); // Cierra menú completo

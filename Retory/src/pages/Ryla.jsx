@@ -39,7 +39,11 @@ export default function Ryla() {
               alt="logo Ryla"
               data-anim="slide-left"
             />
-            <p className="oculto" data-anim="slide-right">
+            <p
+              className="oculto"
+              data-anim="slide-right"
+              style={{ transitionDelay: "450ms" }}
+            >
               Es más conocido como RYLA, es un seminario que se realiza
               anualmente. Se enfoca en la formación de adolescentes y adultos
               para fomentar y reconocer las cualidades de liderazgo, con énfasis
@@ -66,7 +70,10 @@ export default function Ryla() {
 
       <div className="ryla-galeria-video">
         <div className="ryla-galeria-contenedor">
-          <div className="ryla-galeria-descripcion oculto" data-anim="slide-left">
+          <div
+            className="ryla-galeria-descripcion oculto"
+            data-anim="slide-left"
+          >
             <h2>Nosotros</h2>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Id quam

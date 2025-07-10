@@ -70,8 +70,10 @@
 }
 
 .donacion-razones {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  padding: 20px;
   gap: 10px;
 }
 
@@ -89,6 +91,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 0 40px;
 }
@@ -268,17 +271,18 @@
 }
 
 .donacion-bloque-secundario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  position: relative;
   background-size: cover;
   background-position: center;
   border-radius: 12px;
   padding: 3rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  position: relative;
   color: white;
   text-align: center;
+  overflow: hidden;
 }
 
 .donacion-bloque-secundario::before {
@@ -286,7 +290,6 @@
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
   z-index: 1;
 }
 
@@ -298,8 +301,6 @@
   position: relative;
   left: 300px;
   z-index: 2;
-  max-width: 400px;
-  width: 100%;
 }
 
 .donacion-bloque-titulo {
@@ -360,7 +361,7 @@
 
 .mostrar {
   opacity: 1;
-  /* transform: none !important; */
+  transform: none !important;
 }
 
 [data-anim="slide-left"].oculto {
@@ -381,4 +382,129 @@
 
 [data-anim="slide-up"].oculto {
   transform: translateY(80px);
+}
+
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px) {
+  .donacion-contenido-secundario {
+    gap: 10px;
+  }
+
+  .contenedor-frase {
+    left: 0;
+    top: 10%;
+    width: 100%;
+    height: 70%;
+    padding: 20px;
+  }
+
+  .contenedor-frase .donacion-frase {
+    font-size: 2rem;
+  }
+
+  .donacion-botones {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .donacion-botones button {
+    height: auto;
+    font-size: 1.3rem;
+  }
+
+  .donacion-mensaje-final {
+    font-size: 1.3rem;
+  }
+
+  .donacion-razones {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .donacion-razones .donacion-titulo {
+    text-align: center;
+    font-size: 2.5rem;
+  }
+
+  .donacion-lista .donacion-icono{
+    width: 350px;
+  }
+
+  .donacion-lista .donacion-descripcion {
+    font-size: 1.5rem;
+  }
+
+  .donacion-lista .btn-conocer-mas {
+    width: 150px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+
+  .donacion-llamado {
+    padding-top: 0;
+  }
+
+  .donacion-formas-extra {
+    padding: 0;
+  }
+
+  .donacion-formas-extra .donacion-formas-header {
+    width: 100%;
+  }
+
+  .donacion-formas-titulo {
+    font-size: 1.3rem;
+  }
+
+  .donacion-formas-contenido {
+    height: auto;
+    padding: 1rem;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .donacion-voluntariado .donacion-voluntariado-titulo {
+    font-size: 2rem;
+  }
+
+  .donacion-voluntariado .donacion-voluntariado-texto {
+    font-size: 1.4rem;
+  }
+
+  .donacion-btn-contacto p {
+    font-size: 1.2rem;
+  }
+
+  .donacion-imagen-fondo .donacion-imagen-texto {
+    left: 120px;
+    color: #444;
+  }
+
+  .donacion-bloque-secundario {
+    height: auto;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .donacion-bloque-contenido {
+    left: 0;
+  }
+
+  .donacion-bloque-contenido .donacion-bloque-titulo{
+    font-size: 2rem;
+  }
+
+  .donacion-boton-principal, .donacion-boton-secundario {
+    font-size: 1.2rem;
+  }
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
 }

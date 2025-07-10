@@ -7,7 +7,7 @@ import IconArrowLeft from "../assets/icons/IconArrowLeft.png";
 
 import "../styles/header.css";
 
-const Header = ({ setonOpenMenu, setOnOpenMenuMovil }) => {
+const Header = ({ setonOpenMenu, onOpenMenuMovil, setOnOpenMenuMovil }) => {
   const menuItems = [
     {
       label: "Inicio",
@@ -99,7 +99,10 @@ const Header = ({ setonOpenMenu, setOnOpenMenuMovil }) => {
         </div>
       </nav>
       <nav className="nav-movil">
-        <div className="menu-movil" onClick={() => setOnOpenMenuMovil(true)}>
+        <div className="contenedor-button-donar-movil">
+          <NavLink to="donar">donar</NavLink>
+        </div>
+        <div className={`menu-movil ${onOpenMenuMovil ? "active" : ""}`} onClick={() => setOnOpenMenuMovil(!onOpenMenuMovil)}>
           <span></span>
           <span></span>
           <span></span>

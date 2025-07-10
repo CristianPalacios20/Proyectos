@@ -41,11 +41,11 @@ export default function Interact() {
         data-anime="slide-up"
       >
         {indice === 0 && (
-          <div className="interact-banner-info">
+          <div className={`interact-banner-info`}>
             <img
               className="oculto"
               src={interactLogo}
-              alt="logo interact"
+              alt="logo Interact"
               data-anim="slide-left"
             />
             <p
@@ -68,8 +68,24 @@ export default function Interact() {
 
         <div className="interact-carrusel-submenu">
           <div className="interact-botones-carrusel">
-            <button onClick={anterior}>&#10094;</button>
-            <button onClick={siguiente}>&#10095;</button>
+            <button
+              onClick={anterior}
+              style={{
+                color: indice > 0 ? "black" : "white",
+                backgroundColor: indice > 0 ? "rgba(255, 255, 255, 0.47)" : "",
+              }}
+            >
+              &#10094;
+            </button>
+            <button
+              onClick={siguiente}
+              style={{
+                color: indice > 0 ? "black" : "white",
+                backgroundColor: indice > 0 ? "rgba(255, 255, 255, 0.47)" : "",
+              }}
+            >
+              &#10095;
+            </button>
           </div>
         </div>
         {indice >= 1 && (
@@ -99,8 +115,6 @@ export default function Interact() {
             <div className="interact-video-item">
               <iframe
                 className="interact-video-player"
-                width="560"
-                height="315"
                 src={video}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

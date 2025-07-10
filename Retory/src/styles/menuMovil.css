@@ -1,77 +1,34 @@
 #menuMovil {
   position: fixed;
   width: 100%;
-  height: 100vh;
-  padding-top: 60px;
-  transform: translateY(100%);
-  background-color: rgba(0, 0, 0, 0.753);
-  transition: transform 0.5s ease, opacity 0.5s ease-in-out;
-  opacity: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  transform: translateY(-100%);
+  transition: transform 0.5s ease, opacity 0.5s ease;
   z-index: 1000;
+  opacity: 0;
   pointer-events: none;
+  margin-top: 70px;
 }
 
 #menuMovil.visible {
-  transform: translateY(-0);
+  transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
 }
 
 #menuMovil.oculto {
-  transform: translateY(100%);
+  transform: translateY(-100%);
   opacity: 0;
   pointer-events: none;
 }
 
-.cerrar-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  align-items: flex-end;
-  height: 40px;
-  gap: 6px;
-  padding: 15px;
-  margin-bottom: 1rem;
-}
-
-.contenedor-barras {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 100%;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.cerrar-menu span {
-  position: absolute;
-  width: 25px;
-  height: 2px;
-  display: inline-block;
-  background-color: black;
-  transition: transform 0.3s ease;
-}
-
-.cerrar-menu span:nth-child(1) {
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.cerrar-menu span:nth-child(2) {
-  transform: translateY(-50%) rotate(-45deg);
-}
-
 .menu-movil-nav {
-  position: absolute;
-  right: 0;
-  /* bottom: 0; */
   width: 100%;
-  height: 100%;
-  padding: 10px;
-  border-radius: 25px 25px 0 0;
+  height: auto;
+  padding: 40px 20px;
   background-color: white;
+  transition: height 0.3s ease;
 }
 
 .menu-movil-lista {
@@ -79,11 +36,7 @@
   flex-direction: column;
   height: 100%;
   gap: 8px;
-  padding-left: 15px;
-  overflow: auto;
   border-radius: 10px;
-  /* background-color: white; */
-  /* border: 1px solid; */
 }
 
 .menu-movil-lista .menu-movil-item {
@@ -130,3 +83,23 @@
   margin: 16px 0 0 10px;
 }
 
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px) {
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .menu-movil-nav{
+    padding-left: 100px;
+  }
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
+  
+}

@@ -7,7 +7,7 @@
   background-size: cover;
   background-position: center;
   color: white;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
   background-attachment: fixed;
 }
 
@@ -23,7 +23,7 @@
   position: relative;
   top: 30%;
   left: 10%;
-  width: 50%;
+  width: 450px;
   opacity: 0;
   transform: translateX(-50px);
   animation: entradaBanner 1s ease forwards;
@@ -39,7 +39,7 @@
 
 .bazar-banner-info .bazar-banner-descripcion {
   color: #ccc;
-  width: 420px;
+  width: 100%;
 }
 
 .bazar-banner-info .bazar-boton-leer-mas {
@@ -73,7 +73,6 @@
   transition: all 0.3s ease-in;
 }
 
-
 .botones-carrusel {
   display: flex;
   gap: 15px;
@@ -106,10 +105,9 @@
   transition: all 0.6s ease;
 }
 
-.botones-carrusel.oscuro:hover{
+.botones-carrusel.oscuro:hover {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-
 }
 
 .bazar-banner-titulo {
@@ -162,12 +160,42 @@
   }
 }
 
-@media (max-width: 768px) {
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px) {
+  #bazar{
+    gap: 10px;
+  }
+
+  .bazar-banner-info{
+    top: 10%;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .bazar-banner-info p{
+    width: 100%;
+    font-size: 20px;
+  }
+  
   .bazar-contenido {
+    margin: 0;
     padding: 2rem 1rem;
   }
 
   .bazar-descripcion {
     font-size: 1rem;
   }
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
 }

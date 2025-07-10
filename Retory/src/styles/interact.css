@@ -1,9 +1,11 @@
 #interact {
-  padding-top: 65px;
+  height: auto;
+  padding-top: 50px;
   overflow-x: hidden;
 }
 
 .interact-banner {
+  position: relative;
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -243,7 +245,6 @@
   position: relative;
   width: 500px;
   height: 80%;
-  max-width: 800px;
 }
 
 .interact-video-item {
@@ -278,4 +279,98 @@
   outline: none;
   color: white;
   cursor: pointer;
+}
+
+.oculto {
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.mostrar {
+  opacity: 1;
+  transform: none !important;
+}
+
+/* Animación desde la izquierda */
+[data-anim="slide-left"].oculto {
+  transform: translateX(-100px);
+}
+
+/* Animación desde la derecha */
+[data-anim="slide-right"].oculto {
+  transform: translateX(100px);
+}
+
+/* Móviles pequeños */
+@media (min-width: 360px) and (max-width: 480px) {
+  .interact-banner-info {
+    width: 100%;
+    top: 8%;
+    left: 0;
+    padding: 10px;
+  }
+
+  .interact-banner-info img {
+    width: 250px;
+  }
+
+  .interact-banner-info p {
+    left: 0;
+  }
+
+  .interact-carrusel-submenu {
+    width: 100%;
+    top: 80%;
+    left: 0%;
+  }
+
+  .interact-logo {
+    top: 4%;
+    left: 50%;
+  }
+
+  .interact-galeria-video {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .interact-galeria-video .interact-galeria-contenedor {
+    flex-direction: column;
+    width: 100%;
+    width: 100%;
+    height: auto;
+    gap: 5px;
+    border-radius: 0;
+  }
+
+  .interact-galeria-descripcion {
+    padding: 20px;
+    width: 100%;
+    font-size: 19px;
+  }
+
+  .interact-galeria-descripcion p {
+    width: 100%;
+  }
+
+  .interact-video-items {
+    height: 300px;
+    position: relative;
+  }
+
+  .interact-video-player {
+    width: 100%;
+  }
+}
+
+/* Móviles grandes y tablets pequeñas */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Tablets grandes */
+@media (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Escritorios */
+@media (min-width: 1025px) {
 }
