@@ -96,7 +96,7 @@ export default function Tareas({
                 onPress={() =>
                   navigation.navigate("Chat", {
                     chatId: chat.chatId,
-                    userName: chat.title,
+                    titulo: chat.title,
                     message: chat.messages[0]?.content ?? "sin mensajes",
                     messages: chat.messages,
                   })

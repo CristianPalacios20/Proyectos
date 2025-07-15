@@ -8,7 +8,8 @@ import {
 } from "react-native";
 
 import Edit from "../../assets/icons/iconEdit.png";
-import iconSetting from "../../assets/icons/iconSetting.png";
+import iconSetting from "../../assets/icons/iconAjustes.png";
+import iconBuscar from "../../assets/icons/iconBuscar.png";
 
 export default function HeaderHome({ setSelectedTab }) {
   return (
@@ -23,13 +24,19 @@ export default function HeaderHome({ setSelectedTab }) {
             onPress={() => setSelectedTab("Ajustes")}
             style={stylesHeaderHome.bottomSetting}
           >
-            <Image source={iconSetting} style={stylesHeaderHome.iconSetting} />
+            <Image source={iconBuscar} style={stylesHeaderHome.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setSelectedTab("Ajustes")}
+            style={stylesHeaderHome.bottomSetting}
+          >
+            <Image source={iconSetting} style={stylesHeaderHome.icon} />
           </TouchableOpacity>
           <TouchableOpacity
             style={stylesHeaderHome.options}
             onPress={() => alert("Opciones")}
           >
-            <Image source={Edit} style={stylesHeaderHome.optionsImg} />
+            <Image source={Edit} style={stylesHeaderHome.icon} />
           </TouchableOpacity>
         </View>
       </View>
@@ -51,7 +58,7 @@ const stylesHeaderHome = StyleSheet.create({
     justifyContent: "space-between",
   },
   nameApp: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: "Poppins-Regular",
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -60,8 +67,9 @@ const stylesHeaderHome = StyleSheet.create({
     justifyContent: "center",
     width: 30,
     height: 30,
+    resizeMode: "cover",
   },
-  iconSetting: {
+  icon: {
     width: 25,
     height: 25,
     resizeMode: "cover",
@@ -73,13 +81,8 @@ const stylesHeaderHome = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 20,
-    backgroundColor: "#e5e7e9",
+    // backgroundColor: "#e5e7e9",
     overflow: "hidden",
-  },
-  optionsImg: {
-    width: 20,
-    height: 20,
-    resizeMode: "contain",
   },
   imgLogo: {
     width: 35,

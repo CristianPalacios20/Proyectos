@@ -1,115 +1,119 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Platform,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 
-import Buscador from "../buscador";
-
 import iconArrowBack from "../../../assets/icons/iconArrowBack.png";
-import perfil from "../../../assets/icons/Perfil.png";
+import perfil from "../../../assets/icons/iconUser2.png";
 import iconArrowLeft from "../../../assets/icons/iconArrowLeft.png";
 import iconKey from "../../../assets/icons/iconKey.png";
 import iconPadlock from "../../../assets/icons/iconPadlock.png";
 import iconNotification from "../../../assets/icons/iconNotification.png";
 import iconHelp from "../../../assets/icons/iconHelp.png";
 import iconFriends from "../../../assets/icons/iconFriends.png";
-import iconLogOut from "../../../assets/icons/iconLogOut1.png";
 
 export default function Ajustes({ onLogout, setSelectedTab }) {
-  const [ajusteBusqueda, setAjusteBusqueda] = useState("");
   const navigation = useNavigation();
+
+  const opcionesCuenta = [
+    { icon: iconKey, label: "Cuenta" },
+    { icon: iconPadlock, label: "Privacidad" },
+    { icon: iconNotification, label: "Notificaciones" },
+  ];
+
+  const opcionesSoporte = [
+    { icon: iconHelp, label: "Ayuda" },
+    { icon: iconFriends, label: "Invitar a amigos" },
+  ];
   return (
     <SafeAreaView edges={["top"]} style={stylesAjustes.content}>
-      <TouchableOpacity
-        onPress={()=>setSelectedTab("Tareas")}
-        style={stylesAjustes.buttonBack}
-      >
-        <Image source={iconArrowBack} style={stylesAjustes.iconArrowBack} />
-        <Text style={{ fontSize: 18 }}>Volver</Text>
-      </TouchableOpacity>
-      <Text style={stylesAjustes.title}>Ajustes</Text>
-      <View style={stylesAjustes.contentSearch}>
-        <Buscador
-          valor={ajusteBusqueda}
-          onCambiarTexto={setAjusteBusqueda}
-          placeholder="Buscar en ajustes..."
-        />
+      <View style={stylesAjustes.header}>
+        <TouchableOpacity
+          onPress={() => setSelectedTab("Tareas")}
+          style={stylesAjustes.buttonBack}
+        >
+          <Image source={iconArrowBack} style={stylesAjustes.iconArrowBack} />
+        </TouchableOpacity>
+        <Text style={stylesAjustes.title}>Ajustes</Text>
       </View>
+
       <View style={stylesAjustes.contentOptions}>
         <View style={stylesAjustes.extraOptions}>
-          <TouchableOpacity
+          <View
             style={[
               stylesAjustes.optionGroup,
               stylesAjustes.optionButtonPerfil,
             ]}
           >
-            <Image source={perfil} style={stylesAjustes.perfil} />
-            <Text style={stylesAjustes.optionText}>Nombre de usuario</Text>
-          </TouchableOpacity>
+            <View style={stylesAjustes.contenedorImgPerfil}>
+              <Image source={perfil} style={stylesAjustes.perfil} />
+            </View>
+            <Text style={[stylesAjustes.optionText, stylesAjustes.perfiltext]}>
+              Editar perfil
+            </Text>
+          </View>
+
+          {/* Grupo Cuenta */}
           <View
             style={[stylesAjustes.optionGroup, stylesAjustes.optionGroupCuenta]}
           >
-            <TouchableOpacity style={[stylesAjustes.optionButton]}>
-              <Image source={iconKey} style={stylesAjustes.img} />
-              <Text style={stylesAjustes.optionText}>Cuenta</Text>
-              <Image
-                source={iconArrowLeft}
-                style={stylesAjustes.iconArrowLeft}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={[stylesAjustes.optionButton]}>
-              <Image source={iconPadlock} style={stylesAjustes.img} />
-              <Text style={stylesAjustes.optionText}>Privacidad</Text>
-              <Image
-                source={iconArrowLeft}
-                style={stylesAjustes.iconArrowLeft}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={[stylesAjustes.optionButton]}>
-              <Image source={iconNotification} style={stylesAjustes.img} />
-              <Text style={stylesAjustes.optionText}>Notificaciones</Text>
-              <Image
-                source={iconArrowLeft}
-                style={stylesAjustes.iconArrowLeft}
-              />
-            </TouchableOpacity>
+            <Text style={stylesAjustes.textCuenta}>cuenta</Text>
+            <View style={stylesAjustes.contenedorBotones}>
+              {opcionesCuenta.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={stylesAjustes.optionButton}
+                  onPress={() =>
+                    navigation.navigate("Informacion", {
+                      label: item.label,
+                    })
+                  }
+                >
+                  <Image source={item.icon} style={stylesAjustes.img} />
+                  <Text style={stylesAjustes.optionText}>{item.label}</Text>
+                  <Image
+                    source={iconArrowLeft}
+                    style={stylesAjustes.iconArrowLeft}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
+
+          {/* Grupo Soporte */}
           <View
             style={[stylesAjustes.optionGroup, stylesAjustes.optionGroupExtras]}
           >
-            <TouchableOpacity style={[stylesAjustes.optionButton]}>
-              <Image source={iconHelp} style={stylesAjustes.img} />
-              <Text style={stylesAjustes.optionText}>Ayuda</Text>
-              <Image
-                source={iconArrowLeft}
-                style={stylesAjustes.iconArrowLeft}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={[stylesAjustes.optionButton]}>
-              <Image source={iconFriends} style={stylesAjustes.img} />
-              <Text style={stylesAjustes.optionText}>Invitar a amigos</Text>
-              <Image
-                source={iconArrowLeft}
-                style={stylesAjustes.iconArrowLeft}
-              />
-            </TouchableOpacity>
+            <Text style={stylesAjustes.textSoporte}>soporte</Text>
+            <View style={stylesAjustes.contenedorBotones}>
+              {opcionesSoporte.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={stylesAjustes.optionButton}
+                  onPress={() =>
+                    navigation.navigate("Informacion", {
+                      label: item.label,
+                    })
+                  }
+                >
+                  <Image source={item.icon} style={stylesAjustes.img} />
+                  <Text style={stylesAjustes.optionText}>{item.label}</Text>
+                  <Image
+                    source={iconArrowLeft}
+                    style={stylesAjustes.iconArrowLeft}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-        </View>
-        {/* <View style={stylesAjustes.logoutContainer}>
+
           <TouchableOpacity
-            style={stylesAjustes.logoutButton}
-            onPress={onLogout}
+            style={stylesAjustes.botonCerrar}
+            onPress={() => onLogout(false)}
           >
-            <Image source={iconLogOut} style={stylesAjustes.img} />
+            <Text style={stylesAjustes.textoBotonCerrar}>cerrar sesión</Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -118,37 +122,35 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
 const stylesAjustes = StyleSheet.create({
   content: {
     flex: 1,
-    paddingTop: 50,
   },
+
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 80,
+    padding: 10,
+  },
+
+  title: {
+    fontSize: 25,
+    fontWeight: "600",
+    paddingBottom: 5,
+    marginBottom: 10,
+    paddingLeft: 16,
+  },
+
   buttonBack: {
     position: "absolute",
-    justifyContent: "center",
-    alignItems: "center",
     flexDirection: "row",
-    top: 58,
+    top: 20,
     left: 10,
+    width: 80,
   },
   iconArrowBack: {
     width: 30,
     height: 20,
     resizeMode: "contain",
-  },
-  nameTask: {
-    marginTop: 60,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  title: {
-    fontSize: 35,
-    fontWeight: "bold",
-    paddingBottom: 5,
-    marginBottom: 10,
-    paddingLeft: 16,
-  },
-  contentSearch: {
-    paddingBottom: 10,
-    paddingLeft: 16,
-    paddingRight: 16,
   },
   contentOptions: {
     flex: 1,
@@ -161,29 +163,45 @@ const stylesAjustes = StyleSheet.create({
     gap: 30,
   },
   optionGroup: {
-    alignSelf: "flex-start",
     width: "100%",
-    paddingLeft: 20,
     borderRadius: 10,
-    backgroundColor: "#fff",
   },
   optionButtonPerfil: {
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
-    height: 80,
+    justifyContent: "center",
+    width: "100%",
     gap: 20,
-    paddingLeft: 20,
+    padding: 20,
+    backgroundColor: "transparent",
   },
+
+  contenedorImgPerfil: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 150,
+    height: 150,
+    borderRadius: 80,
+    backgroundColor: "#D9D9D9",
+  },
+
   perfil: {
-    width: 40,
-    height: 40,
-    resizeMode: "contain",
+    width: 110,
+    height: 110,
+    resizeMode: "cover",
   },
   optionText: {
     height: 20,
     fontSize: 16,
   },
+
+  perfiltext: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#0099FF",
+    height: 30,
+  },
+
   optionButton: {
     flexDirection: "row",
     position: "relative",
@@ -195,6 +213,28 @@ const stylesAjustes = StyleSheet.create({
     height: 120,
     gap: 15,
   },
+
+  textCuenta: {
+    fontSize: 16,
+    fontWeight: "500",
+    textTransform: "uppercase",
+    color: "#7B7D7D",
+  },
+
+  textSoporte: {
+    fontSize: 16,
+    fontWeight: "500",
+    textTransform: "uppercase",
+    color: "#7B7D7D",
+  },
+
+  contenedorBotones: {
+    gap: 15,
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 10,
+  },
+
   img: {
     width: 20,
     height: 20,
@@ -204,6 +244,7 @@ const stylesAjustes = StyleSheet.create({
     justifyContent: "center",
     height: 80,
     gap: 15,
+    marginTop: 20,
   },
   iconArrowLeft: {
     position: "absolute",
@@ -212,27 +253,20 @@ const stylesAjustes = StyleSheet.create({
     left: "90%",
     resizeMode: "contain",
   },
-  logoutContainer: {
+
+  botonCerrar: {
     position: "absolute",
-    width: 40,
-    height: 40,
-    bottom: 10,
-    left: 30,
-    backgroundColor: "#d0d3d4",
-    borderRadius: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-      },
-    }),
-  },
-  logoutButton: {
     alignItems: "center",
     justifyContent: "center",
-    height: 40,
+    bottom: 50,
+    width: "100%",
     padding: 10,
+    borderRadius: 7,
+    backgroundColor: "#D7DBDD",
+  },
+
+  textoBotonCerrar: {
+    textTransform: "capitalize",
+    fontWeight: "600",
   },
 });

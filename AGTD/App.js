@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
-import logo from "./assets/logo/Group23.png";
-import Vector3 from "./assets/img/Vector3.png";
-
+import ScreenWrapper from "./src/components/screen/ScreenWrapper";
 import Layout from "./src/components/Layout";
 import LoggenIn from "./src/components/login/LoggedIn";
 import LoginScreen from "./src/components/screen/LoginScreen";
 import RegisterScreen from "./src/components/screen/RegisterScreen";
 
-import Modal from "./pruebas/modal";
+import AnimatedCircle from "./src/components/screen/AnimatedCircle";
 
 export default function App() {
   const [selectedTab, setSelectedTab] = useState("Tareas");
@@ -27,12 +25,6 @@ export default function App() {
     return () => clearTimeout(timer); // limpia si el componente se desmonta
   }, []);
 
-  useEffect(() => {
-    if (!isLoading && screen === "splash") {
-      setScreen("welcome"); // cambia después de que se haya terminado de cargar
-    }
-  }, [isLoading]);
-
   const delayScreenChange = (nextScreen, delay = 1000) => {
     setIsLoading(true);
     setTimeout(() => {
@@ -46,39 +38,44 @@ export default function App() {
       case "splash":
         return (
           <View style={stylesApp.contentLogo}>
-            <Text style={stylesApp.text}>Bienvenido a AGT</Text>
-            <Image source={Vector3} style={stylesApp.vector3} />
+            <AnimatedCircle setScreen={setScreen} />
           </View>
         );
 
       case "welcome":
         return (
-          <LoggenIn
-            setIsLoggedIn={() => delayScreenChange("login")}
-            goToRegister={() => delayScreenChange("register")}
-          />
+          <ScreenWrapper>
+            <LoggenIn
+              setIsLoggedIn={() => delayScreenChange("login")}
+              goToRegister={() => delayScreenChange("register")}
+            />
+          </ScreenWrapper>
         );
 
       case "login":
         return (
-          <LoginScreen
-            onLoginSuccess={() => setScreen("main")}
-            onGoBack={() => setScreen("welcome")}
-            goToRegister={() => setScreen("register")}
-          />
+          <ScreenWrapper>
+            <LoginScreen
+              onLoginSuccess={() => setScreen("main")}
+              onGoBack={() => setScreen("welcome")}
+              goToRegister={() => setScreen("register")}
+            />
+          </ScreenWrapper>
         );
 
       case "register":
         return (
-          <RegisterScreen
-            onRegisterSuccess={() => setScreen("main")}
-            onGoBack={() => setScreen("welcome")}
-          />
+          <ScreenWrapper>
+            <RegisterScreen
+              onRegisterSuccess={() => setScreen("main")}
+              onGoBack={() => setScreen("welcome")}
+            />
+          </ScreenWrapper>
         );
 
       case "main":
         return (
-          <>
+          <ScreenWrapper>
             <Layout
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
@@ -88,7 +85,7 @@ export default function App() {
               currentRoute={currentRoute}
               setCurrentRoute={setCurrentRoute}
             />
-          </>
+          </ScreenWrapper>
         );
       default:
         return null;
@@ -97,7 +94,6 @@ export default function App() {
   return (
     <SafeAreaProvider style={stylesApp.contenedor}>
       {renderContent()}
-      {/* <Modal /> */}
     </SafeAreaProvider>
   );
 }
@@ -105,12 +101,10 @@ export default function App() {
 const stylesApp = StyleSheet.create({
   contenedor: {
     flex: 1,
-    backgroundColor: "#0099FF",
   },
   contentLogo: {
     display: "flex",
     alignItems: "center",
-    // justifyContent: "center",
     height: "100%",
     width: "100%",
   },

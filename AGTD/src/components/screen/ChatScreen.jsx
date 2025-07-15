@@ -19,7 +19,7 @@ import iconPlus from "../../../assets/icons/iconPlus3.png";
 import iconSend from "../../../assets/icons/iconSend.png";
 
 export default function ChatScreen({ route }) {
-  const { userName, message } = route.params;
+  const { titulo, message } = route.params;
   const [mensaje, setMensaje] = useState("");
   const navigation = useNavigation();
 
@@ -42,7 +42,7 @@ export default function ChatScreen({ route }) {
                 style={stylesChatScreen.iconArrowBack}
               />
             </TouchableOpacity>
-            <Text style={stylesChatScreen.nameTask}>{userName}</Text>
+            <Text style={stylesChatScreen.nameTask}>{titulo}</Text>
           </View>
 
           <ScrollView style={stylesChatScreen.containerMessages}>
@@ -52,28 +52,6 @@ export default function ChatScreen({ route }) {
           </ScrollView>
 
           {/* Mensajes */}
-          <View style={stylesChatScreen.inputContainer1}>
-            <View style={stylesChatScreen.inputContainer2}>
-              <TouchableOpacity
-                onPress={() =>
-                  alert("Funciones como: agregar imagen, archivos, etc.")
-                }
-              >
-                <Image source={iconPlus} style={stylesChatScreen.iconPlus} />
-              </TouchableOpacity>
-              <TextInput
-                value={mensaje}
-                onChangeText={setMensaje}
-                style={stylesChatScreen.input}
-              />
-              <TouchableOpacity
-                onPress={() => alert("Mensaje enviado")}
-                style={stylesChatScreen.sendContainer}
-              >
-                <Image source={iconSend} style={stylesChatScreen.iconSend} />
-              </TouchableOpacity>
-            </View>
-          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -88,12 +66,15 @@ const stylesChatScreen = StyleSheet.create({
   headerChat: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     height: 100,
     paddingLeft: 5,
     backgroundColor: "white",
   },
   containerButtonback: {
+    position: "absolute",
     marginTop: 60,
+    left: 0
   },
   iconArrowBack: {
     width: 45,
@@ -109,6 +90,8 @@ const stylesChatScreen = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     paddingRight: 10,
+    borderWidth: 1,
+    borderColor: "red",
   },
   viewMessage: {
     justifyContent: "center",
@@ -122,45 +105,5 @@ const stylesChatScreen = StyleSheet.create({
   message: {
     fontSize: 15,
   },
-  inputContainer1: {
-    height: 80,
-    backgroundColor: "#ecf0f1",
-  },
-  inputContainer2: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 45,
-    gap: 5,
-    padding: 10,
-    backgroundColor: "#ecf0f1",
-  },
-  input: {
-    width: "80%",
-    height: 30,
-    padding: 5,
-    borderRadius: 15,
-    borderWidth: 1,
-    backgroundColor: "white",
-    borderColor: "#d7dbdd",
-  },
-  iconPlus: {
-    width: 35,
-    height: 35,
-    resizeMode: "contain",
-  },
-  sendContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    width: 30,
-    height: 30,
-    borderRadius: "50%",
-    backgroundColor: "black",
-  },
-  iconSend: {
-    width: 20,
-    height: 20,
-    resizeMode: "contain",
-    transform: [{ scaleY: 1.1 }],
-  },
+  
 });

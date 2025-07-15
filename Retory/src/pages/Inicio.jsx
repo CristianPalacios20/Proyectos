@@ -31,7 +31,6 @@ import eventos1 from "../assets/img/eventos1.jpg";
 import eventos2 from "../assets/img/eventos2.jpg";
 import eventos3 from "../assets/img/eventos3.jpg";
 import eventos4 from "../assets/img/eventos4.jpg";
-import image3 from "../assets/img/Frame39.png";
 import iconConocerMas from "../assets/icons/iconConocerMas.png";
 
 import "../styles/inicio.css";

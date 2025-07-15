@@ -37,7 +37,7 @@ export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
     }
     try {
       const response = await fetch(
-        "http://192.168.1.4/backend/register.php",
+        "http://192.168.1.8/backend/register.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

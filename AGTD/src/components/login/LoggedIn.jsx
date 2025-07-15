@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import logo from "../../../assets/logo/Group23.png";
+import logo from "../../../assets/img/imgInicioII.png";
 
 export default function Login({ setIsLoggedIn, goToRegister }) {
   const [loadingButton, setLoadingButton] = useState(null);
@@ -89,12 +89,11 @@ const stylesLogin = StyleSheet.create({
     padding: 20,
   },
   imgLogoLogin: {
-    left: "20%",
+    right: "8%",
+    width: 400,
     height: 300,
-    width: 300,
     bottom: 50,
     resizeMode: "cover",
-    // borderWidth: 1,
   },
   motivationalTextContainer: {},
   motivationalText: {

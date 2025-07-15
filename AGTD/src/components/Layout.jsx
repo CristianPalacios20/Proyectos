@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
 
 import Main from "./Main";
-import NavigationHeader from "./Navigationheader";
 
 export default function Layout({
   selectedTab,

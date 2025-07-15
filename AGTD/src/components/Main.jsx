@@ -10,6 +10,7 @@ import Tareas from "./screen/Tareas";
 import Ajustes from "./screen/Ajustes";
 import CrearTarea from "./CrearTarea";
 import ChatScreen from "./screen/ChatScreen";
+import InformacionScreen from "./screen/InformacionScreen";
 
 const chatData = require("./json/Tareas.json");
 const Stack = createStackNavigator();
@@ -20,7 +21,7 @@ export default function Main({
   onLogout,
   setSelectedTab,
   setCurrentRoute,
-  onLoginSuccess
+  onLoginSuccess,
 }) {
   const [dataChats, setDataChats] = useState([]);
   const [isLoading, setIsloading] = useState(true);
@@ -54,7 +55,13 @@ export default function Main({
       case "Ajustes":
         return (
           <Stack.Screen name="Ajustes">
-            {(props) => <Ajustes {...props} onLogout={onLogout} setSelectedTab={setSelectedTab}/>}
+            {(props) => (
+              <Ajustes
+                {...props}
+                onLogout={onLogout}
+                setSelectedTab={setSelectedTab}
+              />
+            )}
           </Stack.Screen>
         );
       case "CrearTarea":
@@ -86,6 +93,7 @@ export default function Main({
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {renderContent()}
           <Stack.Screen name="Chat" component={ChatScreen} />
+          <Stack.Screen name="Informacion" component={InformacionScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
