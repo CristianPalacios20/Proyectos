@@ -12,7 +12,7 @@ export default function Layout({
   setCurrentRoute,
   onLoginSuccess
 }) {
-  const mostrarHeader = currentRoute !== "Chat";
+  // const mostrarHeader = currentRoute !== "Chat";
   return (
     <View style={styles.contenedor}>
       <Main

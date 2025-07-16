@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -7,14 +7,16 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Platform,
 } from "react-native";
 
 import HeaderHome from "../HeaderHome";
-import Buscador from "../buscador";
+import moment from "moment";
+import "moment/locale/es";
 
 import iconTareas from "../../../assets/logo/logo-icon-tareas-transparent.png";
 import { Ionicons } from "@expo/vector-icons";
+
+moment.locale("es"); //establece el idioma en español
 
 export default function Tareas({
   data = [],
@@ -23,56 +25,59 @@ export default function Tareas({
   selectedTab,
   setSelectedTab,
 }) {
-  const [textoBusqueda, setTextoBusqueda] = useState("");
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [diaSeleccionado, setDiaSeleccionado] = useState(null);
 
-  const filtros = [
-    { name: "Todos", value: "all" },
-    { name: "Pendientes", value: "pending" },
-    { name: "Finalizado", value: "done" },
-  ];
+  const diasSemana = Array.from({ length: 7 }).map((_, index) => {
+    const dia = moment()
+      .startOf("week")
+      .add(index + 1, "days");
+    return {
+      nombre: dia.format("ddd"),
+      numero: dia.format("D"),
+      clave: dia.format("YYYY-MM-DD"),
+    };
+  });
 
   return (
     <View edges={["top"]} style={stylesTareas.content}>
       <HeaderHome selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       <ScrollView style={stylesTareas.taskBody}>
-        <View style={{ left: 20, top: 10 }}>
-          <Text style={stylesTareas.title}>Tus tareas</Text>
-        </View>
-        <View style={[stylesTareas.contentSearch]}>
-          <Buscador
-            valor={textoBusqueda}
-            onCambiarTexto={setTextoBusqueda}
-            placeholder="Crear con IA o buscar"
-          />
-        </View>
-        <View style={stylesTareas.filterTabs}>
-          {filtros.map((filtro) => (
+        <View style={[stylesTareas.contenedorCalendar]}>
+          {diasSemana.map((dia, index) => (
             <TouchableOpacity
-              key={filtro.value}
-              onPress={() => setActiveFilter(filtro.value)}
+              key={index}
+              onPress={() => setDiaSeleccionado(dia.clave)}
               style={[
-                stylesTareas.filterTab,
-                {
-                  backgroundColor:
-                    activeFilter === filtro.value ? "#28a3f6" : "#e5e7e9",
-                },
+                stylesTareas.dia,
+                diaSeleccionado === dia.clave && stylesTareas.diaSeleccionado,
               ]}
             >
               <Text
                 style={[
-                  stylesTareas.textFiltertab,
-                  {
-                    color: activeFilter === filtro.value ? "white" : "#979a9a",
-                  },
+                  stylesTareas.nombre,
+                  diaSeleccionado === dia.clave &&
+                    stylesTareas.textoSeleccionado,
                 ]}
               >
-                {filtro.name}
+                {dia.nombre}
               </Text>
+              ;
+              <Text
+                style={[
+                  stylesTareas.dia,
+                  diaSeleccionado === dia.clave &&
+                    stylesTareas.textoSeleccionado,
+                ]}
+              >
+                {dia.numero}
+              </Text>
+              ;
             </TouchableOpacity>
           ))}
         </View>
-
+        <View style={{ left: 20, top: 10 }}>
+          <Text style={stylesTareas.title}>Tus tareas</Text>
+        </View>
         {isLoading ? (
           <ActivityIndicator size="large" color="#007BFF" style={{ flex: 1 }} />
         ) : !data || data.length === 0 ? (
@@ -134,36 +139,43 @@ const stylesTareas = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: "bold",
     paddingBottom: 5,
     marginBottom: 10,
     borderColor: "#d7dbdd",
   },
-  contentSearch: {
-    height: 40,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 10,
-    marginBottom: 20,
-  },
-  filterTabs: {
+  contenedorCalendar: {
     flexDirection: "row",
-    height: 40,
-    gap: 10,
-    left: 20,
-    marginTop: 5,
-    marginBottom: 20,
+    justifyContent: "space-between",
+    padding: 14,
   },
-  filterTab: {
-    justifyContent: "center",
-    padding: 8,
-    borderRadius: 18,
+
+  dia: {
+    alignItems: "center",
+    flex: 1,
+    paddingBottom: 2,
   },
-  textFiltertab: {
+  nombre: {
     fontWeight: "bold",
-    color: "#979a9a",
+    color: "#979A9A",
+    fontSize: 12,
+    textTransform: "uppercase",
   },
+  numero: {
+    fontSize: 16,
+    color: "#979A9A",
+  },
+
+  diaSeleccionado: {
+    borderBottomWidth: 2,
+    borderBottomColor: "#007BFF",
+  },
+
+  textoSeleccionado: {
+    color: "#007BFF",
+  },
+
   emptyState: {
     flex: 1,
     marginTop: 10,
@@ -182,14 +194,15 @@ const stylesTareas = StyleSheet.create({
     padding: 12,
   },
   containerChats: {
+    marginTop: 20,
     paddingLeft: 16,
   },
   task: {
     display: "flex",
     flexDirection: "row",
-    paddingTop: 5,
     paddingLeft: 5,
     gap: 10,
+    height: 70,
   },
   contentTask: {
     display: "flex",
@@ -198,21 +211,20 @@ const stylesTareas = StyleSheet.create({
     width: 50,
     height: 50,
     top: 8,
-    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     borderRadius: 30,
-    shadowColor: "#000",
-    backgroundColor: "#e5e7e9",
+    backgroundColor: "#e5e7e938",
   },
   chatInfoContainer: {
     width: "100%",
-    borderBottomWidth: 1,
     gap: 5,
+    padding: 10,
+    borderTopWidth: 1,
     borderColor: "#d7dbdd",
   },
   chatTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "600",
   },
   desTask: {

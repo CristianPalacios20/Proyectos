@@ -21,7 +21,7 @@ export default function HeaderHome({ setSelectedTab }) {
         </Text>
         <View style={stylesHeaderHome.quickActions}>
           <TouchableOpacity
-            onPress={() => setSelectedTab("Ajustes")}
+            onPress={() => setSelectedTab("Buscar")}
             style={stylesHeaderHome.bottomSetting}
           >
             <Image source={iconBuscar} style={stylesHeaderHome.icon} />
@@ -34,7 +34,7 @@ export default function HeaderHome({ setSelectedTab }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={stylesHeaderHome.options}
-            onPress={() => alert("Opciones")}
+            onPress={() => setSelectedTab("CrearTarea")}
           >
             <Image source={Edit} style={stylesHeaderHome.icon} />
           </TouchableOpacity>

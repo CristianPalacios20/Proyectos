@@ -15,8 +15,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import iconArrowBack from "../../../assets/icons/iconArrowBack.png";
-import iconPlus from "../../../assets/icons/iconPlus3.png";
-import iconSend from "../../../assets/icons/iconSend.png";
 
 export default function ChatScreen({ route }) {
   const { titulo, message } = route.params;
