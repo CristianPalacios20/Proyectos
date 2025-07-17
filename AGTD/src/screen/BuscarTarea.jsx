@@ -48,7 +48,6 @@ export default function Buscar({ setSelectedTab }) {
               >
                 <Text
                   style={[
-                    
                     {
                       color:
                         activeFilter === filtro.value ? "black" : "#979a9a",
@@ -76,7 +75,6 @@ const style = StyleSheet.create({
 
   panelWrapper: {
     flex: 1,
-    marginTop: 50,
     padding: 20,
     backgroundColor: "#fff",
     borderRadius: 20,

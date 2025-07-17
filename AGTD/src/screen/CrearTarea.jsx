@@ -31,7 +31,7 @@ export default function CrearTarea({ setSelectedTab }) {
   const opcionesPrioridad = ["Alta", "Media", "Baja"];
 
   return (
-    <View edges={["top"]} style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.innerWrapper}>
         <View style={styles.topButtons}>
           <TouchableOpacity
@@ -194,7 +194,6 @@ const styles = StyleSheet.create({
   innerWrapper: {
     flex: 1,
     padding: 20,
-    marginTop: 50,
     backgroundColor: "#fff",
     borderRadius: 20,
   },

@@ -13,7 +13,7 @@ export default function AnimatedScreenWrapper({
 }) {
   const opacity = useSharedValue(animacion === "fade" ? 0 : 1);
   const translateY = useSharedValue(animacion === "slideUp" ? 500 : 0);
-  const translateX = useSharedValue(animacion === "slideLeft" ? 30 : 0);
+  const translateX = useSharedValue(animacion === "slideLeft" ? 300 : 0);
   const scale = useSharedValue(animacion === "scale" ? 0.8 : 1);
 
   const animatedStyle = useAnimatedStyle(() => {

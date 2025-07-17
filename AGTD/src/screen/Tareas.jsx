@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  SafeAreaView
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -36,7 +37,7 @@ export default function Tareas(props) {
   });
 
   return (
-    <View edges={["top"]} style={stylesTareas.content}>
+    <View style={stylesTareas.content}>
       <HeaderHome selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       <View style={[stylesTareas.contenedorCalendar]}>
         {diasSemana.map((dia, index) => (
@@ -130,7 +131,6 @@ const stylesTareas = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: "white",
-    borderWidth: 1,
   },
   taskBody: {
     flex: 1,

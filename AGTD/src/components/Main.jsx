@@ -10,7 +10,7 @@ import MainContent from "./MainContent";
 import ChatScreen from "../screen/ChatScreen";
 import InformacionScreen from "../screen/InformacionScreen";
 
-const chatData = require("./json/Tareas.json");
+const chatData = require("../json/Tareas.json");
 const Stack = createStackNavigator();
 
 export default function Main({

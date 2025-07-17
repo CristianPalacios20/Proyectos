@@ -26,7 +26,7 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
     { icon: iconFriends, label: "Invitar a amigos" },
   ];
   return (
-    <SafeAreaView edges={["top"]} style={stylesAjustes.content}>
+    <View style={stylesAjustes.content}>
       <View style={stylesAjustes.header}>
         <TouchableOpacity
           onPress={() => setSelectedTab("Tareas")}
@@ -115,7 +115,7 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

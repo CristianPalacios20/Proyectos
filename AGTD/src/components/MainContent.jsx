@@ -27,29 +27,35 @@ export default function MainContent({
         );
       case "Ajustes":
         return (
-          <Stack.Screen name="Ajustes">
-            <Ajustes onLogout={onLogout} setSelectedTab={setSelectedTab} />
-          </Stack.Screen>
+          <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
+            <AnimatedScreenWrapper animacion="slideLeft">
+              <Ajustes onLogout={onLogout} setSelectedTab={setSelectedTab} />
+            </AnimatedScreenWrapper>
+          </SafeAreaView>
         );
         break;
       case "Buscar":
         return (
-          <AnimatedScreenWrapper animacion="slideUp">
-            <BuscarOCrear
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            />
-          </AnimatedScreenWrapper>
+          <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
+            <AnimatedScreenWrapper animacion="slideUp">
+              <BuscarOCrear
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+              />
+            </AnimatedScreenWrapper>
+          </SafeAreaView>
         );
         break;
       case "CrearTarea":
         return (
-          <AnimatedScreenWrapper animacion="slideUp">
-            <CrearTarea
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            />
-          </AnimatedScreenWrapper>
+          <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
+            <AnimatedScreenWrapper animacion="slideUp">
+              <CrearTarea
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+              />
+            </AnimatedScreenWrapper>
+          </SafeAreaView>
         );
       default:
         return (
