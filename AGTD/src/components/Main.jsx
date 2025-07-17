@@ -64,7 +64,16 @@ export default function Main({
               />
             )}
           </Stack.Screen>
-          <Stack.Screen name="Chat" component={ChatScreen} />
+          <Stack.Screen
+            name="Chat"
+            component={(props) => (
+              <ChatScreen
+                {...props}
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+              />
+            )}
+          />
           <Stack.Screen name="Informacion" component={InformacionScreen} />
         </Stack.Navigator>
       </NavigationContainer>

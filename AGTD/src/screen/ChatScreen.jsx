@@ -7,16 +7,23 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
-import iconAdd from "../../assets/icons/iconAdd.png";
 import iconMenu from "../../assets/icons/iconMenu.png";
 import iconUser from "../../assets/icons/iconUser.png";
 import iconStar from "../../assets/icons/iconStar.png";
+import iconEditar from "../../assets/icons/iconEditar.png";
+import iconEliminar from "../../assets/icons/iconEliminar.png";
+import iconMarcar from "../../assets/icons/iconMarcar.png";
+import iconDestacar from "../../assets/icons/iconDestacar.png";
+import iconCompartir from "../../assets/icons/iconCompartir2.png";
+import iconDuplicar from "../../assets/icons/iconDuplicar.png";
+import iconRecordar from "../../assets/icons/iconRecordar.png";
 
-export default function ChatScreen({ route }) {
+export default function ChatScreen({ route, setSelectedTab }) {
   const { titulo } = route.params;
   const navigation = useNavigation();
   const participantes = [
@@ -43,6 +50,36 @@ export default function ChatScreen({ route }) {
       comentario: "Lorem ipsum dolor sit amet",
     },
   ];
+  const opciones = [
+    { icon: iconEditar, opcion: "editar tarea", tab: "EditarTarea" },
+    { icon: iconEliminar, opcion: "eliminar tarea", tab: "EliminarTarea" },
+    { icon: iconMarcar, opcion: "marcar como completada", tab: "MarcarTarea" },
+    { icon: iconDestacar, opcion: "destacar", tab: "DestacarTarea" },
+    { icon: iconCompartir, opcion: "compartir tarea", tab: "CompartirTarea" },
+    { icon: iconDuplicar, opcion: "duplicar tarea", tab: "DuplicarTarea" },
+    {
+      icon: iconRecordar,
+      opcion: "configurar recordatorio",
+      tab: "RecordatorioTarea",
+    },
+  ];
+
+  const [textoActivo, setTextoActivo] = useState(null);
+  const [modalActivo, setModalActivo] = useState(false);
+  const toggleColor = (index) => {
+    setTextoActivo(index === textoActivo ? null : index);
+    setModalActivo(false);
+  };
+  const toggleModal = () => {
+    setModalActivo((prev) => !prev);
+  };
+
+  const handleOpcionPresss = (index, item) => {
+    toggleColor(index);
+    if (item.tab) {
+      setSelectedTab(item.tam);
+    }
+  };
 
   return (
     <SafeAreaView edges={["top"]} style={stylesChatScreen.content}>
@@ -58,9 +95,36 @@ export default function ChatScreen({ route }) {
             />
           </TouchableOpacity>
           <Text style={stylesChatScreen.nameTask}>{titulo}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            style={stylesChatScreen.openModal}
+            onPress={toggleModal}
+          >
             <Image source={iconMenu} style={stylesChatScreen.menu} />
           </TouchableOpacity>
+          {modalActivo && (
+            <View style={stylesChatScreen.modal}>
+              {opciones.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => handleOpcionPresss(index, item)}
+                  style={stylesChatScreen.botonOpcion}
+                >
+                  <Image
+                    source={item.icon}
+                    style={stylesChatScreen.opcionIcon}
+                  />
+                  <Text
+                    style={[
+                      stylesChatScreen.opcionTexto,
+                      { color: index === textoActivo ? "#0099FF" : "black" },
+                    ]}
+                  >
+                    {item.opcion}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
         </View>
 
         <ScrollView style={stylesChatScreen.containerInfo}>
@@ -195,16 +259,17 @@ const stylesChatScreen = StyleSheet.create({
   },
 
   headerChat: {
+    position: "relative",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 10,
+    padding: 15,
   },
 
   iconArrowBack: {
     width: 20,
     height: 20,
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   iconMenu: {
     width: 20,
@@ -213,6 +278,37 @@ const stylesChatScreen = StyleSheet.create({
   nameTask: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+
+  openModal: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+  },
+
+  modal: {
+    position: "absolute",
+    justifyContent: "center",
+    top: 50,
+    right: 20,
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    zIndex: 1,
+  },
+
+  botonOpcion: {
+    flexDirection: "row",
+    gap: 10,
+    padding: 8,
+  },
+
+  opcionTexto: {
+    fontSize: 16,
+    fontWeight: "600",
+    textTransform: "capitalize",
   },
 
   /************************* */

@@ -4,6 +4,7 @@ import Tareas from "../screen/Tareas";
 import Ajustes from "../screen/Ajustes";
 import BuscarOCrear from "../screen/BuscarTarea";
 import CrearTarea from "../screen/CrearTarea";
+import EditarTarea from "../screen/EditarTarea";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function MainContent({
@@ -51,6 +52,17 @@ export default function MainContent({
           <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
             <AnimatedScreenWrapper animacion="slideUp">
               <CrearTarea
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+              />
+            </AnimatedScreenWrapper>
+          </SafeAreaView>
+        );
+      case "EditarTarea":
+        return (
+          <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
+            <AnimatedScreenWrapper animacion="slideUp">
+              <EditarTarea
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
               />

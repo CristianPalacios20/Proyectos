@@ -28,7 +28,7 @@ export default function CrearTarea({ setSelectedTab }) {
 
   const [visible, setVisible] = useState(false);
   const [prioridad, setPrioridad] = useState("");
-  const opcionesPrioridad = ["Alta", "Media", "Baja"];
+  const opcionesPrioridad = [" ","Alta", "Media", "Baja"];
 
   return (
     <View style={styles.container}>
@@ -112,28 +112,6 @@ export default function CrearTarea({ setSelectedTab }) {
                     <Text style={styles.badgeText}>{prioridad}</Text>
                   </View>
                 </TouchableOpacity>
-
-                <Modal transparent visible={visible} animationType="slide">
-                  <Pressable
-                    style={styles.modalBackground}
-                    onPress={() => setVisible(false)}
-                  >
-                    <View style={styles.modalContent}>
-                      {opcionesPrioridad.map((opt) => (
-                        <TouchableOpacity
-                          key={opt}
-                          style={styles.option}
-                          onPress={() => {
-                            setPrioridad(opt);
-                            setVisible(false);
-                          }}
-                        >
-                          <Text style={styles.optionText}>{opt}</Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  </Pressable>
-                </Modal>
 
                 {/* Modal de opciones */}
                 <Modal transparent visible={visible} animationType="slide">
