@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import iconArrowBack from "../../../assets/icons/iconArrowBack.png";
+import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 
 export default function ChatScreen({ route }) {
   const { titulo, message } = route.params;
@@ -27,7 +27,6 @@ export default function ChatScreen({ route }) {
       keyboardVerticalOffset={Platform.OS === "ios" ? -35 : 0} // Ajusta según tu header
       style={stylesChatScreen.content}
     >
-      {/* Aquí se renderiza los mensajes según el chatId */}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1 }}>
           <View style={stylesChatScreen.headerChat}>
@@ -72,7 +71,7 @@ const stylesChatScreen = StyleSheet.create({
   containerButtonback: {
     position: "absolute",
     marginTop: 60,
-    left: 0
+    left: 0,
   },
   iconArrowBack: {
     width: 45,
@@ -103,5 +102,4 @@ const stylesChatScreen = StyleSheet.create({
   message: {
     fontSize: 15,
   },
-  
 });

@@ -6,13 +6,9 @@ import {
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Tareas from "./screen/Tareas";
-import Ajustes from "./screen/Ajustes";
-import BuscarOCrear from "./screen/BuscarOCrear";
-import CrearTarea from "./screen/CrearTarea";
-import ChatScreen from "./screen/ChatScreen";
-import InformacionScreen from "./screen/InformacionScreen";
-import AnimatedScreenWrapper from "./AnimatedScreenWrapper";
+import MainContent from "./MainContent";
+import ChatScreen from "../screen/ChatScreen";
+import InformacionScreen from "../screen/InformacionScreen";
 
 const chatData = require("./json/Tareas.json");
 const Stack = createStackNavigator();
@@ -38,77 +34,6 @@ export default function Main({
     }, 2000);
   }, [selectedChat]);
 
-  const renderContent = () => {
-    switch (selectedTab) {
-      case "Tareas":
-        return (
-          <Stack.Screen name="Tareas">
-            {(props) => (
-              <Tareas
-                {...props}
-                data={dataChats}
-                isLoading={isLoading}
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-              />
-            )}
-          </Stack.Screen>
-        );
-      case "Ajustes":
-        return (
-          <Stack.Screen name="Ajustes">
-            {(props) => (
-              <Ajustes
-                {...props}
-                onLogout={onLogout}
-                setSelectedTab={setSelectedTab}
-              />
-            )}
-          </Stack.Screen>
-        );
-        break;
-      case "Buscar":
-        return (
-          <Stack.Screen name="Buscar">
-            {(props) => (
-              <AnimatedScreenWrapper animacion="slideUp">
-                <BuscarOCrear
-                  {...props}
-                  selectedTab={selectedTab}
-                  setSelectedTab={setSelectedTab}
-                />
-              </AnimatedScreenWrapper>
-            )}
-          </Stack.Screen>
-        );
-        break;
-      case "CrearTarea":
-        return (
-          <Stack.Screen name="CrearTarea">
-            {(props) => (
-              <CrearTarea
-                {...props}
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-              />
-            )}
-          </Stack.Screen>
-        );
-      default:
-        return (
-          <Stack.Screen>
-            {(props) => (
-              <Tareas
-                {...props}
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-              />
-            )}
-          </Stack.Screen>
-        );
-        break;
-    }
-  };
   return (
     <View style={stylesMain.content}>
       <NavigationContainer
@@ -119,8 +44,26 @@ export default function Main({
           if (route) setCurrentRoute(route.name);
         }}
       >
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {renderContent()}
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            animationEnabled: false,
+            gestureEnabled: false,
+          }}
+        >
+          <Stack.Screen name="MainContent">
+            {(props) => (
+              <MainContent
+                {...props}
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+                selectedChat={selectedChat}
+                isLoading={isLoading}
+                dataChats={dataChats}
+                onLogout={onLogout}
+              />
+            )}
+          </Stack.Screen>
           <Stack.Screen name="Chat" component={ChatScreen} />
           <Stack.Screen name="Informacion" component={InformacionScreen} />
         </Stack.Navigator>

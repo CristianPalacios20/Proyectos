@@ -3,9 +3,9 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 
-import Buscador from "../buscador";
+import Buscador from "../components/buscador";
 
-import iconClose from "../../../assets/icons/iconClose.png";
+import iconClose from "../../assets/icons/iconClose.png";
 
 export default function Buscar({ setSelectedTab }) {
   const [activeFilter, setActiveFilter] = useState("all");
@@ -48,7 +48,7 @@ export default function Buscar({ setSelectedTab }) {
               >
                 <Text
                   style={[
-                    style.textFilterTab,
+                    
                     {
                       color:
                         activeFilter === filtro.value ? "black" : "#979a9a",
@@ -72,8 +72,6 @@ const style = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    borderWidth: 1,
   },
 
   panelWrapper: {

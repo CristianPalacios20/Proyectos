@@ -7,7 +7,7 @@ import {
   StatusBar,
 } from "react-native";
 
-import Edit from "../../assets/icons/iconEdit.png";
+import iconAdd from "../../assets/icons/iconAdd.png";
 import iconSetting from "../../assets/icons/iconAjustes.png";
 import iconBuscar from "../../assets/icons/iconBuscar.png";
 
@@ -33,10 +33,10 @@ export default function HeaderHome({ setSelectedTab }) {
             <Image source={iconSetting} style={stylesHeaderHome.icon} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={stylesHeaderHome.options}
+            style={stylesHeaderHome.AddTask}
             onPress={() => setSelectedTab("CrearTarea")}
           >
-            <Image source={Edit} style={stylesHeaderHome.icon} />
+            <Image source={iconAdd} style={stylesHeaderHome.icon} />
           </TouchableOpacity>
         </View>
       </View>
@@ -70,53 +70,29 @@ const stylesHeaderHome = StyleSheet.create({
     resizeMode: "cover",
   },
   icon: {
-    width: 25,
-    height: 25,
+    width: 20,
+    height: 20,
     resizeMode: "cover",
   },
-  options: {
+  AddTask: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     width: 30,
     height: 30,
-    borderRadius: 20,
-    // backgroundColor: "#e5e7e9",
+    borderRadius: 40,
+    backgroundColor: "#0099FF",
     overflow: "hidden",
-  },
-  imgLogo: {
-    width: 35,
-    height: 35,
-    transform: [{ rotate: "130deg" }],
-    resizeMode: "contain",
   },
   imgSearch: {
     width: 24,
     height: 24,
     resizeMode: "contain",
   },
-  button: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 28,
-    height: 28,
-    borderRadius: 20,
-    backgroundColor: "#28a3f6",
-  },
   quickActions: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-  },
-  userContainer: {
-    position: "absolute",
-    left: 20,
-    bottom: 10,
-  },
-  textUser: {
-    fontSize: 30,
-    // color: "white",
   },
 });

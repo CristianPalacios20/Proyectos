@@ -10,15 +10,15 @@ import {
   Platform,
 } from "react-native";
 
-import iconArrowBack from "../../../assets/icons/iconArrowBack.png";
-import ArrowLeft from "../../../assets/icons/arrowLeft.png";
-import iconUser from "../../../assets/icons/iconUser.png";
-import iconLockPassword from "../../../assets/icons/iconLockPassword.png";
-import iconView from "../../../assets/icons/iconView.png";
-import iconFacebook from "../../../assets/icons/iconFacebook.png";
-import iconGmail from "../../../assets/icons/iconGmail.png";
-import vector from "../../../assets/logo/Vector.png";
-import lineButton from "../../../assets/logo/LineButton.png";
+import iconArrowBack from "../../assets/icons/iconArrowBack.png";
+import ArrowLeft from "../../assets/icons/arrowLeft.png";
+import iconUser from "../../assets/icons/iconUser.png";
+import iconLockPassword from "../../assets/icons/iconLockPassword.png";
+import iconView from "../../assets/icons/iconView.png";
+import iconFacebook from "../../assets/icons/iconFacebook.png";
+import iconGmail from "../../assets/icons/iconGmail.png";
+import vector from "../../assets/logo/Vector.png";
+import lineButton from "../../assets/logo/LineButton.png";
 
 export default function LoginScreen({
   onLoginSuccess,

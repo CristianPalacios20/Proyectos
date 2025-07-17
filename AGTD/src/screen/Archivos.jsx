@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import Buscador from "../buscador";
+import Buscador from "../components/buscador";
 
 export default function Archivos() {
   const [archivoBusqueda, setArchivoBusqueda] = useState("");

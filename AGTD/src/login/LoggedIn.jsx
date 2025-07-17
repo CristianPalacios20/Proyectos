@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import logo from "../../../assets/img/imgInicioII.png";
+import logo from "../../assets/img/imgInicioII.png";
 
 export default function Login({ setIsLoggedIn, goToRegister }) {
   const [loadingButton, setLoadingButton] = useState(null);

@@ -3,14 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 
-import iconArrowBack from "../../../assets/icons/iconArrowBack.png";
-import perfil from "../../../assets/icons/iconUser2.png";
-import iconArrowLeft from "../../../assets/icons/iconArrowLeft.png";
-import iconKey from "../../../assets/icons/iconKey.png";
-import iconPadlock from "../../../assets/icons/iconPadlock.png";
-import iconNotification from "../../../assets/icons/iconNotification.png";
-import iconHelp from "../../../assets/icons/iconHelp.png";
-import iconFriends from "../../../assets/icons/iconFriends.png";
+import iconArrowBack from "../../assets/icons/iconArrowBack.png";
+import perfil from "../../assets/icons/iconUser2.png";
+import iconArrowLeft from "../../assets/icons/iconArrowLeft.png";
+import iconKey from "../../assets/icons/iconKey.png";
+import iconPadlock from "../../assets/icons/iconPadlock.png";
+import iconNotification from "../../assets/icons/iconNotification.png";
+import iconHelp from "../../assets/icons/iconHelp.png";
+import iconFriends from "../../assets/icons/iconFriends.png";
 
 export default function Ajustes({ onLogout, setSelectedTab }) {
   const navigation = useNavigation();

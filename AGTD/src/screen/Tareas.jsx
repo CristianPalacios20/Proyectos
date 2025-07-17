@@ -8,24 +8,21 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import HeaderHome from "../HeaderHome";
+import HeaderHome from "../components/HeaderHome";
 import moment from "moment";
 import "moment/locale/es";
 
-import iconTareas from "../../../assets/logo/logo-icon-tareas-transparent.png";
+import iconTareas from "../../assets/logo/logo-icon-tareas-transparent.png";
 import { Ionicons } from "@expo/vector-icons";
 
 moment.locale("es"); //establece el idioma en español
 
-export default function Tareas({
-  data = [],
-  isLoading,
-  navigation,
-  selectedTab,
-  setSelectedTab,
-}) {
+export default function Tareas(props) {
+  const { data = [], isLoading, selectedTab, setSelectedTab } = props;
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
+  const navigation = useNavigation();
 
   const diasSemana = Array.from({ length: 7 }).map((_, index) => {
     const dia = moment()
@@ -41,40 +38,39 @@ export default function Tareas({
   return (
     <View edges={["top"]} style={stylesTareas.content}>
       <HeaderHome selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      <ScrollView style={stylesTareas.taskBody}>
-        <View style={[stylesTareas.contenedorCalendar]}>
-          {diasSemana.map((dia, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => setDiaSeleccionado(dia.clave)}
+      <View style={[stylesTareas.contenedorCalendar]}>
+        {diasSemana.map((dia, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => setDiaSeleccionado(dia.clave)}
+            style={[
+              stylesTareas.dia,
+              diaSeleccionado === dia.clave && stylesTareas.diaSeleccionado,
+            ]}
+          >
+            <Text
               style={[
-                stylesTareas.dia,
-                diaSeleccionado === dia.clave && stylesTareas.diaSeleccionado,
+                stylesTareas.nombre,
+                diaSeleccionado === dia.clave && stylesTareas.textoSeleccionado,
               ]}
             >
-              <Text
-                style={[
-                  stylesTareas.nombre,
-                  diaSeleccionado === dia.clave &&
-                    stylesTareas.textoSeleccionado,
-                ]}
-              >
-                {dia.nombre}
-              </Text>
-              ;
-              <Text
-                style={[
-                  stylesTareas.dia,
-                  diaSeleccionado === dia.clave &&
-                    stylesTareas.textoSeleccionado,
-                ]}
-              >
-                {dia.numero}
-              </Text>
-              ;
-            </TouchableOpacity>
-          ))}
-        </View>
+              {dia.nombre}
+            </Text>
+            ;
+            <Text
+              style={[
+                stylesTareas.dia,
+                stylesTareas.numero,
+                diaSeleccionado === dia.clave && stylesTareas.textoSeleccionado,
+              ]}
+            >
+              {dia.numero}
+            </Text>
+            ;
+          </TouchableOpacity>
+        ))}
+      </View>
+      <ScrollView style={stylesTareas.taskBody}>
         <View style={{ left: 20, top: 10 }}>
           <Text style={stylesTareas.title}>Tus tareas</Text>
         </View>
@@ -134,6 +130,7 @@ const stylesTareas = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: "white",
+    borderWidth: 1,
   },
   taskBody: {
     flex: 1,
@@ -148,13 +145,16 @@ const stylesTareas = StyleSheet.create({
   contenedorCalendar: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 14,
+    gap: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 
   dia: {
     alignItems: "center",
-    flex: 1,
-    paddingBottom: 2,
+    gap: 5,
   },
   nombre: {
     fontWeight: "bold",
@@ -163,8 +163,9 @@ const stylesTareas = StyleSheet.create({
     textTransform: "uppercase",
   },
   numero: {
-    fontSize: 16,
+    fontSize: 12,
     color: "#979A9A",
+    marginBottom: 4,
   },
 
   diaSeleccionado: {

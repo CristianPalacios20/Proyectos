@@ -14,8 +14,8 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-import Waves from "../../../assets/img/WavesBlue.png";
-import IconArrow from "../../../assets/icons/iconArrow.png";
+import Waves from "../../assets/img/WavesBlue.png";
+import IconArrow from "../../assets/icons/iconArrow.png";
 
 const { width, height } = Dimensions.get("window");
 

@@ -12,11 +12,11 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import iconUser from "../../../assets/icons/iconUser.png";
-import iconAdd from "../../../assets/icons/iconAdd.png";
-import iconCalendar from "../../../assets/icons/iconCalendar.png";
-import iconSubtareas from "../../../assets/icons/iconSubTareas.png";
-import iconSend from "../../../assets/icons/iconSend.png";
+import iconUser from "../../assets/icons/iconUser.png";
+import iconAdd from "../../assets/icons/iconAdd.png";
+import iconCalendar from "../../assets/icons/iconCalendar.png";
+import iconSubtareas from "../../assets/icons/iconSubTareas.png";
+import iconSend from "../../assets/icons/iconSend.png";
 
 export default function CrearTarea({ setSelectedTab }) {
   const participantes = [
@@ -31,7 +31,7 @@ export default function CrearTarea({ setSelectedTab }) {
   const opcionesPrioridad = ["Alta", "Media", "Baja"];
 
   return (
-    <SafeAreaView edges={["top"]} style={styles.container}>
+    <View edges={["top"]} style={styles.container}>
       <View style={styles.innerWrapper}>
         <View style={styles.topButtons}>
           <TouchableOpacity
@@ -181,18 +181,20 @@ export default function CrearTarea({ setSelectedTab }) {
           </View>
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
+    // backgroundColor: "rgba(0,0,0,0.5)",
+    // marginTop: 20,
   },
   innerWrapper: {
     flex: 1,
     padding: 20,
+    marginTop: 50,
     backgroundColor: "#fff",
     borderRadius: 20,
   },

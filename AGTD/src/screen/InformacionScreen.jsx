@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import CustomSwitch from "../CustomSwitch";
+import CustomSwitch from "../components/CustomSwitch";
 
-import iconArrow from "../../../assets/icons/iconArrowBack.png";
-import iconCompartir from "../../../assets/icons/iconCompartir.png";
-import iconEmail from "../../../assets/icons/iconEmail.png";
-import iconQR from "../../../assets/icons/iconQR.png";
-import iconTime from "../../../assets/icons/iconTime.png";
+import iconArrow from "../../assets/icons/iconArrowBack.png";
+import iconCompartir from "../../assets/icons/iconCompartir.png";
+import iconEmail from "../../assets/icons/iconEmail.png";
+import iconQR from "../../assets/icons/iconQR.png";
+import iconTime from "../../assets/icons/iconTime.png";
 
 export default function InformacionScreen({ route }) {
   const { label } = route.params;

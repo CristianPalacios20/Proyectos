@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { View, StyleSheet } from "react-native";
 
-import ScreenWrapper from "./src/components/screen/ScreenWrapper";
+import ScreenWrapper from "./src/screen/ScreenWrapper";
 import Layout from "./src/components/Layout";
-import LoggenIn from "./src/components/login/LoggedIn";
-import LoginScreen from "./src/components/screen/LoginScreen";
-import RegisterScreen from "./src/components/screen/RegisterScreen";
+import LoggenIn from "./src/login/LoggedIn";
+import LoginScreen from "./src/screen/LoginScreen";
+import RegisterScreen from "./src/screen/RegisterScreen";
 
-import AnimatedCircle from "./src/components/screen/AnimatedCircle";
+import AnimatedCircle from "./src/screen/AnimatedCircle";
 
 export default function App() {
   const [selectedTab, setSelectedTab] = useState("Tareas");
@@ -75,17 +75,15 @@ export default function App() {
 
       case "main":
         return (
-          <ScreenWrapper>
-            <Layout
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-              selectedChat={selectedChat}
-              setSelectedChat={setSelectedChat}
-              onLogout={() => setScreen("welcome")}
-              currentRoute={currentRoute}
-              setCurrentRoute={setCurrentRoute}
-            />
-          </ScreenWrapper>
+          <Layout
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+            selectedChat={selectedChat}
+            setSelectedChat={setSelectedChat}
+            onLogout={() => setScreen("welcome")}
+            currentRoute={currentRoute}
+            setCurrentRoute={setCurrentRoute}
+          />
         );
       default:
         return null;
