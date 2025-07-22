@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 
 import Buscador from "../components/buscador";
+import Destacadas from "./Destacadas";
 
 import iconClose from "../../assets/icons/iconClose.png";
 
@@ -28,37 +29,50 @@ export default function Buscar({ setSelectedTab }) {
               <Image source={iconClose} />
             </TouchableOpacity>
           </View>
-
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={style.filterTabs}
-          >
-            {filtros.map((filtro) => (
-              <TouchableOpacity
-                key={filtro.value}
-                onPress={() => setActiveFilter(filtro.value)}
-                style={[
-                  style.filterTab,
-                  {
-                    backgroundColor:
-                      activeFilter === filtro.value ? "#28a4f66e" : "#e5e7e9",
-                  },
-                ]}
-              >
-                <Text
+          <View style={{ overflow: "hidden" }}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={style.filterTabs}
+            >
+              {filtros.map((filtro) => (
+                <TouchableOpacity
+                  key={filtro.value}
+                  onPress={() => setActiveFilter(filtro.value)}
                   style={[
+                    style.filterTab,
                     {
-                      color:
-                        activeFilter === filtro.value ? "black" : "#979a9a",
+                      backgroundColor:
+                        activeFilter === filtro.value ? "#28a4f66e" : "#e5e7e9",
                     },
                   ]}
                 >
-                  {filtro.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+                  <Text
+                    style={[
+                      {
+                        color:
+                          activeFilter === filtro.value ? "black" : "#979a9a",
+                      },
+                    ]}
+                  >
+                    {filtro.name}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+          <View style={style.filterContent}>
+            {activeFilter === "all" && (
+              <Text style={style.filterTitle}>Tareas</Text>
+            )}
+            {activeFilter === "pending" && (
+              <Text style={style.filterTitle}>Pendientes</Text>
+            )}
+            {activeFilter === "done" && (
+              <Text style={style.filterTitle}>Finalizadas</Text>
+            )}
+            {activeFilter === "dest" && <Destacadas />}
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -87,11 +101,13 @@ const style = StyleSheet.create({
   },
 
   contentBuscador: {
-    width: 300,
+    width: "90%",
   },
 
   filterTabs: {
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     height: 40,
     gap: 5,
     marginTop: 10,
@@ -108,5 +124,8 @@ const style = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     color: "#979a9a",
+  },
+  filterContent: {
+    flex: 1,
   },
 });

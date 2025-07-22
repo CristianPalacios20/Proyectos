@@ -1,12 +1,15 @@
+import { View, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { View, StyleSheet } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import ScreenWrapper from "./src/screen/ScreenWrapper";
 import Layout from "./src/components/Layout";
 import LoggenIn from "./src/login/LoggedIn";
 import LoginScreen from "./src/screen/LoginScreen";
 import RegisterScreen from "./src/screen/RegisterScreen";
+
+import MostrarBoton from "./pruebas/mostrarBoton";
 
 import AnimatedCircle from "./src/screen/AnimatedCircle";
 
@@ -90,15 +93,20 @@ export default function App() {
     }
   };
   return (
-    <SafeAreaProvider style={stylesApp.contenedor}>
-      {renderContent()}
-    </SafeAreaProvider>
+    <GestureHandlerRootView>
+      <SafeAreaProvider style={stylesApp.contenedor}>
+        {renderContent()}
+
+        {/* <MostrarBoton/> */}
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 
 const stylesApp = StyleSheet.create({
   contenedor: {
     flex: 1,
+    justifyContent: "center",
   },
   contentLogo: {
     display: "flex",

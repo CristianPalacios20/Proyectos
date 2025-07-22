@@ -66,6 +66,8 @@ export default function ChatScreen({ route, setSelectedTab }) {
 
   const [textoActivo, setTextoActivo] = useState(null);
   const [modalActivo, setModalActivo] = useState(false);
+  const [prioridad, setPrioridad] = useState("");
+
   const toggleColor = (index) => {
     setTextoActivo(index === textoActivo ? null : index);
     setModalActivo(false);
@@ -77,7 +79,7 @@ export default function ChatScreen({ route, setSelectedTab }) {
   const handleOpcionPresss = (index, item) => {
     toggleColor(index);
     if (item.tab) {
-      setSelectedTab(item.tam);
+      navigation.navigate(item.tab);
     }
   };
 
@@ -144,11 +146,14 @@ export default function ChatScreen({ route, setSelectedTab }) {
                 <Text style={stylesChatScreen.detailLabel}>
                   Fecha vencimiento
                 </Text>
-                <Text style={stylesChatScreen.detailValue}>fecha</Text>
+                <Text style={stylesChatScreen.detailValue}>5 de mayo</Text>
               </View>
               <View style={stylesChatScreen.detailItem}>
                 <Text style={stylesChatScreen.detailLabel}>Prioridad</Text>
-                <Text style={stylesChatScreen.detailValue}>Prioridad</Text>
+                <View style={stylesChatScreen.contenPrioridad}>
+                  <View style={[stylesChatScreen.circle, prioridad ]}></View>
+                  <Text style={stylesChatScreen.detailValue}>alta</Text>
+                </View>
               </View>
               <View style={stylesChatScreen.detailItem}>
                 <Text style={stylesChatScreen.detailLabel}>Categoria</Text>
@@ -159,7 +164,10 @@ export default function ChatScreen({ route, setSelectedTab }) {
             <View style={stylesChatScreen.subtasksSection}>
               <View style={stylesChatScreen.subtasksHeader}>
                 <Text style={stylesChatScreen.sectionTitle}>Subtareas</Text>
-                <TouchableOpacity style={stylesChatScreen.addSubtaskButton}>
+                <TouchableOpacity
+                  style={stylesChatScreen.addSubtaskButton}
+                  onPress={() => navigation.navigate("NuevaSubTarea")}
+                >
                   <Text style={stylesChatScreen.addSubtaskText}>
                     Agregar subtarea
                   </Text>
@@ -266,6 +274,12 @@ const stylesChatScreen = StyleSheet.create({
     padding: 15,
   },
 
+  containerButtonback: {
+    justifyContent: "center",
+    width: 50,
+    height: 40
+  },
+
   iconArrowBack: {
     width: 20,
     height: 20,
@@ -351,6 +365,20 @@ const stylesChatScreen = StyleSheet.create({
     fontWeight: "bold",
   },
 
+  contenPrioridad: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+
+  circle: {
+    width: 10,
+    height: 10,
+    backgroundColor: "#a6acaf",
+    borderRadius: 50
+  },
+
   detailValue: {
     textAlign: "right",
     fontSize: 16,
@@ -386,7 +414,6 @@ const stylesChatScreen = StyleSheet.create({
 
   participantsSection: {
     gap: 8,
-    // borderWidth: 1,
   },
 
   participants: {
@@ -398,7 +425,6 @@ const stylesChatScreen = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    // borderWidth: 1,
   },
 
   contentParticipant: {
@@ -486,7 +512,6 @@ const stylesChatScreen = StyleSheet.create({
   participantsList: {
     flexDirection: "row",
     width: 90,
-    // borderWidth: 1,
   },
 
   participant: {

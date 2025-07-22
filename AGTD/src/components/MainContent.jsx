@@ -58,18 +58,7 @@ export default function MainContent({
             </AnimatedScreenWrapper>
           </SafeAreaView>
         );
-      case "EditarTarea":
-        return (
-          <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
-            <AnimatedScreenWrapper animacion="slideUp">
-              <EditarTarea
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-              />
-            </AnimatedScreenWrapper>
-          </SafeAreaView>
-        );
-      default:
+        break;
         return (
           <Tareas selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
         );

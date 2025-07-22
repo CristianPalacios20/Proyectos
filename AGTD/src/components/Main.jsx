@@ -9,6 +9,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import MainContent from "./MainContent";
 import ChatScreen from "../screen/ChatScreen";
 import InformacionScreen from "../screen/InformacionScreen";
+import EditarTarea from "../screen/EditarTarea";
+import NuevaSubtarea from "../screen/NuevaSubtarea"
+import Destacadas from "../screen/Destacadas";
 
 const chatData = require("../json/Tareas.json");
 const Stack = createStackNavigator();
@@ -64,17 +67,20 @@ export default function Main({
               />
             )}
           </Stack.Screen>
-          <Stack.Screen
-            name="Chat"
-            component={(props) => (
+          <Stack.Screen name="Chat">
+            {(props) => (
               <ChatScreen
                 {...props}
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
               />
             )}
-          />
+          </Stack.Screen>
           <Stack.Screen name="Informacion" component={InformacionScreen} />
+          <Stack.Screen name="EditarTarea" component={EditarTarea} />
+          <Stack.Screen name="NuevaSubTarea" component={NuevaSubtarea} />
+          <Stack.Screen name="Destacadas" component={Destacadas} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </View>

@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import HeaderHome from "../components/HeaderHome";
+import SwipeToReveal from "../animaciones/SwipeToReveal";
+
 import moment from "moment";
 import "moment/locale/es";
 
@@ -35,6 +37,13 @@ export default function Tareas(props) {
       clave: dia.format("YYYY-MM-DD"),
     };
   });
+
+  const eliminarTask = () => {
+    const siono = alert(`deseas eliminar la tarea ${data.chatTitle}`);
+    if (siono === "S") {
+      alert("Tarea eliminada");
+    }
+  };
 
   return (
     <View style={stylesTareas.content}>
@@ -92,33 +101,37 @@ export default function Tareas(props) {
         ) : (
           <View style={stylesTareas.containerChats}>
             {data.map((chat) => (
-              <TouchableOpacity
-                key={chat.chatId}
-                style={stylesTareas.task}
-                onPress={() =>
-                  navigation.navigate("Chat", {
-                    chatId: chat.chatId,
-                    titulo: chat.title,
-                    message: chat.messages[0]?.content ?? "sin mensajes",
-                    messages: chat.messages,
-                  })
-                }
-              >
-                <View style={stylesTareas.contentTask}>
-                  <Image source={iconTareas} style={stylesTareas.iconTareas} />
-                </View>
-                <View style={stylesTareas.chatInfoContainer}>
-                  <Text style={stylesTareas.chatTitle}>{chat.title}</Text>
-                  <View style={stylesTareas.desTask}>
-                    <View style={stylesTareas.countTask}>
-                      <Text style={{ color: "white" }}>
-                        {chat.tasks.length}
-                      </Text>
-                    </View>
-                    <Text style={{ color: "#7b7d7d" }}>tarea(s)</Text>
+              <SwipeToReveal key={chat.chatId}>
+                <TouchableOpacity
+                  style={stylesTareas.task}
+                  onPress={() =>
+                    navigation.navigate("Chat", {
+                      chatId: chat.chatId,
+                      titulo: chat.title,
+                      message: chat.messages[0]?.content ?? "sin mensajes",
+                      // messages: chat.messages,
+                    })
+                  }
+                >
+                  <View style={stylesTareas.contentTask}>
+                    <Image
+                      source={iconTareas}
+                      style={stylesTareas.iconTareas}
+                    />
                   </View>
-                </View>
-              </TouchableOpacity>
+                  <View style={stylesTareas.chatInfoContainer}>
+                    <Text style={stylesTareas.chatTitle}>{chat.title}</Text>
+                    <View style={stylesTareas.desTask}>
+                      <View style={stylesTareas.countTask}>
+                        <Text style={{ color: "white" }}>
+                          {chat.tasks.length}
+                        </Text>
+                      </View>
+                      <Text style={{ color: "#7b7d7d" }}>Subtarea(s)</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </SwipeToReveal>
             ))}
           </View>
         )}
@@ -196,17 +209,15 @@ const stylesTareas = StyleSheet.create({
   },
   containerChats: {
     marginTop: 20,
-    paddingLeft: 16,
   },
   task: {
-    display: "flex",
     flexDirection: "row",
-    paddingLeft: 5,
     gap: 10,
+    width: "100%",
     height: 70,
+    overflow: "hidden",
   },
   contentTask: {
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
     width: 50,
@@ -218,10 +229,12 @@ const stylesTareas = StyleSheet.create({
     backgroundColor: "#e5e7e938",
   },
   chatInfoContainer: {
+    justifyContent: "center",
     width: "100%",
+    height: "100%",
     gap: 5,
     padding: 10,
-    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: "#d7dbdd",
   },
   chatTitle: {
@@ -233,7 +246,7 @@ const stylesTareas = StyleSheet.create({
     gap: 5,
     left: 10,
     color: "#777",
-    height: 45,
+    width: 100,
   },
   countTask: {
     textAlign: "center",
