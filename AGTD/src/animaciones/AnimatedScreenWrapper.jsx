@@ -3,6 +3,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
+  runOnJS,
 } from "react-native-reanimated";
 
 export default function AnimatedScreenWrapper({
@@ -10,6 +11,9 @@ export default function AnimatedScreenWrapper({
   animacion = "fade",
   delay = 0,
   duration = 400,
+  visible = true,
+  onFinish = () => {},
+  style,
 }) {
   const opacity = useSharedValue(animacion === "fade" ? 0 : 1);
   const translateY = useSharedValue(animacion === "slideUp" ? 500 : 0);
@@ -29,14 +33,41 @@ export default function AnimatedScreenWrapper({
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      if (animacion === "fade") opacity.value = withTiming(1, { duration });
-      if (animacion === "slideUp") translateY.value = withTiming(0, { duration });
-      if (animacion === "slideLeft") translateX.value = withTiming(0, { duration });
-      if (animacion === "scale") scale.value = withTiming(1, { duration });
+      if (visible) {
+        //ANIMACIÓN DE ENTRADA.
+        if (animacion === "fade") opacity.value = withTiming(1, { duration });
+        if (animacion === "slideUp")
+          translateY.value = withTiming(0, { duration });
+        if (animacion === "slideLeft")
+          translateX.value = withTiming(0, { duration });
+        if (animacion === "scale") scale.value = withTiming(1, { duration });
+      } else {
+        //ANIMACIÓN DE SALIDA.
+        if (animacion === "fade")
+          opacity.value = withTiming(0, { duration }, () =>
+            runOnJS(onFinish)()
+          );
+        if (animacion === "slideUp")
+          translateY.value = withTiming(500, { duration }, () =>
+            runOnJS(onFinish)()
+          );
+        if (animacion === "slideLeft")
+          translateX.value = withTiming(300, { duration }, () =>
+            runOnJS(onFinish)()
+          );
+        if (animacion === "scale")
+          scale.value = withTiming(0.8, { duration }, () =>
+            runOnJS(onFinish)()
+          );
+      }
     }, delay);
 
     return () => clearTimeout(timeOut);
-  }, []);
+  }, [visible]);
 
-  return <Animated.View style={[{ flex: 1 }, animatedStyle]}>{children}</Animated.View>;
+  return (
+    <Animated.View style={[{ flex: 1 }, animatedStyle, style]}>
+      {children}
+    </Animated.View>
+  );
 }

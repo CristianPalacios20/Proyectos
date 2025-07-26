@@ -37,7 +37,7 @@ export default function LoginScreen({
     }
     // console.log("Enviando:", { correo: identificador, contrasena });
     try {
-      const response = await fetch("http://192.168.1.8/backend/login.php", {
+      const response = await fetch("http://192.168.1.6/backend/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correo: identificador, contrasena }),

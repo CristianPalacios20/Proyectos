@@ -4,7 +4,8 @@ import Tareas from "../screen/Tareas";
 import Ajustes from "../screen/Ajustes";
 import BuscarOCrear from "../screen/BuscarTarea";
 import CrearTarea from "../screen/CrearTarea";
-import EditarTarea from "../screen/EditarTarea";
+import EditarPerfil from "../screen/EditarPerfil";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function MainContent({
@@ -14,6 +15,7 @@ export default function MainContent({
   isLoading,
   dataChats,
   onLogout,
+  openModal,
 }) {
   const renderScreen = () => {
     switch (selectedTab) {
@@ -24,21 +26,22 @@ export default function MainContent({
             isLoading={isLoading}
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
+            openModal={openModal}
           />
         );
       case "Ajustes":
         return (
           <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
-            <AnimatedScreenWrapper animacion="slideLeft">
+            <AnimatedScreenWrapper key={selectedTab} animacion="slideLeft">
               <Ajustes onLogout={onLogout} setSelectedTab={setSelectedTab} />
             </AnimatedScreenWrapper>
           </SafeAreaView>
         );
-        break;
+
       case "Buscar":
         return (
           <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
-            <AnimatedScreenWrapper animacion="slideUp">
+            <AnimatedScreenWrapper key={selectedTab} animacion="slideUp">
               <BuscarOCrear
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
@@ -46,11 +49,11 @@ export default function MainContent({
             </AnimatedScreenWrapper>
           </SafeAreaView>
         );
-        break;
+
       case "CrearTarea":
         return (
           <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
-            <AnimatedScreenWrapper animacion="slideUp">
+            <AnimatedScreenWrapper key={selectedTab} animacion="slideUp">
               <CrearTarea
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
@@ -58,11 +61,18 @@ export default function MainContent({
             </AnimatedScreenWrapper>
           </SafeAreaView>
         );
-        break;
+
+      case "EditarPerfil":
         return (
-          <Tareas selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+          <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
+            <AnimatedScreenWrapper key={selectedTab} animacion="slideLeft">
+              <EditarPerfil
+                selectedTab={selectedTab}
+                setSelectedTab={setSelectedTab}
+              />
+            </AnimatedScreenWrapper>
+          </SafeAreaView>
         );
-        break;
     }
   };
   return <View style={{ flex: 1 }}>{renderScreen()}</View>;

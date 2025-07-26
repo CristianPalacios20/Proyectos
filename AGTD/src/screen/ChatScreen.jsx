@@ -259,7 +259,6 @@ export default function ChatScreen({ route, setSelectedTab }) {
 const stylesChatScreen = StyleSheet.create({
   content: {
     flex: 1,
-    gap: 10,
   },
 
   body: {
@@ -267,7 +266,6 @@ const stylesChatScreen = StyleSheet.create({
   },
 
   headerChat: {
-    position: "relative",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

@@ -10,7 +10,7 @@ import MainContent from "./MainContent";
 import ChatScreen from "../screen/ChatScreen";
 import InformacionScreen from "../screen/InformacionScreen";
 import EditarTarea from "../screen/EditarTarea";
-import NuevaSubtarea from "../screen/NuevaSubtarea"
+import NuevaSubtarea from "../screen/NuevaSubtarea";
 import Destacadas from "../screen/Destacadas";
 
 const chatData = require("../json/Tareas.json");
@@ -23,6 +23,7 @@ export default function Main({
   setSelectedTab,
   setCurrentRoute,
   onLoginSuccess,
+  openModal,
 }) {
   const [dataChats, setDataChats] = useState([]);
   const [isLoading, setIsloading] = useState(true);
@@ -64,6 +65,7 @@ export default function Main({
                 isLoading={isLoading}
                 dataChats={dataChats}
                 onLogout={onLogout}
+                openModal={openModal}
               />
             )}
           </Stack.Screen>
@@ -80,7 +82,6 @@ export default function Main({
           <Stack.Screen name="EditarTarea" component={EditarTarea} />
           <Stack.Screen name="NuevaSubTarea" component={NuevaSubtarea} />
           <Stack.Screen name="Destacadas" component={Destacadas} />
-
         </Stack.Navigator>
       </NavigationContainer>
     </View>

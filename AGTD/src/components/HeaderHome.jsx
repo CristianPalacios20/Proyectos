@@ -46,10 +46,7 @@ export default function HeaderHome({ setSelectedTab }) {
 
 const stylesHeaderHome = StyleSheet.create({
   content: {
-    height: 90,
-    paddingTop: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
+    padding: 20,
     overflow: "hidden",
   },
   headerButtons: {

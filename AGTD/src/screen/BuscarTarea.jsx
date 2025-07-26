@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -18,7 +25,7 @@ export default function Buscar({ setSelectedTab }) {
     { name: "Destacadas", value: "dest" },
   ];
   return (
-    <SafeAreaView edges={["top: 0"]} style={style.container}>
+    <SafeAreaView edges={["top"]} style={style.container}>
       <View style={style.overlay}>
         <View style={style.panelWrapper}>
           <View style={style.searchRow}>
@@ -85,13 +92,22 @@ const style = StyleSheet.create({
   },
   overlay: {
     flex: 1,
+    ...Platform.select({
+      ios: {
+        paddingTop: 10,
+      },
+    }),
   },
 
   panelWrapper: {
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
-    borderRadius: 20,
+    ...Platform.select({
+      ios: {
+        borderRadius: 20,
+      },
+    }),
   },
 
   searchRow: {

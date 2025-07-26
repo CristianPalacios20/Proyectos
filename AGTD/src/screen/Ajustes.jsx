@@ -48,9 +48,13 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
             <View style={stylesAjustes.contenedorImgPerfil}>
               <Image source={perfil} style={stylesAjustes.perfil} />
             </View>
-            <Text style={[stylesAjustes.optionText, stylesAjustes.perfiltext]}>
-              Editar perfil
-            </Text>
+            <TouchableOpacity onPress={() => setSelectedTab("EditarPerfil")}>
+              <Text
+                style={[stylesAjustes.optionText, stylesAjustes.perfiltext]}
+              >
+                Editar perfil
+              </Text>
+            </TouchableOpacity>
           </View>
 
           {/* Grupo Cuenta */}

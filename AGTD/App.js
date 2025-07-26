@@ -107,6 +107,7 @@ const stylesApp = StyleSheet.create({
   contenedor: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "white"
   },
   contentLogo: {
     display: "flex",

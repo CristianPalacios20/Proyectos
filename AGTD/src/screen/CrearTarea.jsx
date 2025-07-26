@@ -9,6 +9,7 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -28,7 +29,7 @@ export default function CrearTarea({ setSelectedTab }) {
 
   const [visible, setVisible] = useState(false);
   const [prioridad, setPrioridad] = useState("");
-  const opcionesPrioridad = [" ","Alta", "Media", "Baja"];
+  const opcionesPrioridad = [" ", "Alta", "Media", "Baja"];
 
   return (
     <View style={styles.container}>
@@ -44,7 +45,7 @@ export default function CrearTarea({ setSelectedTab }) {
             <Text style={styles.bottomText}>Guardar</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView>
+        <ScrollView showsHorizontalScrollIndicator={false}>
           <View style={styles.content}>
             <Text style={styles.title}>Coordina, colabora, crea.</Text>
 
@@ -166,14 +167,21 @@ export default function CrearTarea({ setSelectedTab }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "rgba(0,0,0,0.5)",
-    // marginTop: 20,
+    ...Platform.select({
+      ios: {
+        paddingTop: 10,
+      },
+    }),
   },
   innerWrapper: {
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
-    borderRadius: 20,
+    ...Platform.select({
+      ios: {
+        borderRadius: 20,
+      },
+    }),
   },
 
   topButtons: {

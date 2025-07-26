@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,11 @@ import {
   SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useRef } from "react";
 
 import HeaderHome from "../components/HeaderHome";
 import SwipeToReveal from "../animaciones/SwipeToReveal";
+import ModalMenu from "./ModalMenu";
 
 import moment from "moment";
 import "moment/locale/es";
@@ -23,9 +25,16 @@ import { Ionicons } from "@expo/vector-icons";
 moment.locale("es"); //establece el idioma en español
 
 export default function Tareas(props) {
-  const { data = [], isLoading, selectedTab, setSelectedTab } = props;
+  const {
+    data = [],
+    isLoading,
+    selectedTab,
+    setSelectedTab,
+    openModal,
+  } = props;
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const navigation = useNavigation();
+  const refs = useRef({});
 
   const diasSemana = Array.from({ length: 7 }).map((_, index) => {
     const dia = moment()
@@ -38,15 +47,8 @@ export default function Tareas(props) {
     };
   });
 
-  const eliminarTask = () => {
-    const siono = alert(`deseas eliminar la tarea ${data.chatTitle}`);
-    if (siono === "S") {
-      alert("Tarea eliminada");
-    }
-  };
-
   return (
-    <View style={stylesTareas.content}>
+    <SafeAreaView style={stylesTareas.content}>
       <HeaderHome selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       <View style={[stylesTareas.contenedorCalendar]}>
         {diasSemana.map((dia, index) => (
@@ -100,43 +102,65 @@ export default function Tareas(props) {
           </View>
         ) : (
           <View style={stylesTareas.containerChats}>
-            {data.map((chat) => (
-              <SwipeToReveal key={chat.chatId}>
-                <TouchableOpacity
-                  style={stylesTareas.task}
-                  onPress={() =>
-                    navigation.navigate("Chat", {
-                      chatId: chat.chatId,
-                      titulo: chat.title,
-                      message: chat.messages[0]?.content ?? "sin mensajes",
-                      // messages: chat.messages,
-                    })
-                  }
+            {data.map((chat) => {
+              if (!refs.current[chat.chatId]) {
+                refs.current[chat.chatId] = React.createRef();
+              }
+              return (
+                <SwipeToReveal
+                  key={chat.chatId}
+                  ref={refs.current[chat.chatId]}
+                  // Cierra todos excepto este
+                  onSwipeStart={() => {
+                    Object.entries(refs.current).forEach(([id, ref]) => {
+                      if (id !== chat.chatId && ref.current?.isOpen()) {
+                        ref.current.closeSwipe();
+                      }
+                    });
+                  }}
+                  openModal={openModal}
                 >
-                  <View style={stylesTareas.contentTask}>
-                    <Image
-                      source={iconTareas}
-                      style={stylesTareas.iconTareas}
-                    />
-                  </View>
-                  <View style={stylesTareas.chatInfoContainer}>
-                    <Text style={stylesTareas.chatTitle}>{chat.title}</Text>
-                    <View style={stylesTareas.desTask}>
-                      <View style={stylesTareas.countTask}>
-                        <Text style={{ color: "white" }}>
-                          {chat.tasks.length}
-                        </Text>
-                      </View>
-                      <Text style={{ color: "#7b7d7d" }}>Subtarea(s)</Text>
+                  <TouchableOpacity
+                    style={stylesTareas.task}
+                    onPress={async () => {
+                      const currentRef = refs.current[chat.chatId];
+                      if (currentRef.current?.isOpen()) {
+                        currentRef.current.closeSwipe();
+                        return; // ❗ Importante: detener aquí para que NO navegue
+                      }
+                      navigation.navigate("Chat", {
+                        chatId: chat.chatId,
+                        titulo: chat.title,
+                        message: chat.messages[0]?.content ?? "sin mensajes",
+                        // messages: chat.messages,
+                      });
+                    }}
+                  >
+                    <View style={stylesTareas.contentTask}>
+                      <Image
+                        source={iconTareas}
+                        style={stylesTareas.iconTareas}
+                      />
                     </View>
-                  </View>
-                </TouchableOpacity>
-              </SwipeToReveal>
-            ))}
+                    <View style={stylesTareas.chatInfoContainer}>
+                      <Text style={stylesTareas.chatTitle}>{chat.title}</Text>
+                      <View style={stylesTareas.desTask}>
+                        <View style={stylesTareas.countTask}>
+                          <Text style={{ color: "white" }}>
+                            {chat.tasks.length}
+                          </Text>
+                        </View>
+                        <Text style={{ color: "#7b7d7d" }}>Subtarea(s)</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </SwipeToReveal>
+              );
+            })}
           </View>
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -144,6 +168,7 @@ const stylesTareas = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: "white",
+    // borderWidth: 1
   },
   taskBody: {
     flex: 1,
