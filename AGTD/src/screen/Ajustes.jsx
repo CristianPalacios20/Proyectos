@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { useChat } from "../components/Context";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import perfil from "../../assets/icons/iconUser2.png";
@@ -14,6 +14,7 @@ import iconFriends from "../../assets/icons/iconFriends.png";
 
 export default function Ajustes({ onLogout, setSelectedTab }) {
   const navigation = useNavigation();
+  const {user} = useChat();
 
   const opcionesCuenta = [
     { icon: iconKey, label: "Cuenta" },
@@ -45,16 +46,21 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
               stylesAjustes.optionButtonPerfil,
             ]}
           >
-            <View style={stylesAjustes.contenedorImgPerfil}>
-              <Image source={perfil} style={stylesAjustes.perfil} />
+            <View style={stylesAjustes.contenedorinfo}>
+              <View style={stylesAjustes.contenedorImgPerfil}>
+                <Image source={perfil} style={stylesAjustes.perfil} />
+              </View>
+              <Text style={stylesAjustes.textNombre}>{user?.nombre}</Text>
             </View>
-            <TouchableOpacity onPress={() => setSelectedTab("EditarPerfil")}>
-              <Text
-                style={[stylesAjustes.optionText, stylesAjustes.perfiltext]}
-              >
-                Editar perfil
-              </Text>
-            </TouchableOpacity>
+            <View style={stylesAjustes.contentEditarperfil}>
+              <TouchableOpacity onPress={() => setSelectedTab("EditarPerfil")}>
+                <Text
+                  style={[stylesAjustes.optionText, stylesAjustes.perfiltext]}
+                >
+                  Editar perfil
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           {/* Grupo Cuenta */}
@@ -171,36 +177,52 @@ const stylesAjustes = StyleSheet.create({
     borderRadius: 10,
   },
   optionButtonPerfil: {
-    display: "flex",
-    alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    gap: 20,
+    maxHeight: 120,
+    gap: 15,
     padding: 20,
-    backgroundColor: "transparent",
+    backgroundColor: "white",
+  },
+
+  contenedorinfo: {
+    flexDirection: "row",
+    gap: 20,
+    alignItems: "center",
   },
 
   contenedorImgPerfil: {
     alignItems: "center",
     justifyContent: "center",
-    width: 150,
-    height: 150,
+    width: 50,
+    height: 50,
     borderRadius: 80,
     backgroundColor: "#D9D9D9",
   },
 
   perfil: {
-    width: 110,
-    height: 110,
+    width: 40,
+    height: 40,
     resizeMode: "cover",
+  },
+  textNombre: {
+    fontSize: 20,
+    fontWeight: "400"
   },
   optionText: {
     height: 20,
     fontSize: 16,
   },
 
+  contentEditarperfil: {
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderColor: "#D9D9D9",
+    // borderWidth: 1
+  },
+
   perfiltext: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#0099FF",
     height: 30,

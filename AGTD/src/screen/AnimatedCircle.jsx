@@ -21,7 +21,7 @@ const { width, height } = Dimensions.get("window");
 
 const AnimatedImage = Animated.createAnimatedComponent(RNImage);
 
-export default function AnimatedCircle({ setScreen }) {
+export default function AnimatedCircle({ setScreen, onFinish }) {
   const [textoColor, setTextoColor] = useState("#fff");
   const scale = useSharedValue(1);
   const circuloOpacity = useSharedValue(1);
@@ -149,7 +149,7 @@ export default function AnimatedCircle({ setScreen }) {
       <Animated.View style={[styles.contenedorBotonContinuar, continuarStyle]}>
         <TouchableOpacity
           style={styles.botonContinuar}
-          onPress={() => setScreen("welcome")}
+          onPress={onFinish}
         >
           <RNImage source={IconArrow} style={[styles.iconArrow]} />
         </TouchableOpacity>

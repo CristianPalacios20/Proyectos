@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
@@ -14,12 +13,11 @@ import { useRef } from "react";
 
 import HeaderHome from "../components/HeaderHome";
 import SwipeToReveal from "../animaciones/SwipeToReveal";
-import ModalMenu from "./ModalMenu";
+import PorcentajeCircular from "../components/PorcentajeCircular";
 
 import moment from "moment";
 import "moment/locale/es";
 
-import iconTareas from "../../assets/logo/logo-icon-tareas-transparent.png";
 import { Ionicons } from "@expo/vector-icons";
 
 moment.locale("es"); //establece el idioma en español
@@ -68,7 +66,7 @@ export default function Tareas(props) {
             >
               {dia.nombre}
             </Text>
-            ;
+
             <Text
               style={[
                 stylesTareas.dia,
@@ -78,7 +76,6 @@ export default function Tareas(props) {
             >
               {dia.numero}
             </Text>
-            ;
           </TouchableOpacity>
         ))}
       </View>
@@ -95,14 +92,14 @@ export default function Tareas(props) {
             </Text>
             <TouchableOpacity
               style={stylesTareas.createTaskButton}
-              onPress={() => alert("Agregar tarea")}
+              onPress={() => setSelectedTab("CrearTarea")}
             >
               <Ionicons name="add" size={28} color="white" />
             </TouchableOpacity>
           </View>
         ) : (
           <View style={stylesTareas.containerChats}>
-            {data.map((chat) => {
+            {data.map((chat, index) => {
               if (!refs.current[chat.chatId]) {
                 refs.current[chat.chatId] = React.createRef();
               }
@@ -118,36 +115,53 @@ export default function Tareas(props) {
                       }
                     });
                   }}
-                  openModal={openModal}
+                  openModal={() => openModal("menu", chat.chatId)}
                 >
                   <TouchableOpacity
-                    style={stylesTareas.task}
+                    style={[stylesTareas.task]}
                     onPress={async () => {
                       const currentRef = refs.current[chat.chatId];
+
+                      // 1. Si ESTÁ ABIERTO: Cierra y NO navega
                       if (currentRef.current?.isOpen()) {
-                        currentRef.current.closeSwipe();
-                        return; // ❗ Importante: detener aquí para que NO navegue
+                        await currentRef.current.closeSwipe();
+                        return;
                       }
-                      navigation.navigate("Chat", {
-                        chatId: chat.chatId,
-                        titulo: chat.title,
-                        message: chat.messages[0]?.content ?? "sin mensajes",
-                        // messages: chat.messages,
-                      });
+
+                      // 2. Si ESTÁ CERRADO: Navega después de un pequeño delay
+                      setTimeout(() => {
+                        if (!currentRef.current?.isOpen()) {
+                          // Doble verificación
+                          navigation.navigate("Chat", {
+                            chatId: chat.chatId,
+                            titulo: chat.title,
+                            message:
+                              chat.messages?.[0]?.content ?? "sin mensajes",
+                          });
+                        }
+                      }, 150); // Delay óptimo para evitar conflicto con gestos
                     }}
                   >
                     <View style={stylesTareas.contentTask}>
-                      <Image
-                        source={iconTareas}
-                        style={stylesTareas.iconTareas}
-                      />
+                      <PorcentajeCircular />
                     </View>
-                    <View style={stylesTareas.chatInfoContainer}>
-                      <Text style={stylesTareas.chatTitle}>{chat.title}</Text>
+                    <View
+                      style={[
+                        stylesTareas.chatInfoContainer,
+                        index >= 0 ? stylesTareas.borderTopTask : null,
+                      ]}
+                    >
+                      <Text
+                        style={stylesTareas.chatTitle}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                      >
+                        {chat.title}
+                      </Text>
                       <View style={stylesTareas.desTask}>
                         <View style={stylesTareas.countTask}>
-                          <Text style={{ color: "white" }}>
-                            {chat.tasks.length}
+                          <Text style={{ color: "#0099FF" }}>
+                            {chat.subtasks.length}
                           </Text>
                         </View>
                         <Text style={{ color: "#7b7d7d" }}>Subtarea(s)</Text>
@@ -168,7 +182,6 @@ const stylesTareas = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: "white",
-    // borderWidth: 1
   },
   taskBody: {
     flex: 1,
@@ -234,20 +247,22 @@ const stylesTareas = StyleSheet.create({
   },
   containerChats: {
     marginTop: 20,
+    gap: 5,
   },
   task: {
     flexDirection: "row",
+    alignItems: "center",
     gap: 10,
     width: "100%",
     height: 70,
     overflow: "hidden",
   },
+
   contentTask: {
     alignItems: "center",
     justifyContent: "center",
     width: 50,
     height: 50,
-    top: 8,
     shadowOpacity: 0.2,
     shadowRadius: 4,
     borderRadius: 30,
@@ -257,14 +272,24 @@ const stylesTareas = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     height: "100%",
-    gap: 5,
-    padding: 10,
-    borderBottomWidth: 1,
+    gap: 8,
+    paddingTop: 8,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 8,
+  },
+
+  borderTopTask: {
+    borderTopWidth: 1,
     borderColor: "#d7dbdd",
   },
   chatTitle: {
     fontSize: 16,
     fontWeight: "600",
+    width: "80%",
+    flexShrink: 1,
+    flexGrow: 1,
+    overflow: "hidden",
   },
   desTask: {
     flexDirection: "row",
@@ -280,7 +305,7 @@ const stylesTareas = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 20,
-    backgroundColor: "#28a3f6",
+    backgroundColor: "#E4E4E7",
   },
   iconTareas: {
     width: 30,

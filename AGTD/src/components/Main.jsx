@@ -13,30 +13,17 @@ import EditarTarea from "../screen/EditarTarea";
 import NuevaSubtarea from "../screen/NuevaSubtarea";
 import Destacadas from "../screen/Destacadas";
 
-const chatData = require("../json/Tareas.json");
 const Stack = createStackNavigator();
 
 export default function Main({
   selectedTab,
-  selectedChat,
   onLogout,
   setSelectedTab,
   setCurrentRoute,
-  onLoginSuccess,
   openModal,
+  isLoading,
 }) {
-  const [dataChats, setDataChats] = useState([]);
-  const [isLoading, setIsloading] = useState(true);
   const navRef = useNavigationContainerRef();
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (chatData && chatData.chats) {
-        setDataChats(chatData.chats);
-      }
-      setIsloading(false);
-    }, 2000);
-  }, [selectedChat]);
 
   return (
     <View style={stylesMain.content}>
@@ -61,23 +48,14 @@ export default function Main({
                 {...props}
                 selectedTab={selectedTab}
                 setSelectedTab={setSelectedTab}
-                selectedChat={selectedChat}
                 isLoading={isLoading}
-                dataChats={dataChats}
                 onLogout={onLogout}
                 openModal={openModal}
               />
             )}
           </Stack.Screen>
-          <Stack.Screen name="Chat">
-            {(props) => (
-              <ChatScreen
-                {...props}
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-              />
-            )}
-          </Stack.Screen>
+          <Stack.Screen name="Chat" component={ChatScreen} />
+
           <Stack.Screen name="Informacion" component={InformacionScreen} />
           <Stack.Screen name="EditarTarea" component={EditarTarea} />
           <Stack.Screen name="NuevaSubTarea" component={NuevaSubtarea} />

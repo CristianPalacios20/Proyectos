@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import iconEditar from "../../assets/icons/iconEditar.png";
-import iconEliminar from "../../assets/icons/iconEliminar2.png";
+import iconEliminar from "../../assets/icons/iconEliminar3.png";
 import iconUser from "../../assets/icons/iconUser.png";
 import iconArrowLeft from "../../assets/icons/iconArrowLeft.png";
 
@@ -116,13 +116,13 @@ export default function EditarTarea({ setSelectedTab }) {
               <TouchableOpacity>
                 <Image
                   source={iconEditar}
-                  style={stylesEditarTarea.iconEditar}
+                  style={[stylesEditarTarea.iconEditar, stylesEditarTarea.icon]}
                 />
               </TouchableOpacity>
               <TouchableOpacity>
                 <Image
                   source={iconEliminar}
-                  style={stylesEditarTarea.iconEliminar}
+                  style={[stylesEditarTarea.iconEliminar, stylesEditarTarea.icon]}
                 />
               </TouchableOpacity>
             </View>
@@ -311,7 +311,7 @@ const stylesEditarTarea = StyleSheet.create({
     alignItems: "center",
     gap: 10,
   },
-  iconEditar: {
+  icon: {
     width: 20,
     height: 20,
     resizeMode: "cover",

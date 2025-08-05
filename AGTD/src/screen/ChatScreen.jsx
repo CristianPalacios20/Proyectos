@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
-  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useChat } from "../components/Context";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import iconMenu from "../../assets/icons/iconMenu.png";
@@ -23,9 +23,13 @@ import iconCompartir from "../../assets/icons/iconCompartir2.png";
 import iconDuplicar from "../../assets/icons/iconDuplicar.png";
 import iconRecordar from "../../assets/icons/iconRecordar.png";
 
-export default function ChatScreen({ route, setSelectedTab }) {
-  const { titulo } = route.params;
+export default function ChatScreen({ route }) {
+  const { titulo, chatId } = route.params;
   const navigation = useNavigation();
+  const { dataChats, selectedChat, setSelectedChat } = useChat();
+
+  const chatActual = dataChats.find((chat) => chat.chatId === selectedChat);
+
   const participantes = [
     {
       icon: iconUser,
@@ -83,6 +87,12 @@ export default function ChatScreen({ route, setSelectedTab }) {
     }
   };
 
+  useEffect(() => {
+    if (chatId) {
+      setSelectedChat(chatId); // <-- Establece el chat actual al montar
+    }
+  }, [chatId]);
+
   return (
     <SafeAreaView edges={["top"]} style={stylesChatScreen.content}>
       <View style={stylesChatScreen.body}>
@@ -96,7 +106,13 @@ export default function ChatScreen({ route, setSelectedTab }) {
               style={stylesChatScreen.iconArrowBack}
             />
           </TouchableOpacity>
-          <Text style={stylesChatScreen.nameTask}>{titulo}</Text>
+          <Text
+            style={stylesChatScreen.nameTask}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {titulo}
+          </Text>
           <TouchableOpacity
             style={stylesChatScreen.openModal}
             onPress={toggleModal}
@@ -134,10 +150,11 @@ export default function ChatScreen({ route, setSelectedTab }) {
             <View style={stylesChatScreen.descripcion}>
               <Text style={stylesChatScreen.title}>Descripción</Text>
               <Text style={stylesChatScreen.subtitle}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                quaerat vero voluptatibus ipsam sequi ullam pariatur dolorem
-                eos. Veritatis quasi quibusdam dicta repellendus et ut dolore
-                itaque alias iusto labore.
+                {chatActual ? (
+                  <Text>{chatActual.description}</Text>
+                ) : (
+                  <Text>Selecciona un chat</Text>
+                )}
               </Text>
             </View>
 
@@ -146,18 +163,46 @@ export default function ChatScreen({ route, setSelectedTab }) {
                 <Text style={stylesChatScreen.detailLabel}>
                   Fecha vencimiento
                 </Text>
-                <Text style={stylesChatScreen.detailValue}>5 de mayo</Text>
+                <Text style={stylesChatScreen.detailValue}>
+                  {chatActual.dueDate}
+                </Text>
               </View>
               <View style={stylesChatScreen.detailItem}>
                 <Text style={stylesChatScreen.detailLabel}>Prioridad</Text>
-                <View style={stylesChatScreen.contenPrioridad}>
-                  <View style={[stylesChatScreen.circle, prioridad ]}></View>
-                  <Text style={stylesChatScreen.detailValue}>alta</Text>
+                <View
+                  style={[
+                    stylesChatScreen.contenPrioridad,
+                    chatActual.priority === "alta"
+                      ? stylesChatScreen.priorytyAA
+                      : chatActual.priority === "media"
+                      ? stylesChatScreen.priorityMM
+                      : chatActual.priority === "baja"
+                      ? stylesChatScreen.prioridadBB
+                      : null,
+                  ]}
+                >
+                  <View
+                    style={[
+                      stylesChatScreen.circle,
+                      chatActual.priority === "alta"
+                        ? stylesChatScreen.priorytyA
+                        : chatActual.priority === "media"
+                        ? stylesChatScreen.priorityM
+                        : chatActual.priority === "baja"
+                        ? stylesChatScreen.prioridadB
+                        : null,
+                    ]}
+                  />
+                  <Text style={stylesChatScreen.detailValue}>
+                    {chatActual.priority}
+                  </Text>
                 </View>
               </View>
               <View style={stylesChatScreen.detailItem}>
                 <Text style={stylesChatScreen.detailLabel}>Categoria</Text>
-                <Text style={stylesChatScreen.detailValue}>trabajo</Text>
+                <Text style={stylesChatScreen.detailValue}>
+                  {chatActual.category}
+                </Text>
               </View>
             </View>
 
@@ -173,9 +218,23 @@ export default function ChatScreen({ route, setSelectedTab }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={stylesChatScreen.subtaskList}>
-                <Text style={stylesChatScreen.subtaskItem}>Subtare#1</Text>
-                <Text style={stylesChatScreen.subtaskItem}>Subtare#2</Text>
+              <View style={stylesChatScreen.contentSubtask}>
+                {chatActual.subtasks.map((subtask, index) => (
+                  <View
+                    key={subtask.subtaskId}
+                    style={[
+                      stylesChatScreen.contentBottom,
+                      index >= 1 ? stylesChatScreen.borderTop : null,
+                    ]}
+                  >
+                    <TouchableOpacity style={stylesChatScreen.buttomSubTask}>
+                      <View style={stylesChatScreen.circleII}></View>
+                      <Text style={[stylesChatScreen.subtaskItem]}>
+                        {subtask.name}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
               </View>
             </View>
 
@@ -189,7 +248,9 @@ export default function ChatScreen({ route, setSelectedTab }) {
                       style={stylesChatScreen.participantImage}
                     />
                   </View>
-                  <Text style={stylesChatScreen.participantName}>nombre</Text>
+                  <Text style={stylesChatScreen.participantName}>
+                    {chatActual.createdBy}
+                  </Text>
                   <Image
                     source={iconStar}
                     style={stylesChatScreen.participantStatus}
@@ -197,7 +258,7 @@ export default function ChatScreen({ route, setSelectedTab }) {
                 </View>
 
                 <View style={stylesChatScreen.participantsList}>
-                  {participantes.map((item, index) => (
+                  {chatActual.participants.map((item, index) => (
                     <View
                       key={index}
                       style={[
@@ -209,7 +270,7 @@ export default function ChatScreen({ route, setSelectedTab }) {
                       ]}
                     >
                       <Image
-                        source={item.icon}
+                        source={item.avatar}
                         style={stylesChatScreen.participantIcon}
                       />
                     </View>
@@ -221,7 +282,7 @@ export default function ChatScreen({ route, setSelectedTab }) {
             <View style={stylesChatScreen.commentsSection}>
               <Text style={stylesChatScreen.sectionTitle}>Comentarios</Text>
               <View style={stylesChatScreen.commentsList}>
-                {participantes.map((item, index) => (
+                {chatActual.comments.map((item, index) => (
                   <View key={index} style={stylesChatScreen.containerComment}>
                     <View style={stylesChatScreen.commentItem}>
                       <View style={stylesChatScreen.commentAvatar}>
@@ -232,17 +293,17 @@ export default function ChatScreen({ route, setSelectedTab }) {
                       </View>
                       <View style={stylesChatScreen.commentContent}>
                         <Text style={stylesChatScreen.commentName}>
-                          {item.nombre}
+                          {item.name}
                         </Text>
                         <Text style={stylesChatScreen.commentDate}>
-                          16 junio 14:32
+                          {item.timestamp}
                         </Text>
                       </View>
                     </View>
 
                     <View style={stylesChatScreen.viewComment}>
                       <Text style={stylesChatScreen.commentText}>
-                        {item.comentario}
+                        {item.content}
                       </Text>
                     </View>
                   </View>
@@ -275,7 +336,7 @@ const stylesChatScreen = StyleSheet.create({
   containerButtonback: {
     justifyContent: "center",
     width: 50,
-    height: 40
+    height: 40,
   },
 
   iconArrowBack: {
@@ -290,6 +351,9 @@ const stylesChatScreen = StyleSheet.create({
   nameTask: {
     fontSize: 18,
     fontWeight: "bold",
+    flexShrink: 1,
+    flexGrow: 1,
+    overflow: "hidden",
   },
 
   openModal: {
@@ -331,7 +395,6 @@ const stylesChatScreen = StyleSheet.create({
   contentInfo: {
     flex: 1,
     gap: 20,
-    // borderWidth: 1,
   },
 
   descripcion: {
@@ -367,14 +430,39 @@ const stylesChatScreen = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
+    gap: 5,
+    padding: 4,
+    maxWidth: 80,
+    borderRadius: 20,
+  },
+
+  priorytyAA: {
+    backgroundColor: "#ff00005b",
+  },
+  priorityMM: {
+    backgroundColor: "#ffff0057",
+  },
+
+  prioridadBB: {
+    backgroundColor: "#0099ff50",
   },
 
   circle: {
     width: 10,
     height: 10,
     backgroundColor: "#a6acaf",
-    borderRadius: 50
+    borderRadius: 50,
+  },
+
+  priorytyA: {
+    backgroundColor: "#FF0000",
+  },
+  priorityM: {
+    backgroundColor: "#FFFF00",
+  },
+
+  prioridadB: {
+    backgroundColor: "#0099FF",
   },
 
   detailValue: {
@@ -403,11 +491,36 @@ const stylesChatScreen = StyleSheet.create({
     color: "#0099FF",
   },
 
-  subtaskList: {
-    gap: 5,
+  contentSubtask: {
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#B3B6B7",
+    borderRadius: 10,
   },
+
+  contentBottom: {
+    padding: 5,
+  },
+
+  buttomSubTask: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  circleII: {
+    width: 18,
+    height: 18,
+    borderWidth: 1,
+    borderRadius: 50,
+  },
+
   subtaskItem: {
     padding: 5,
+  },
+
+  borderTop: {
+    borderTopWidth: 1,
+    borderColor: "#B3B6B7",
   },
 
   participantsSection: {

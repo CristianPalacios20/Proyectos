@@ -6,7 +6,7 @@ import {
   Image,
 } from "react-native";
 
-import IA from "../../assets/img/IA.jpg";
+import IA from "../../assets/img/IA.png";
 
 export default function buscador({
   placeholder = "buscar",

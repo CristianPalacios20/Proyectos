@@ -1,32 +1,41 @@
 import { View, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import ScreenWrapper from "./src/screen/ScreenWrapper";
 import Layout from "./src/components/Layout";
 import LoggenIn from "./src/login/LoggedIn";
-import LoginScreen from "./src/screen/LoginScreen";
-import RegisterScreen from "./src/screen/RegisterScreen";
+import LoginScreen from "./src/login/LoginScreen";
+import RegisterScreen from "./src/login/RegisterScreen";
+import { ChatProvider } from "./src/components/Context";
 
-import MostrarBoton from "./pruebas/mostrarBoton";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import AnimatedCircle from "./src/screen/AnimatedCircle";
+import { useChat } from "./src/components/Context";
 
-export default function App() {
+function AppContent() {
   const [selectedTab, setSelectedTab] = useState("Tareas");
-  const [selectedChat, setSelectedChat] = useState("chat_001");
-  const [isLoading, setIsLoading] = useState(true);
-  const [screen, setScreen] = useState("splash");
   const [currentRoute, setCurrentRoute] = useState(null);
+  const { user, setUser, selectedChat, screen, setScreen, setIsLoading } =
+    useChat();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // primero desactiva la carga
-    }, 4000);
-
-    return () => clearTimeout(timer); // limpia si el componente se desmonta
-  }, []);
+  const verificarUsuario = async () => {
+    try {
+      const storedUser = await AsyncStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+        setScreen("main");
+      } else {
+        setScreen("welcome");
+      }
+    } catch (error) {
+      console.error("Error al cargar usuario: ", error);
+      setScreen("welcome");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const delayScreenChange = (nextScreen, delay = 1000) => {
     setIsLoading(true);
@@ -41,7 +50,7 @@ export default function App() {
       case "splash":
         return (
           <View style={stylesApp.contentLogo}>
-            <AnimatedCircle setScreen={setScreen} />
+            <AnimatedCircle onFinish={verificarUsuario} />
           </View>
         );
 
@@ -59,7 +68,7 @@ export default function App() {
         return (
           <ScreenWrapper>
             <LoginScreen
-              onLoginSuccess={() => setScreen("main")}
+              // onLoginSuccess={() => setScreen("main")}
               onGoBack={() => setScreen("welcome")}
               goToRegister={() => setScreen("register")}
             />
@@ -82,8 +91,11 @@ export default function App() {
             selectedTab={selectedTab}
             setSelectedTab={setSelectedTab}
             selectedChat={selectedChat}
-            setSelectedChat={setSelectedChat}
-            onLogout={() => setScreen("welcome")}
+            onLogout={async () => {
+              await AsyncStorage.removeItem("user");
+              setUser(null);
+              setScreen("welcome");
+            }}
             currentRoute={currentRoute}
             setCurrentRoute={setCurrentRoute}
           />
@@ -92,12 +104,16 @@ export default function App() {
         return null;
     }
   };
+  return renderContent();
+}
+
+export default function App() {
   return (
     <GestureHandlerRootView>
       <SafeAreaProvider style={stylesApp.contenedor}>
-        {renderContent()}
-
-        {/* <MostrarBoton/> */}
+        <ChatProvider>
+          <AppContent />
+        </ChatProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
@@ -107,7 +123,7 @@ const stylesApp = StyleSheet.create({
   contenedor: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   contentLogo: {
     display: "flex",

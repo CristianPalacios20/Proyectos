@@ -7,16 +7,19 @@ import CrearTarea from "../screen/CrearTarea";
 import EditarPerfil from "../screen/EditarPerfil";
 
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useContext } from "react";
+import { useChat } from "./Context";
 
 export default function MainContent({
   selectedTab,
   setSelectedTab,
   selectedChat,
   isLoading,
-  dataChats,
   onLogout,
   openModal,
 }) {
+  const { dataChats = [] } = useChat();
+
   const renderScreen = () => {
     switch (selectedTab) {
       case "Tareas":
@@ -52,14 +55,11 @@ export default function MainContent({
 
       case "CrearTarea":
         return (
-          <SafeAreaView edges={["top"]} style={{ flex: 1 }}>
-            <AnimatedScreenWrapper key={selectedTab} animacion="slideUp">
-              <CrearTarea
-                selectedTab={selectedTab}
-                setSelectedTab={setSelectedTab}
-              />
-            </AnimatedScreenWrapper>
-          </SafeAreaView>
+          <CrearTarea
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+            openModal={openModal}
+          />
         );
 
       case "EditarPerfil":

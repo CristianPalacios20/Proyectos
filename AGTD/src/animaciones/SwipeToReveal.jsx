@@ -1,5 +1,5 @@
-import React, { useImperativeHandle, forwardRef } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useImperativeHandle, forwardRef } from "react";
+import { View, Image, StyleSheet, Pressable } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -8,10 +8,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
+import iconMenu from "../../assets/icons/iconMenu2.png"
+
 const SwipeToReveal = forwardRef(
   ({ children, openModal, style, onSwipeStart }, ref) => {
     const translateX = useSharedValue(0);
-    const MAX_TRANSLATE = -100;
+    const MAX_TRANSLATE = -80;
 
     const closeSwipe = () => {
       translateX.value = withTiming(0);
@@ -57,7 +59,7 @@ const SwipeToReveal = forwardRef(
             onPress={openModal}
             style={[styles.deleteButton, deleteButtonStyle]}
           >
-            <Text style={styles.deleteText}>opciones</Text>
+            <Image source={iconMenu} style={styles.deleteText} />
           </Pressable>
         </Animated.View>
         {/* Área deslizable + cierre automático al tocar */}
@@ -93,15 +95,14 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     position: "relative",
-    backgroundColor: "#626567",
+    backgroundColor: "#0099FF",
     justifyContent: "center",
     alignItems: "flex-end",
     height: "100%",
     paddingRight: 15,
   },
   deleteText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 16,
+    width: 50,
+    height: 50,
   },
 });

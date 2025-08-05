@@ -13,7 +13,7 @@ import {
   Pressable,
 } from "react-native-gesture-handler";
 
-import IA from "../../assets/img/IA.jpg";
+import IA from "../../assets/img/IA.png";
 
 export default function BtnIA() {
   const offsetX = useSharedValue(0);

@@ -6,7 +6,6 @@ import {
   Image,
   StyleSheet,
   TextInput,
-  ImageBackground,
   Platform,
 } from "react-native";
 
@@ -18,148 +17,163 @@ import iconView from "../../assets/icons/iconView.png";
 import iconFacebook from "../../assets/icons/iconFacebook.png";
 import iconGmail from "../../assets/icons/iconGmail.png";
 import vector from "../../assets/logo/Vector.png";
-import lineButton from "../../assets/logo/LineButton.png";
+import lineButtom from "../../assets/logo/LineButton.png";
 
-export default function LoginScreen({
-  onLoginSuccess,
-  onGoBack,
-  goToRegister,
-}) {
+export default function RegisterScreen({ onGoBack, onRegisterSuccess }) {
   const [ocultar, setOcultar] = useState(true);
-  const [identificador, setIdentificador] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const login = async () => {
-    if (identificador.trim() === "" || contrasena.trim() === "") {
-      setMensaje("¡Por favor ingresa usuario y/o contraseña!");
+  const register = async () => {
+    if (
+      nombre.trim() === "" ||
+      correo.trim() === "" ||
+      contrasena.trim() === ""
+    ) {
+      setMensaje("Debes completar todos los campos");
       return;
     }
-    // console.log("Enviando:", { correo: identificador, contrasena });
     try {
-      const response = await fetch("http://192.168.1.6/backend/login.php", {
+      const response = await fetch("http://192.168.1.5/backend/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ correo: identificador, contrasena }),
+        body: JSON.stringify({ nombre, correo, contrasena }),
       });
 
-      if (!response.ok) throw new Error("Error en la respuesta del servidor");
+      //primero verifica el estado de la respuesta.
+      if (!response.ok) {
+        throw new Error("¡Error en la respuesta del servidor!");
+      }
 
-      const data = await response.json();
+      // Obtiene la respuesta como texto
+      const rawData = await response.text();
+      console.log("Respuesta del servidor (RAW):", rawData); // 👈 Verifica esto
 
-      if (data.success) {
-        onLoginSuccess(data.usuario);
-      } else {
-        setMensaje(data.message);
+      try {
+        const data = await response.json();
+        if (data.success) {
+          console.log("Bienvenido", data.usuario);
+          onRegisterSuccess(data.usuario);
+        } else {
+          setMensaje(data.message);
+        }
+      } catch (jsonError) {
+        console.error("Error al parsear JSON: ", jsonError);
+        throw new Error(
+          `El servidor no devolvió JSON válido: ${rawData.substring(0, 50)}...`
+        );
       }
     } catch (error) {
-      console.error("Error al hacer la solictud:", error);
+      console.log("Error en la solicitud", error.message);
       setMensaje(`Error: ${error.message}`);
     }
-    setContrasena("");
   };
 
   useEffect(() => {
-    if (mensaje !== "") {
-      const timer = setTimeout(() => {
-        setMensaje("");
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setMensaje("");
+    }, 5000);
+    return () => clearTimeout(timer);
   }, [mensaje]);
 
   return (
-    <View style={stylesLoginScreen.conteiner}>
-      <Image source={vector} style={stylesLoginScreen.vector} />
-      <Image source={lineButton} style={stylesLoginScreen.lineButton} />
-      <TouchableOpacity onPress={onGoBack} style={stylesLoginScreen.return}>
-        <Image source={iconArrowBack} style={stylesLoginScreen.iconArrowBack} />
+    <View style={sttyleregisterScreen.conteiner}>
+      <Image source={vector} style={sttyleregisterScreen.vector} />
+      <Image source={lineButtom} style={sttyleregisterScreen.lineButton} />
+      <TouchableOpacity onPress={onGoBack} style={sttyleregisterScreen.return}>
+        <Image source={iconArrowBack} style={{ width: 20, height: 20 }} />
         <Text style={{ fontSize: 18 }}>Volver</Text>
       </TouchableOpacity>
-      <View style={stylesLoginScreen.header}>
-        <View style={stylesLoginScreen.headerTextContainer}>
-          <Text style={stylesLoginScreen.title}>¡Florece con cada tarea!</Text>
-          <Text style={stylesLoginScreen.text}>
-            Inicia sesión y cultiva tu productividad
+      <View style={sttyleregisterScreen.header}>
+        <View style={sttyleregisterScreen.headerTextContainer}>
+          <Text style={sttyleregisterScreen.title}>
+            ¡Haz florecer tus tareas!
+          </Text>
+          <Text style={sttyleregisterScreen.text}>
+            Crea tu cuenta y mejora tu productividad desde hoy.
           </Text>
         </View>
-        <View style={stylesLoginScreen.contentInputs}>
-          <View style={stylesLoginScreen.contentInputUser}>
-            <Image source={iconUser} style={stylesLoginScreen.iconUser} />
+        <View style={sttyleregisterScreen.contentInputs}>
+          <View style={sttyleregisterScreen.contentInputUser}>
+            <Image source={iconUser} style={sttyleregisterScreen.iconUser} />
             <TextInput
-              placeholder="Usuario"
-              value={identificador}
-              onChangeText={setIdentificador}
-              style={stylesLoginScreen.input}
+              placeholder="Nombre"
+              value={nombre}
+              onChangeText={setNombre}
+              style={sttyleregisterScreen.input}
             />
           </View>
-          {/* Inputs */}
-          <View style={stylesLoginScreen.contentInputPass}>
+          <View style={sttyleregisterScreen.contentInputUser}>
+            <Image source={iconUser} style={sttyleregisterScreen.iconUser} />
+            <TextInput
+              placeholder="correo/celular"
+              keyboardType="email-address"
+              value={correo}
+              onChangeText={setCorreo}
+              style={sttyleregisterScreen.input}
+            />
+          </View>
+          <View style={sttyleregisterScreen.contentInputPass}>
             <Image
               source={iconLockPassword}
-              style={stylesLoginScreen.iconUser}
+              style={sttyleregisterScreen.iconUser}
             />
             <TextInput
               placeholder="password"
+              secureTextEntry={ocultar}
               value={contrasena}
               onChangeText={setContrasena}
-              style={stylesLoginScreen.input}
-              secureTextEntry={ocultar}
+              style={sttyleregisterScreen.input}
             />
             <TouchableOpacity
               onPress={() => setOcultar(!ocultar)}
-              style={stylesLoginScreen.buttonView}
+              style={sttyleregisterScreen.buttonView}
             >
-              <Image source={iconView} style={stylesLoginScreen.iconView} />
+              <Image source={iconView} style={sttyleregisterScreen.iconView} />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => alert("Recuperar contraseña")}
-            style={stylesLoginScreen.buttonPass}
-          >
-            <Text style={stylesLoginScreen.forgotPass}>
-              ¿Olvidaste tu contraseña?
-            </Text>
-          </TouchableOpacity>
         </View>
-
-        {/* Mensaje de error */}
-        {mensaje && (
-          <Text style={stylesLoginScreen.menssageError}>{mensaje}</Text>
-        )}
-
-        {/* Botón login */}
-        <TouchableOpacity onPress={login} style={stylesLoginScreen.buttonLogin}>
-          <View style={stylesLoginScreen.contentTextLogin}>
-            <Text style={stylesLoginScreen.textLogin}>Iniciar</Text>
-            <ImageBackground style={stylesLoginScreen.contentImg}>
-              <Image source={ArrowLeft} style={stylesLoginScreen.imgLogin} />
-            </ImageBackground>
+        <TouchableOpacity
+          onPress={() => {
+            register();
+          }}
+          style={sttyleregisterScreen.buttonRegister}
+        >
+          <View style={sttyleregisterScreen.contentTextLogin}>
+            <Text style={sttyleregisterScreen.textLogin}>Registrar</Text>
+            <View style={sttyleregisterScreen.contentImg}>
+              <Image
+                source={ArrowLeft}
+                style={sttyleregisterScreen.imgRegister}
+              />
+            </View>
           </View>
         </TouchableOpacity>
       </View>
 
-      <View style={stylesLoginScreen.contentRedes}>
-        <View style={stylesLoginScreen.registerContainer}>
-          <Text style={stylesLoginScreen.textCreateAccount}>
-            Inicia sesión con o
+      {mensaje && (
+        <Text style={sttyleregisterScreen.messageError}>{mensaje}</Text>
+      )}
+
+      <View style={sttyleregisterScreen.contentRedes}>
+        <View style={sttyleregisterScreen.registerContainer}>
+          <Text style={sttyleregisterScreen.textCreateAccount}>
+            Regístrate con
           </Text>
-          <TouchableOpacity
-            onPress={goToRegister}
-            style={stylesLoginScreen.registerButton}
-          >
-            <Text style={stylesLoginScreen.textButton}>Crea una</Text>
-          </TouchableOpacity>
         </View>
-        <View style={stylesLoginScreen.contentIcons}>
-          <TouchableOpacity onPress={() => alert("Iniciar con Facebook")}>
+        <View style={sttyleregisterScreen.contentIcons}>
+          <TouchableOpacity
+            onPress={() => alert("Iniciar sesión con Facebook")}
+          >
             <Image
               source={iconFacebook}
-              style={stylesLoginScreen.iconFacebook}
+              style={sttyleregisterScreen.iconFacebook}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => alert("Iniciar con Gmail")}>
-            <Image source={iconGmail} style={stylesLoginScreen.iconGmail} />
+          <TouchableOpacity onPress={() => alert("Iniciar sesión con Gmail")}>
+            <Image source={iconGmail} style={sttyleregisterScreen.iconGmail} />
           </TouchableOpacity>
         </View>
       </View>
@@ -167,10 +181,10 @@ export default function LoginScreen({
   );
 }
 
-const stylesLoginScreen = StyleSheet.create({
+const sttyleregisterScreen = StyleSheet.create({
   conteiner: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "white",
   },
   vector: {
     position: "absolute",
@@ -209,14 +223,13 @@ const stylesLoginScreen = StyleSheet.create({
   },
   title: {
     textAlign: "center",
-    fontSize: 40,
+    width: "100%",
+    fontSize: 45,
     fontWeight: "bold",
     color: "#28a3f6",
   },
   text: {
-    width: "100%",
-    textAlign: "center",
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
     color: "#7b7d7d",
   },
@@ -225,20 +238,23 @@ const stylesLoginScreen = StyleSheet.create({
     height: "100%",
   },
   contentInputs: {
+    alignItems: "center",
+    justifyContent: "center",
     width: "100%",
     paddingLeft: 30,
     paddingRight: 30,
     gap: 20,
-    padding: 20,
+    paddingTop: 20,
   },
   contentInputUser: {
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
+    gap: 10,
     borderRadius: 30,
     ...Platform.select({
       ios: {
-        height: 50,
-        paddingLeft: 15,
+        padding: 15,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
@@ -247,6 +263,7 @@ const stylesLoginScreen = StyleSheet.create({
       },
       android: {
         height: 50,
+        padding: 7,
         paddingLeft: 15,
         elevation: 1,
         backgroundColor: "white",
@@ -256,17 +273,19 @@ const stylesLoginScreen = StyleSheet.create({
   iconUser: {
     width: 20,
     height: 20,
-    marginRight: 5,
     resizeMode: "contain",
   },
   contentInputPass: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    gap: 10,
     borderRadius: 30,
     ...Platform.select({
       ios: {
         height: 50,
-        paddingLeft: 15,
+        padding: 15,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
@@ -274,6 +293,7 @@ const stylesLoginScreen = StyleSheet.create({
         backgroundColor: "white",
       },
       android: {
+        height: 50,
         padding: 7,
         paddingLeft: 15,
         elevation: 1,
@@ -284,33 +304,27 @@ const stylesLoginScreen = StyleSheet.create({
   iconLockPassword: {
     width: 20,
     height: 20,
-    marginRight: 5,
     resizeMode: "contain",
+  },
+  buttonView: {
+    ...Platform.select({
+      android: {
+        right: 15,
+      },
+    }),
   },
   iconView: {
     width: 20,
     height: 20,
     resizeMode: "contain",
   },
-  buttonPass: {
-    alignItems: "center",
-    width: 200,
-    left: "44%",
-  },
   forgotPass: {
     fontWeight: "bold",
     color: "#a6acaf",
   },
-  menssageError: {
-    position: "absolute",
-    width: "100%",
-    top: "75%",
-    textAlign: "center",
-    color: "red",
-  },
-  buttonLogin: {
-    left: "22%",
-    top: "5%",
+  buttonRegister: {
+    left: "20%",
+    top: "10%",
   },
   contentTextLogin: {
     flexDirection: "row",
@@ -320,15 +334,11 @@ const stylesLoginScreen = StyleSheet.create({
     gap: 10,
   },
   textLogin: {
-    ...Platform.select({
-      ios: {
-        fontSize: 40,
-      },
-      android: {
-        fontSize: 30,
-      },
-    }),
     fontWeight: "bold",
+    ...Platform.select({
+      ios: { fontSize: 30 },
+      android: { fontSize: 25 },
+    }),
   },
   contentImg: {
     padding: 10,
@@ -347,9 +357,17 @@ const stylesLoginScreen = StyleSheet.create({
       },
     }),
   },
-  imgLogin: {
-    width: 30,
+  imgRegister: {
+    width: 28,
     height: 20,
+  },
+  messageError: {
+    position: "absolute",
+    width: "100%",
+    top: "60%",
+    textAlign: "center",
+    color: "red",
+    // borderWidth: 1,
   },
   registerContainer: {
     flexDirection: "row",
