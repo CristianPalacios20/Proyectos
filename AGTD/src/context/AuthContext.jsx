@@ -39,11 +39,14 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (identificador, contrasena) => {
     try {
-      const response = await fetch("http://192.168.1.3/backend/login.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ correo: identificador, contrasena }),
-      });
+      const response = await fetch(
+        "http://192.168.1.3/proyectoEnReact-Backend/backend/back-end-AGT/login.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ correo: identificador, contrasena }),
+        }
+      );
 
       if (!response.ok) throw new Error("Error en la respuesta del servidor");
 
@@ -64,11 +67,14 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (nombre, correo, celular, contrasena) => {
     try {
-      const response = await fetch("http://192.168.1.3/backend/register.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, correo, celular, contrasena }),
-      });
+      const response = await fetch(
+        "http://192.168.1.3/proyectoEnReact-Backend/backend/back-end-AGT/register.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre, correo, celular, contrasena }),
+        }
+      );
 
       //primero verifica el estado de la respuesta.
       if (!response.ok) {

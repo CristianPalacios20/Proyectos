@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import AnimatedScreenWrapper from "../animaciones/AnimatedScreenWrapper";
-import { useChat } from "../components/context/Context";
+import { useChat } from "../context/chatContext";
 
 import iconClose from "../../assets/icons/iconClose.png";
 import iconNotificacion from "../../assets/icons/iconNotificacion.png";

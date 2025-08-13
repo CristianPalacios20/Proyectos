@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createContext, useContext } from "react";
-const tareasData = require("../../json/Tareas.json");
+
+// const tareasData = require("../../json/Tareas.json");
 
 export const ChatContext = createContext(null);
 
@@ -10,10 +11,18 @@ export const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState("chat_001");
 
   useEffect(() => {
-    if (tareasData?.chats) {
-      setDataChats(tareasData.chats);
-    }
-    setIsLoading(false);
+    fetch("http://192.168.1.3/proyectoEnReact-Backend/backend/back-end-AGT/chats.php")
+      .then((responde) => responde.json())
+      .then((data) => {
+        if (data.success) {
+          setDataChats(data.data);
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error al obtener tareas", error);
+        setIsLoading(false);
+      });
   }, []);
 
   return (

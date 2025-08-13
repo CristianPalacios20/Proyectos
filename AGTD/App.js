@@ -8,11 +8,11 @@ import Layout from "./src/components/Layout";
 import LoggenIn from "./src/login/LoggedIn";
 import LoginScreen from "./src/login/LoginScreen";
 import RegisterScreen from "./src/login/RegisterScreen";
-import AppProvider from "./src/components/context/AppProvider";
+import AppProvider from "./src/context/AppProvider";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Splash from "./src/screen/Splash";
-import { useAuth } from "./src/components/context/AuthContext";
+import { useAuth } from "./src/context/AuthContext";
 
 function AppContent() {
   const [selectedTab, setSelectedTab] = useState("Tareas");

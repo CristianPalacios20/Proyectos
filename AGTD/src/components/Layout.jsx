@@ -6,9 +6,7 @@ import IAbtn from "./IAbtn";
 import ModalMenu from "../modals/ModalMenu";
 import ModalAddparticipant from "../modals/ModalAddparticipant";
 
-import { useChat } from "./context/Context";
-
-const chatData = require("../json/Tareas.json");
+import { useChat, dataChatas } from "../context/chatContext";
 
 export default function Layout({
   selectedTab,
@@ -43,8 +41,8 @@ export default function Layout({
       setIsLoading(true);
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        if (chatData?.[0]?.chats) {
-          setDataChats(chatData?.[0]?.chats);
+        if (dataChatas?.[0]?.chats) {
+          setDataChats(dataChatas?.[0]?.chats);
         }
       } catch (error) {
         console.error("Error al cargar chats: ", error);

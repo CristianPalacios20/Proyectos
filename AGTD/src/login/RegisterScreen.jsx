@@ -12,10 +12,12 @@ import {
   Pressable,
   SafeAreaView,
 } from "react-native";
-import { useAuth } from "../components/context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 import ArrowLeft from "../../assets/icons/arrowLeft.png";
 import iconUser from "../../assets/icons/iconUser.png";
+import iconEmail from "../../assets/icons/iconEmail3.png";
+import iconPhone from "../../assets/icons/iconPhone2.png";
 import iconLockPassword from "../../assets/icons/iconLockPassword.png";
 import iconView from "../../assets/icons/iconView.png";
 import vector from "../../assets/img/waveTop.png";
@@ -58,7 +60,7 @@ export default function RegisterScreen() {
       placeholder: "correo",
       value: correo,
       onChangeText: setCorreo,
-      icon: iconUser,
+      icon: iconEmail,
       keyboardType: "email-address",
       secure: false,
     },
@@ -66,7 +68,7 @@ export default function RegisterScreen() {
       placeholder: "celular",
       value: celular,
       onChangeText: setCelular,
-      icon: iconUser,
+      icon: iconPhone,
       keyboardType: "default",
       secure: false,
     },
@@ -137,7 +139,7 @@ export default function RegisterScreen() {
                 >
                   <Image
                     source={item.icon}
-                    style={sttyleregisterScreen.iconUser}
+                    style={sttyleregisterScreen.icon}
                   />
 
                   <TextInput
@@ -295,10 +297,10 @@ const sttyleregisterScreen = StyleSheet.create({
       },
     }),
   },
-  iconUser: {
+  icon: {
     width: 20,
     height: 20,
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   contentInputPass: {
     flexDirection: "row",

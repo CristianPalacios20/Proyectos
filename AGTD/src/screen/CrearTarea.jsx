@@ -14,13 +14,13 @@ import {
 } from "react-native";
 import AnimatedScreenWrapper from "../animaciones/AnimatedScreenWrapper";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useChat } from "../components/context/Context";
+import { useChat } from "../context/chatContext";
 
 import iconUser from "../../assets/icons/iconUser.png";
 import iconAdd from "../../assets/icons/iconAdd.png";
 import iconCalendar from "../../assets/icons/iconCalendario.png";
 import iconSubtareas from "../../assets/icons/iconSubTareas.png";
-import iconSend from "../../assets/icons/iconSend.png";
+import iconSend from "../../assets/icons/iconSend2.png";
 import iconOk from "../../assets/icons/iconOk.png";
 import iconError from "../../assets/icons/iconError.png";
 
@@ -101,7 +101,7 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
         throw new Error(data.message || "Error desconocido del servidor");
       }
 
-      setMensaje(`Tarea guardada`);
+      setMensaje(`Tarea creada`);
       setTipoMensaje("success");
 
       setTimeout(() => {
@@ -319,25 +319,25 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
                 </View>
                 <TouchableOpacity
                   style={styles.saveButton}
-                  onPress={()=>crearTarea}
+                  onPress={crearTarea}
                 >
                   <Text style={styles.saveText}>Guardar</Text>
                 </TouchableOpacity>
               </View>
-              {mensaje && (
-                <View style={styles.contentMessage}>
-                  <View style={styles.message}>
-                    <Image
-                      source={tipoMensaje === "success" ? iconOk : iconError}
-                      style={styles.iconOk}
-                    />
-                    <Text style={styles.textMessage}>{mensaje}</Text>
-                  </View>
-                </View>
-              )}
             </ScrollView>
           </KeyboardAvoidingView>
         </View>
+        {mensaje && (
+          <View style={styles.contentMessage}>
+            <View style={styles.message}>
+              <Image
+                source={tipoMensaje === "success" ? iconOk : iconError}
+                style={styles.icon}
+              />
+              <Text style={styles.textMessage}>{mensaje}</Text>
+            </View>
+          </View>
+        )}
       </AnimatedScreenWrapper>
     </View>
   );
@@ -571,20 +571,18 @@ const styles = StyleSheet.create({
   buttomSend: {
     alignItems: "center",
     justifyContent: "center",
-    width: 40,
-    height: 30,
-    padding: 10,
+    width: 50,
+    height: 35,
+    paddingVertical: 15,
     borderRadius: 50,
     backgroundColor: "#0099FF",
+    perspective: 500,
   },
   iconSend: {
     width: 25,
     height: 25,
     resizeMode: "cover",
-    transform: [{ rotate: "-30deg" }],
-  },
-  contentSubTask: {
-    // borderWidth: 1,
+    transform: [{ rotateX: "-30deg" }, { rotateY: "-30deg" }, { scale: 1.1 }],
   },
   borderBotomSubtask: {
     borderBottomWidth: 1,
@@ -607,25 +605,36 @@ const styles = StyleSheet.create({
 
   contentMessage: {
     position: "absolute",
-    bottom: "10%",
+    alignItems: "center",
+    justifyContent: "center",
+    top: "5%",
     width: "100%",
   },
   message: {
     flexDirection: "row",
     alignItems: "center",
-
-    maxHeight: 80,
-    gap: 10,
+    height: 45,
+    gap: 8,
     padding: 15,
     backgroundColor: "black",
     borderRadius: 50,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOpacity: 0.2,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   textMessage: {
     color: "white",
   },
-  iconOk: {
-    width: 25,
-    height: 25,
-    fontSize: 15,
+  icon: {
+    width: 20,
+    height: 20,
   },
 });

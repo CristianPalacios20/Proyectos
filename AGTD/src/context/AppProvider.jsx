@@ -1,5 +1,5 @@
 import { AuthProvider } from "./AuthContext";
-import { ChatProvider } from "./Context";
+import { ChatProvider } from "./chatContext";
 
 export default function AppProvider({ children }) {
   return (

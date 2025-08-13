@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "../components/context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import perfil from "../../assets/icons/iconUser2.png";

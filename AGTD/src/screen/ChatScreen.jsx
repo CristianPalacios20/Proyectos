@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useChat } from "../components/context/Context";
+import { useChat } from "../context/chatContext";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import iconMenu from "../../assets/icons/iconMenu.png";
