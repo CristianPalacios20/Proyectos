@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native";
 
-import iconCompartir3 from "../../../assets/icons/iconCompartir3.png";
+import iconCompartir3 from "../../assets/icons/iconCompartir3.png";
 
 export default function ModalAddparticipant({ closeModal }) {
   return (

@@ -6,10 +6,11 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Pressable,
   SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useChat } from "../components/Context";
+import { useChat } from "../components/context/Context";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import iconMenu from "../../assets/icons/iconMenu.png";
@@ -76,6 +77,7 @@ export default function ChatScreen({ route }) {
     setTextoActivo(index === textoActivo ? null : index);
     setModalActivo(false);
   };
+
   const toggleModal = () => {
     setModalActivo((prev) => !prev);
   };
@@ -119,7 +121,13 @@ export default function ChatScreen({ route }) {
           >
             <Image source={iconMenu} style={stylesChatScreen.menu} />
           </TouchableOpacity>
-          {modalActivo && (
+        </View>
+
+        {modalActivo && (
+          <Pressable
+            style={stylesChatScreen.contentModal}
+            onPress={toggleModal}
+          >
             <View style={stylesChatScreen.modal}>
               {opciones.map((item, index) => (
                 <TouchableOpacity
@@ -142,8 +150,8 @@ export default function ChatScreen({ route }) {
                 </TouchableOpacity>
               ))}
             </View>
-          )}
-        </View>
+          </Pressable>
+        )}
 
         <ScrollView style={stylesChatScreen.containerInfo}>
           <View style={stylesChatScreen.contentInfo}>
@@ -327,6 +335,7 @@ const stylesChatScreen = StyleSheet.create({
   },
 
   headerChat: {
+    position: "relative",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -364,15 +373,25 @@ const stylesChatScreen = StyleSheet.create({
     borderRadius: 50,
   },
 
-  modal: {
+  contentModal: {
     position: "absolute",
-    justifyContent: "center",
+    alignItems: "flex-end",
     top: 50,
-    right: 20,
+    width: "100%",
+    height: "100%",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    overflow: "hidden",
+    zIndex: 1,
+  },
+
+  modal: {
+    justifyContent: "center",
+    width: 250,
+    // right: 20,
     padding: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
-    zIndex: 1,
   },
 
   botonOpcion: {
@@ -382,8 +401,8 @@ const stylesChatScreen = StyleSheet.create({
   },
 
   opcionTexto: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 14,
+    fontWeight: "500",
     textTransform: "capitalize",
   },
 

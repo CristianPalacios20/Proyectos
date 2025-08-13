@@ -8,60 +8,61 @@ import {
   TextInput,
   ImageBackground,
   Platform,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useChat } from "../components/Context";
+import { useAuth } from "../components/context/AuthContext";
 
-import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import ArrowLeft from "../../assets/icons/arrowLeft.png";
 import iconUser from "../../assets/icons/iconUser.png";
 import iconLockPassword from "../../assets/icons/iconLockPassword.png";
 import iconView from "../../assets/icons/iconView.png";
 import iconFacebook from "../../assets/icons/iconFacebook.png";
 import iconGmail from "../../assets/icons/iconGmail.png";
-import vector from "../../assets/logo/Vector.png";
-import lineButton from "../../assets/logo/LineButton.png";
+import vector from "../../assets/img/waveTop.png";
+import iconError from "../../assets/icons/iconError.png";
 
-export default function LoginScreen({ onGoBack, goToRegister }) {
+export default function LoginScreen() {
   const [ocultar, setOcultar] = useState(true);
   const [identificador, setIdentificador] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const { setUser, setScreen } = useChat();
+  const { setScreen, login } = useAuth();
 
-  const login = async () => {
+  const [focusedIndex, setFocusedIndex] = useState(null);
+
+  const inputs = [
+    {
+      placeholder: "Usuario",
+      value: identificador,
+      onChangeText: setIdentificador,
+      icon: iconUser,
+      secure: false,
+    },
+    {
+      placeholder: "Password",
+      value: contrasena,
+      onChangeText: setContrasena,
+      icon: iconLockPassword,
+      secure: true,
+    },
+  ];
+
+  const handleLogin = async () => {
     if (identificador.trim() === "" || contrasena.trim() === "") {
       setMensaje("¡Por favor ingresa usuario y/o contraseña!");
       return;
     }
-    // console.log("Enviando:", { correo: identificador, contrasena });
-    try {
-      const response = await fetch("http://192.168.1.9/backend/login.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ correo: identificador, contrasena }),
-      });
 
-      if (!response.ok) throw new Error("Error en la respuesta del servidor");
+    const ok = await login(identificador, contrasena);
 
-      const data = await response.json();
-
-
-      if (data.success) {
-      console.log(data);
-
-        await AsyncStorage.setItem("user", JSON.stringify(data.users));
-        setUser(data.users);
-        setScreen("main");
-      } else {
-        setMensaje(data.message);
-      }
-    } catch (error) {
-      console.error("Error al hacer la solictud:", error);
-      setMensaje(`Error: ${error.message}`);
+    if (ok) {
+      setScreen("main");
+    } else {
+      setMensaje("Usuario y/o contraseña incorrectos");
     }
-    setContrasena("");
   };
 
   useEffect(() => {
@@ -74,217 +75,201 @@ export default function LoginScreen({ onGoBack, goToRegister }) {
   }, [mensaje]);
 
   return (
-    <View style={stylesLoginScreen.conteiner}>
-      <Image source={vector} style={stylesLoginScreen.vector} />
-      <Image source={lineButton} style={stylesLoginScreen.lineButton} />
-      <TouchableOpacity onPress={onGoBack} style={stylesLoginScreen.return}>
-        <Image source={iconArrowBack} style={stylesLoginScreen.iconArrowBack} />
-        <Text style={{ fontSize: 18 }}>Volver</Text>
-      </TouchableOpacity>
-      <View style={stylesLoginScreen.header}>
-        <View style={stylesLoginScreen.headerTextContainer}>
-          <Text style={stylesLoginScreen.title}>¡Florece con cada tarea!</Text>
-          <Text style={stylesLoginScreen.text}>
-            Inicia sesión y cultiva tu productividad
-          </Text>
-        </View>
-        <View style={stylesLoginScreen.contentInputs}>
-          <View style={stylesLoginScreen.contentInputUser}>
-            <Image source={iconUser} style={stylesLoginScreen.iconUser} />
-            <TextInput
-              placeholder="Usuario"
-              value={identificador}
-              onChangeText={setIdentificador}
-              style={stylesLoginScreen.input}
-            />
-          </View>
-          {/* Inputs */}
-          <View style={stylesLoginScreen.contentInputPass}>
-            <Image
-              source={iconLockPassword}
-              style={stylesLoginScreen.iconUser}
-            />
-            <TextInput
-              placeholder="password"
-              value={contrasena}
-              onChangeText={setContrasena}
-              style={stylesLoginScreen.input}
-              secureTextEntry={ocultar}
-            />
-            <TouchableOpacity
-              onPress={() => setOcultar(!ocultar)}
-              style={stylesLoginScreen.buttonView}
-            >
-              <Image source={iconView} style={stylesLoginScreen.iconView} />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            onPress={() => alert("Recuperar contraseña")}
-            style={stylesLoginScreen.buttonPass}
-          >
-            <Text style={stylesLoginScreen.forgotPass}>
-              ¿Olvidaste tu contraseña?
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={stylesLoginScreen.conteiner}>
+        <Image source={vector} style={stylesLoginScreen.vector} />
+        <SafeAreaView edges={["top"]} style={stylesLoginScreen.body}>
+          <View style={stylesLoginScreen.contentTextMoti}>
+            <Text style={stylesLoginScreen.title}>Bienvenido a AGT</Text>
+            <Text style={stylesLoginScreen.text}>
+              ¡Florece con cada tarea y cultiva tu productividad!.
             </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Mensaje de error */}
-        {mensaje && (
-          <Text style={stylesLoginScreen.menssageError}>{mensaje}</Text>
-        )}
-
-        {/* Botón login */}
-        <TouchableOpacity onPress={login} style={stylesLoginScreen.buttonLogin}>
-          <View style={stylesLoginScreen.contentTextLogin}>
-            <Text style={stylesLoginScreen.textLogin}>Iniciar</Text>
-            <ImageBackground style={stylesLoginScreen.contentImg}>
-              <Image source={ArrowLeft} style={stylesLoginScreen.imgLogin} />
-            </ImageBackground>
           </View>
-        </TouchableOpacity>
-      </View>
+          <View style={stylesLoginScreen.form}>
+            <View style={stylesLoginScreen.contentInputs}>
+              {/* Inputs */}
+              <View style={stylesLoginScreen.inputs}>
+                {inputs.map((item, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      stylesLoginScreen.contentInput,
+                      item.secure && stylesLoginScreen.contentInputPassword,
+                    ]}
+                  >
+                    <Image
+                      source={item.icon}
+                      style={stylesLoginScreen.iconUser}
+                    />
+                    <TextInput
+                      placeholder={item.placeholder}
+                      value={item.value}
+                      onChangeText={item.onChangeText}
+                      style={[stylesLoginScreen.input]}
+                      secureTextEntry={item.secure && ocultar}
+                    />
+                    {item.secure && (
+                      <TouchableOpacity
+                        onPress={() => setOcultar(!ocultar)}
+                        style={stylesLoginScreen.buttonView}
+                      >
+                        <Image
+                          source={iconView}
+                          style={stylesLoginScreen.iconView}
+                        />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                ))}
+              </View>
+              <TouchableOpacity
+                onPress={() => alert("Recuperar contraseña")}
+                style={stylesLoginScreen.buttonPass}
+              >
+                <Text style={stylesLoginScreen.forgotPass}>
+                  ¿Olvidaste tu contraseña?
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-      <View style={stylesLoginScreen.contentRedes}>
-        <View style={stylesLoginScreen.registerContainer}>
-          <Text style={stylesLoginScreen.textCreateAccount}>
-            Inicia sesión con o
-          </Text>
-          <TouchableOpacity
-            onPress={goToRegister}
-            style={stylesLoginScreen.registerButton}
-          >
-            <Text style={stylesLoginScreen.textButton}>Crea una</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={stylesLoginScreen.contentIcons}>
-          <TouchableOpacity onPress={() => alert("Iniciar con Facebook")}>
-            <Image
-              source={iconFacebook}
-              style={stylesLoginScreen.iconFacebook}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => alert("Iniciar con Gmail")}>
-            <Image source={iconGmail} style={stylesLoginScreen.iconGmail} />
-          </TouchableOpacity>
-        </View>
+            {/* Botón login */}
+            <TouchableOpacity
+              onPress={handleLogin}
+              style={stylesLoginScreen.buttonLogin}
+            >
+              <View style={stylesLoginScreen.contentTextLogin}>
+                <Text style={stylesLoginScreen.textLogin}>Iniciar</Text>
+                <ImageBackground style={stylesLoginScreen.contentImg}>
+                  <Image
+                    source={ArrowLeft}
+                    style={stylesLoginScreen.imgLogin}
+                  />
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+
+            <View style={stylesLoginScreen.containerRegister}>
+              <Text style={stylesLoginScreen.registerText}>
+                ¿No tienes cuenta?
+              </Text>
+              <TouchableOpacity style={stylesLoginScreen.registerButton}>
+                <Text
+                  style={stylesLoginScreen.registerButtonText}
+                  onPress={() => setScreen("register")}
+                >
+                  Regístrate
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={stylesLoginScreen.contentRedes}>
+              <View style={stylesLoginScreen.registerContainer}>
+                <View style={stylesLoginScreen.span}></View>
+                <Text style={stylesLoginScreen.textCreateAccount}>
+                  O regístrate con
+                </Text>
+                <View style={stylesLoginScreen.span}></View>
+              </View>
+              <View style={stylesLoginScreen.contentIcons}>
+                <TouchableOpacity onPress={() => alert("Iniciar con Facebook")}>
+                  <Image
+                    source={iconFacebook}
+                    style={stylesLoginScreen.iconFacebook}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => alert("Iniciar con Gmail")}>
+                  <Image
+                    source={iconGmail}
+                    style={stylesLoginScreen.iconGmail}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          {/* Mensaje de error */}
+          {mensaje && (
+            <View style={stylesLoginScreen.contentMessageError}>
+              <View style={stylesLoginScreen.message}>
+                <Image source={iconError} style={stylesLoginScreen.iconError} />
+                <Text style={stylesLoginScreen.textError}>{mensaje}</Text>
+              </View>
+            </View>
+          )}
+        </SafeAreaView>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const stylesLoginScreen = StyleSheet.create({
   conteiner: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "black",
   },
   vector: {
     position: "absolute",
+    top: 0,
     width: "100%",
   },
-  lineButton: {
-    position: "absolute",
-    bottom: "-17",
-  },
-  return: {
-    flexDirection: "row",
-    alignItems: "center",
-    position: "absolute",
-    top: "5%",
-    width: 100,
-    padding: 10,
-    gap: 10,
-  },
-  iconArrowBack: {
-    width: 20,
-    height: 20,
-    resizeMode: "contain",
-  },
-  header: {
+  body: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
-  headerTextContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
+  contentTextMoti: {
+    justifyContent: "flex-end",
     width: "100%",
+    height: "20%",
     padding: 20,
-    gap: 20,
+    gap: 8,
   },
   title: {
-    textAlign: "center",
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: "bold",
-    color: "#28a3f6",
+    color: "#0099FF",
   },
   text: {
     width: "100%",
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#7b7d7d",
+    fontSize: 15,
+    color: "white",
+  },
+  form: {
+    position: "absolute",
+    width: "100%",
+    height: "84%",
+    bottom: 0,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    backgroundColor: "white",
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    overflow: "hidden",
+  },
+  contentInputs: {
+    width: "100%",
+    gap: 20,
+    paddingVertical: 20,
+    marginTop: 40,
+    overflow: "hidden",
+  },
+  inputs: {
+    gap: 10,
+  },
+  contentInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 40,
+    gap: 10,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    borderWidth: 1.5,
   },
   input: {
     width: "80%",
     height: "100%",
   },
-  contentInputs: {
-    width: "100%",
-    paddingLeft: 30,
-    paddingRight: 30,
-    gap: 20,
-    padding: 20,
-  },
-  contentInputUser: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 30,
-    ...Platform.select({
-      ios: {
-        height: 50,
-        paddingLeft: 15,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        backgroundColor: "white",
-      },
-      android: {
-        height: 50,
-        paddingLeft: 15,
-        elevation: 1,
-        backgroundColor: "white",
-      },
-    }),
-  },
   iconUser: {
     width: 20,
     height: 20,
-    marginRight: 5,
     resizeMode: "contain",
-  },
-  contentInputPass: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 30,
-    ...Platform.select({
-      ios: {
-        height: 50,
-        paddingLeft: 15,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        backgroundColor: "white",
-      },
-      android: {
-        padding: 7,
-        paddingLeft: 15,
-        elevation: 1,
-        backgroundColor: "white",
-      },
-    }),
   },
   iconLockPassword: {
     width: 20,
@@ -292,10 +277,15 @@ const stylesLoginScreen = StyleSheet.create({
     marginRight: 5,
     resizeMode: "contain",
   },
+  buttonView: {
+    alignItems: "flex-end",
+    justifyContent: "center",
+    height: "100%",
+  },
   iconView: {
     width: 20,
     height: 20,
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   buttonPass: {
     alignItems: "center",
@@ -303,20 +293,9 @@ const stylesLoginScreen = StyleSheet.create({
     left: "44%",
   },
   forgotPass: {
-    fontWeight: "bold",
     color: "#a6acaf",
   },
-  menssageError: {
-    position: "absolute",
-    width: "100%",
-    top: "75%",
-    textAlign: "center",
-    color: "red",
-  },
-  buttonLogin: {
-    left: "22%",
-    top: "5%",
-  },
+
   contentTextLogin: {
     flexDirection: "row",
     justifyContent: "center",
@@ -325,6 +304,8 @@ const stylesLoginScreen = StyleSheet.create({
     gap: 10,
   },
   textLogin: {
+    fontWeight: "bold",
+    color: "#0099FF",
     ...Platform.select({
       ios: {
         fontSize: 40,
@@ -333,12 +314,11 @@ const stylesLoginScreen = StyleSheet.create({
         fontSize: 30,
       },
     }),
-    fontWeight: "bold",
   },
   contentImg: {
     padding: 10,
     borderRadius: 20,
-    backgroundColor: "#28a3f6",
+    backgroundColor: "#0099FF",
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -356,41 +336,104 @@ const stylesLoginScreen = StyleSheet.create({
     width: 30,
     height: 20,
   },
+
+  containerRegister: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    gap: 10,
+    paddingVertical: 20,
+    marginTop: 20,
+  },
+  registerText: {
+    fontSize: 16,
+  },
+
+  registerButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
+  contentRedes: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    gap: 20,
+    paddingVertical: 20,
+    marginTop: 20,
+    overflow: "hidden",
+  },
   registerContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
+    overflow: "hidden",
   },
-  contentRedes: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 250,
-    gap: 20,
+  span: {
+    borderWidth: 1,
+    borderColor: "#b8b8b8ff",
+    width: "100%",
   },
   textCreateAccount: {
     fontSize: 16,
-  },
-  textButton: {
-    color: "#28a3f6",
+    fontWeight: "bold",
   },
   contentIcons: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
+    gap: 10,
   },
   iconFacebook: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     resizeMode: "contain",
   },
   iconGmail: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     resizeMode: "contain",
+  },
+  contentMessageError: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    top: "6%",
+    width: "100%",
+  },
+  message: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    gap: 8,
+    paddingHorizontal: 20,
+    backgroundColor: "#E7E5E4",
+    borderRadius: 15,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3,
+      },
+      android: {
+        padding: 8,
+        elevation: 3,
+      },
+    }),
+  },
+  iconError: {
+    width: 20,
+    height: 20,
+  },
+  textError: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#0099FF",
+  },
+  buttonLogin: {
+    left: "22%",
   },
 });

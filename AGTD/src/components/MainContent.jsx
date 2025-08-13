@@ -8,7 +8,7 @@ import EditarPerfil from "../screen/EditarPerfil";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useContext } from "react";
-import { useChat } from "./Context";
+import { useChat } from "./context/Context";
 
 export default function MainContent({
   selectedTab,

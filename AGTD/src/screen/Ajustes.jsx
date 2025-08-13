@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useChat } from "../components/Context";
+import { useAuth } from "../components/context/AuthContext";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import perfil from "../../assets/icons/iconUser2.png";
@@ -14,7 +14,7 @@ import iconFriends from "../../assets/icons/iconFriends.png";
 
 export default function Ajustes({ onLogout, setSelectedTab }) {
   const navigation = useNavigation();
-  const {user} = useChat();
+  const { user, setScreen, logout } = useAuth();
 
   const opcionesCuenta = [
     { icon: iconKey, label: "Cuenta" },
@@ -26,6 +26,12 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
     { icon: iconHelp, label: "Ayuda" },
     { icon: iconFriends, label: "Invitar a amigos" },
   ];
+
+  const handleLogout = async () => {
+    await logout();
+    setScreen("login");
+  };
+
   return (
     <View style={stylesAjustes.content}>
       <View style={stylesAjustes.header}>
@@ -119,7 +125,7 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
 
           <TouchableOpacity
             style={stylesAjustes.botonCerrar}
-            onPress={() => onLogout(false)}
+            onPress={handleLogout}
           >
             <Text style={stylesAjustes.textoBotonCerrar}>cerrar sesión</Text>
           </TouchableOpacity>
@@ -207,7 +213,7 @@ const stylesAjustes = StyleSheet.create({
   },
   textNombre: {
     fontSize: 20,
-    fontWeight: "400"
+    fontWeight: "400",
   },
   optionText: {
     height: 20,

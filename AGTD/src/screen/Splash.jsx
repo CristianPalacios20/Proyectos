@@ -21,7 +21,7 @@ const { width, height } = Dimensions.get("window");
 
 const AnimatedImage = Animated.createAnimatedComponent(RNImage);
 
-export default function AnimatedCircle({ setScreen, onFinish }) {
+export default function Splash({ setScreen, onFinish }) {
   const [textoColor, setTextoColor] = useState("#fff");
   const scale = useSharedValue(1);
   const circuloOpacity = useSharedValue(1);

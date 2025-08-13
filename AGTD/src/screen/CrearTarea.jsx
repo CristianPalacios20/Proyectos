@@ -10,9 +10,11 @@ import {
   Pressable,
   ScrollView,
   Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 import AnimatedScreenWrapper from "../animaciones/AnimatedScreenWrapper";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useChat } from "../components/context/Context";
 
 import iconUser from "../../assets/icons/iconUser.png";
 import iconAdd from "../../assets/icons/iconAdd.png";
@@ -29,14 +31,15 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
-  const [category, setCategory] = useState("");
-  const [createdBy, setCreatedBy] = useState(""); // opcional: puede venir de contexto
   const [participantsIds, setParticipantsIds] = useState([]);
   const [subTasksArray, setSubTasksArray] = useState([]);
+  const [subTasksInput, setsubTasksInput] = useState("");
 
   const [showPicker, setShowPicker] = useState(false);
   const [mensaje, setMensaje] = useState(null);
   const [tipoMensaje, setTipoMensaje] = useState(null);
+
+  const { user } = useChat();
 
   const onChangeDate = (e, selectedDate) => {
     if (Platform.OS === "android") {
@@ -69,9 +72,12 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
       description,
       dueDate: dueDate.toISOString().split("T")[0],
       priority: prioridad.toLowerCase(),
-      createdBy,
+      createdBy: user?.id,
       participants: participantsIds,
-      subTasks: subTasksArray,
+      subTasks: subTasksArray.map((st) => ({
+        name: st.name,
+        completed: st.completed ?? false,
+      })),
     };
 
     try {
@@ -91,17 +97,26 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
         throw new Error("La respuesta del servidor no es JSON:\n" + text);
       }
 
-      if (!res.ok || data.status !== "success") {
+      if (!res.ok || data.success !== true) {
         throw new Error(data.message || "Error desconocido del servidor");
       }
-      setMensaje(`✅ Tarea guardada: ${data.title}`);
-      setMensaje("ok");
+
+      setMensaje(`Tarea guardada`);
+      setTipoMensaje("success");
 
       setTimeout(() => {
         setMensaje(null);
+        setTipoMensaje(null);
       }, 4000);
     } catch (err) {
       console.error("❌ Error al guardar tarea:", err.message);
+      setMensaje("Error al guardar tarea.");
+      setTipoMensaje("error");
+
+      setTimeout(() => {
+        setMensaje(null);
+        setTipoMensaje(null);
+      }, 4000);
     }
   };
 
@@ -120,171 +135,208 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
               <Text style={styles.bottomText}>Guardar</Text>
             </TouchableOpacity>
           </View>
-          <ScrollView showsHorizontalScrollIndicator={false}>
-            <View style={styles.content}>
-              <Text style={styles.title}>Coordina, colabora, crea.</Text>
 
-              <View style={styles.inputGroup}>
-                <TextInput
-                  placeholder="Título"
-                  value={title}
-                  onChangeText={setTitle}
-                  style={styles.input}
-                />
-                <TextInput
-                  placeholder="Descripción"
-                  value={description}
-                  onChangeText={setDescription}
-                  multiline
-                  style={[styles.input, styles.inputDescripcion]}
-                />
-              </View>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}
+          >
+            <ScrollView showsHorizontalScrollIndicator={false}>
+              <View style={styles.content}>
+                <Text style={styles.title}>Coordina, colabora, crea.</Text>
 
-              <View style={styles.participantsSection}>
-                <Text style={styles.label}>Participantes</Text>
-                <View style={styles.participantsList}>
-                  {participantes.map((item, index) => (
-                    <View
-                      key={index}
-                      style={[
-                        styles.participant,
-                        {
-                          marginLeft: index === 0 ? 0 : -25,
-                          zIndex: participantes.length - index,
-                        },
-                      ]}
+                <View style={styles.inputGroup}>
+                  <TextInput
+                    placeholder="Título"
+                    value={title}
+                    onChangeText={setTitle}
+                    style={styles.input}
+                  />
+                  <TextInput
+                    placeholder="Descripción"
+                    value={description}
+                    onChangeText={setDescription}
+                    multiline
+                    style={[styles.input, styles.inputDescripcion]}
+                  />
+                </View>
+
+                <View style={styles.participantsSection}>
+                  <Text style={styles.label}>Participantes</Text>
+                  <View style={styles.participantsList}>
+                    {participantes.map((item, index) => (
+                      <View
+                        key={index}
+                        style={[
+                          styles.participant,
+                          {
+                            marginLeft: index === 0 ? 0 : -25,
+                            zIndex: participantes.length - index,
+                          },
+                        ]}
+                      >
+                        <Image
+                          source={item.icon}
+                          style={[styles.participantIcon]}
+                        />
+                      </View>
+                    ))}
+                    <TouchableOpacity
+                      style={[styles.addParticipant]}
+                      onPress={() => openModal("participantes")}
                     >
-                      <Image
-                        source={item.icon}
-                        style={[styles.participantIcon]}
+                      <Image source={iconAdd} style={styles.iconAdd} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.dateSection}
+                  onPress={() => setShowPicker(true)}
+                >
+                  <Image source={iconCalendar} style={styles.iconCalendar} />
+                  <Text>{formateDate(dueDate)}</Text>
+                  <Text style={styles.helperText}>fecha</Text>
+                </TouchableOpacity>
+
+                {/* Modal fecha */}
+                <Modal transparent visible={showPicker} animationType="fade">
+                  <Pressable
+                    style={{
+                      flex: 1,
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                    }}
+                    onPress={() => setShowPicker(false)} // Cierra al tocar fuera
+                  >
+                    <View style={styles.modalDate}>
+                      <DateTimePicker
+                        value={dueDate}
+                        mode="date"
+                        display={Platform.OS === "ios" ? "spinner" : "calendar"}
+                        onChange={(event, selectedDate) => {
+                          if (selectedDate) setDueDate(selectedDate);
+                        }}
                       />
                     </View>
-                  ))}
-                  <TouchableOpacity
-                    style={[styles.addParticipant]}
-                    onPress={() => openModal("participantes")}
-                  >
-                    <Image source={iconAdd} style={styles.iconAdd} />
-                  </TouchableOpacity>
-                </View>
-              </View>
+                  </Pressable>
+                </Modal>
 
-              <TouchableOpacity
-                style={styles.dateSection}
-                onPress={() => setShowPicker(true)}
-              >
-                <Image source={iconCalendar} style={styles.iconCalendar} />
-                <Text>{formateDate(dueDate)}</Text>
-                <Text style={styles.helperText}>fecha</Text>
-              </TouchableOpacity>
-
-              {/* Modal fecha */}
-              <Modal transparent visible={showPicker} animationType="fade">
-                <Pressable
-                  style={{
-                    flex: 1,
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                  }}
-                  onPress={() => setShowPicker(false)} // Cierra al tocar fuera
-                >
-                  <View style={styles.modalDate}>
-                    <DateTimePicker
-                      value={dueDate}
-                      mode="date"
-                      display={Platform.OS === "ios" ? "spinner" : "calendar"}
-                      onChange={(event, selectedDate) => {
-                        if (selectedDate) setDueDate(selectedDate);
-                      }}
-                    />
-                  </View>
-                </Pressable>
-              </Modal>
-
-              <View style={styles.prioritySection}>
-                <View style={styles.contentInputBottom}>
-                  <TouchableOpacity
-                    style={styles.BottomPriority}
-                    onPress={() => setVisible(true)}
-                  >
-                    <Text style={styles.textPrioridad}>Prioridad</Text>
-                    <View
-                      style={[
-                        styles.badge,
-                        prioridad === "Alta"
-                          ? styles.badgeAlta
-                          : prioridad === "Media"
-                          ? styles.badgeMedia
-                          : styles.badgeBaja,
-                      ]}
+                <View style={styles.prioritySection}>
+                  <View style={styles.contentInputBottom}>
+                    <TouchableOpacity
+                      style={styles.BottomPriority}
+                      onPress={() => setVisible(true)}
                     >
-                      <Text style={styles.badgeText}>{prioridad}</Text>
-                    </View>
-                  </TouchableOpacity>
-
-                  {/* Modal de opciones */}
-                  <Modal transparent visible={visible} animationType="slide">
-                    <Pressable
-                      style={styles.modalBackground}
-                      onPress={() => setVisible(false)}
-                    >
-                      <View style={styles.modalContent}>
-                        {opcionesPrioridad.map((opt) => (
-                          <TouchableOpacity
-                            key={opt}
-                            style={styles.option}
-                            onPress={() => {
-                              setPrioridad(opt);
-                              setVisible(false);
-                            }}
-                          >
-                            <Text style={styles.optionText}>{opt}</Text>
-                          </TouchableOpacity>
-                        ))}
+                      <Text style={styles.textPrioridad}>Prioridad</Text>
+                      <View
+                        style={[
+                          styles.badge,
+                          prioridad === "Alta"
+                            ? styles.badgeAlta
+                            : prioridad === "Media"
+                            ? styles.badgeMedia
+                            : styles.badgeBaja,
+                        ]}
+                      >
+                        <Text style={styles.badgeText}>{prioridad}</Text>
                       </View>
-                    </Pressable>
-                  </Modal>
-                </View>
-              </View>
+                    </TouchableOpacity>
 
-              <View style={styles.subtaskSection}>
-                <View style={styles.subtaskHeader}>
-                  <Image source={iconSubtareas} style={styles.subtaskIcon} />
-                  <Text style={styles.labelSubtareas}>Subtareas</Text>
+                    {/* Modal de opciones */}
+                    <Modal transparent visible={visible} animationType="slide">
+                      <Pressable
+                        style={styles.modalBackground}
+                        onPress={() => setVisible(false)}
+                      >
+                        <View style={styles.modalContent}>
+                          {opcionesPrioridad.map((opt) => (
+                            <TouchableOpacity
+                              key={opt}
+                              style={styles.option}
+                              onPress={() => {
+                                setPrioridad(opt);
+                                setVisible(false);
+                              }}
+                            >
+                              <Text style={styles.optionText}>{opt}</Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+                      </Pressable>
+                    </Modal>
+                  </View>
                 </View>
-                <View style={styles.subtaskInputWrapper}>
+
+                {/* Subtareas */}
+                <View style={styles.subtaskSection}>
+                  <View style={styles.subtaskHeader}>
+                    <Image source={iconSubtareas} style={styles.subtaskIcon} />
+                    <Text style={styles.labelSubtareas}>Subtareas</Text>
+                  </View>
+                  <View style={styles.subtaskInputWrapper}>
+                    <TextInput
+                      placeholder="Añadir subtarea"
+                      style={styles.inputAddSubtask}
+                      value={subTasksInput}
+                      onChangeText={setsubTasksInput}
+                    />
+                    <TouchableOpacity
+                      style={styles.buttomSend}
+                      onPress={() => {
+                        if (subTasksInput.trim()) {
+                          setSubTasksArray([
+                            ...subTasksArray,
+                            { name: subTasksInput.trim(), completed: false },
+                          ]);
+                          setsubTasksInput("");
+                        }
+                      }}
+                    >
+                      <Image style={styles.iconSend} source={iconSend} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.contentSubTask}>
+                    {subTasksArray.map((sub, index) => (
+                      <TouchableOpacity
+                        key={index}
+                        style={[
+                          styles.subTaskItem,
+                          index < subTasksArray.length - 1 &&
+                            styles.borderBotomSubtask,
+                        ]}
+                      >
+                        <Text style={styles.subTaskText}>{sub.name}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
+
+                <View>
                   <TextInput
-                    placeholder="Añadir subtarea"
-                    style={styles}
-                    value=""
+                    placeholder="Adjuntar archivo"
+                    style={styles.input}
                   />
-                  <TouchableOpacity style={styles.buttomSend}>
-                    <Image style={styles.iconSend} source={iconSend} />
-                  </TouchableOpacity>
                 </View>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={()=>crearTarea}
+                >
+                  <Text style={styles.saveText}>Guardar</Text>
+                </TouchableOpacity>
               </View>
-              <View>
-                <TextInput
-                  placeholder="Adjuntar archivo"
-                  style={styles.input}
-                />
-              </View>
-              <TouchableOpacity style={styles.saveButton}>
-                <Text style={styles.saveText}>Guardar</Text>
-              </TouchableOpacity>
-            </View>
-            {mensaje && (
-              <View style={styles.contentMessage}>
-                <View style={styles.message}>
-                  <Image
-                    source={tipoMensaje === "ok" ? iconOk : iconError}
-                    style={styles.iconOk}
-                  />
-                  <Text style={styles.textMessage}>{mensaje}</Text>
+              {mensaje && (
+                <View style={styles.contentMessage}>
+                  <View style={styles.message}>
+                    <Image
+                      source={tipoMensaje === "success" ? iconOk : iconError}
+                      style={styles.iconOk}
+                    />
+                    <Text style={styles.textMessage}>{mensaje}</Text>
+                  </View>
                 </View>
-              </View>
-            )}
-          </ScrollView>
+              )}
+            </ScrollView>
+          </KeyboardAvoidingView>
         </View>
       </AnimatedScreenWrapper>
     </View>
@@ -310,7 +362,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     ...Platform.select({
       ios: {
-        borderRadius: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
       },
     }),
   },
@@ -507,20 +560,38 @@ const styles = StyleSheet.create({
   subtaskInputWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
+    gap: 5,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: "#D9D9D9",
+  },
+  inputAddSubtask: {
+    width: "80%",
   },
   buttomSend: {
     alignItems: "center",
     justifyContent: "center",
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 30,
+    padding: 10,
     borderRadius: 50,
     backgroundColor: "#0099FF",
   },
   iconSend: {
-    width: 22,
-    height: 22,
+    width: 25,
+    height: 25,
     resizeMode: "cover",
-    transform: [{ rotate: "-10deg" }],
+    transform: [{ rotate: "-30deg" }],
+  },
+  contentSubTask: {
+    // borderWidth: 1,
+  },
+  borderBotomSubtask: {
+    borderBottomWidth: 1,
+    borderColor: "#D9D9D9",
+  },
+  subTaskItem: {
+    padding: 10,
   },
   saveButton: {
     alignItems: "center",
@@ -536,7 +607,7 @@ const styles = StyleSheet.create({
 
   contentMessage: {
     position: "absolute",
-    bottom: 80,
+    bottom: "10%",
     width: "100%",
   },
   message: {

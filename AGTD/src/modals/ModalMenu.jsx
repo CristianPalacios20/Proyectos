@@ -8,16 +8,16 @@ import {
   Pressable,
 } from "react-native";
 
-import AnimatedScreenWrapper from "../../animaciones/AnimatedScreenWrapper";
-import { useChat } from "../../components/Context";
+import AnimatedScreenWrapper from "../animaciones/AnimatedScreenWrapper";
+import { useChat } from "../components/context/Context";
 
-import iconClose from "../../../assets/icons/iconClose.png";
-import iconNotificacion from "../../../assets/icons/iconNotificacion.png";
-import iconSilenciarNoti from "../../../assets/icons/iconSilenciarNoti.png";
-import iconInfo from "../../../assets/icons/iconInfo2.png";
-import iconDestacar from "../../../assets/icons/iconDestacar3.png";
-import iconEliminarFav from "../../../assets/icons/iconEliminarDes9.png";
-import iconEliminar2 from "../../../assets/icons/iconEliminar3.png";
+import iconClose from "../../assets/icons/iconClose.png";
+import iconNotificacion from "../../assets/icons/iconNotificacion.png";
+import iconSilenciarNoti from "../../assets/icons/iconSilenciarNoti.png";
+import iconInfo from "../../assets/icons/iconInfo2.png";
+import iconDestacar from "../../assets/icons/iconDestacar3.png";
+import iconEliminarFav from "../../assets/icons/iconEliminarDes9.png";
+import iconEliminar2 from "../../assets/icons/iconEliminar3.png";
 
 export default function ModalMenu({
   closeModal,

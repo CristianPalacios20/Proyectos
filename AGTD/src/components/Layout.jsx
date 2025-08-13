@@ -3,10 +3,10 @@ import { StyleSheet, View } from "react-native";
 
 import Main from "./Main";
 import IAbtn from "./IAbtn";
-import ModalMenu from "../screen/modals/ModalMenu";
-import ModalAddparticipant from "../screen/modals/ModalAddparticipant";
+import ModalMenu from "../modals/ModalMenu";
+import ModalAddparticipant from "../modals/ModalAddparticipant";
 
-import { useChat } from "./Context";
+import { useChat } from "./context/Context";
 
 const chatData = require("../json/Tareas.json");
 
