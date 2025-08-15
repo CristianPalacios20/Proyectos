@@ -36,6 +36,7 @@ export default function Layout({
 
   const closeModal = () => setModalVisible(null);
 
+  // 1️⃣ Carga de chats (solo una vez al montar)
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
@@ -51,7 +52,12 @@ export default function Layout({
       }
     };
     loadData();
-  }, [selectedChat]);
+  }, []);
+
+  // 2️⃣ Lógica que se ejecuta SOLO cuando cambia el chat seleccionado
+  // useEffect(() => {
+  //   selectedChat
+  // }, [selectedChat]);
 
   return (
     <View style={styles.contenedor}>
@@ -76,9 +82,7 @@ export default function Layout({
         />
       )}
       {modalVisible === "participantes" && (
-        <ModalAddparticipant
-          closeModal={closeModal}
-        />
+        <ModalAddparticipant closeModal={closeModal} />
       )}
     </View>
   );

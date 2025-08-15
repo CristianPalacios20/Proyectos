@@ -1,46 +1,62 @@
-import { useImperativeHandle, forwardRef } from "react";
-import { View, Image, StyleSheet, Pressable } from "react-native";
+import { useImperativeHandle, forwardRef, useState } from "react";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   runOnJS,
+  withSpring,
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
 
-import iconMenu from "../../assets/icons/iconMenu2.png"
+import iconMenu from "../../assets/icons/iconMenu3.png";
+
+const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 
 const SwipeToReveal = forwardRef(
   ({ children, openModal, style, onSwipeStart }, ref) => {
     const translateX = useSharedValue(0);
-    const MAX_TRANSLATE = -80;
+    const scale = useSharedValue(1);
+    const MAX_TRANSLATE = -160;
+    const messageOpacity = useSharedValue(0);
+
+    const [liked, setLiked] = useState(false);
 
     const closeSwipe = () => {
       translateX.value = withTiming(0);
     };
 
-    const isOpen = () => translateX.value !== 0;
-
-    // ✅ Exponer métodos imperativos
     useImperativeHandle(ref, () => ({
-      isOpen: () => {
-        return translateX.value !== 0;
-      },
-      closeSwipe: () => {
-        translateX.value = withTiming(0);
-      },
+      isOpen: () => translateX.value !== 0,
+      closeSwipe: () => (translateX.value = withTiming(0)),
     }));
 
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ translateX: translateX.value }],
     }));
+
+    // 🔹 Estilo para el rebote del icono
+    const iconScaleStyle = useAnimatedStyle(() => ({
+      transform: [{ scale: scale.value }],
+    }));
+
+    // const iconAnimatedProps = useDerivedValue(() => ({
+    //   color: color.value,
+    // }));
+
     const deleteButtonStyle = useAnimatedStyle(() => ({
       opacity: translateX.value < 0 ? withTiming(1) : withTiming(0),
     }));
+
+    const messageStyle = useAnimatedStyle(() => ({
+      opacity: messageOpacity.value,
+    }));
+
     const panGesture = Gesture.Pan()
       .onUpdate((e) => {
         if (e.translationX < 0) {
-          runOnJS(onSwipeStart)?.();  // Llama al padre para cerrar otros swipes
+          runOnJS(onSwipeStart)?.();
           translateX.value = e.translationX;
         }
       })
@@ -51,24 +67,71 @@ const SwipeToReveal = forwardRef(
           translateX.value = withTiming(0);
         }
       });
+
+    const handleLiked = () => {
+      const newLiked = !liked;
+      setLiked(newLiked);
+
+      // Rebote
+      scale.value = withSpring(1.3, { stiffness: 200 }, () => {
+        scale.value = withSpring(1);
+      });
+
+      // Mostrar mensaje
+      messageOpacity.value = withTiming(1, { duration: 300 }, () => {
+        messageOpacity.value = withTiming(0, { duration: 5000 });
+      });
+    };
+
     return (
-      <View style={styles.container}>
-        {/* Botón de opciones */}
-        <Animated.View style={[styles.row, style]}>
-          <Pressable
-            onPress={openModal}
-            style={[styles.deleteButton, deleteButtonStyle]}
-          >
-            <Image source={iconMenu} style={styles.deleteText} />
-          </Pressable>
-        </Animated.View>
-        {/* Área deslizable + cierre automático al tocar */}
-        <GestureDetector gesture={panGesture}>
-          <Animated.View style={[styles.card, animatedStyle]}>
-            {children}
+      <>
+        <View style={styles.container}>
+          {/* Botón de opciones */}
+          <Animated.View style={[styles.row, style]}>
+            <Pressable
+              onPress={openModal}
+              style={[
+                styles.button,
+                styles.buttonOtraOpcions,
+                deleteButtonStyle,
+              ]}
+            >
+              <Image source={iconMenu} style={styles.icon} />
+            </Pressable>
+            <Pressable
+              onPress={handleLiked}
+              style={[styles.button, deleteButtonStyle]}
+            >
+              <Animated.View style={iconScaleStyle}>
+                <Ionicons
+                  name="heart"
+                  size={30}
+                  color={liked ? "#0099FF" : "white"}
+                />
+              </Animated.View>
+            </Pressable>
           </Animated.View>
-        </GestureDetector>
-      </View>
+
+          {/* Área deslizable */}
+          <GestureDetector gesture={panGesture}>
+            <Animated.View style={[styles.card, animatedStyle]}>
+              {children}
+            </Animated.View>
+          </GestureDetector>
+        </View>
+        <Animated.View
+          style={[styles.contentMessage, messageStyle]}
+          pointerEvents="none"
+        >
+          <View style={styles.message}>
+            <Text>
+              {liked
+                ? "Agregada a la lista de destacados"
+                : "Eliminada a la lista de destacados"}
+            </Text>
+          </View>
+        </Animated.View>
+      </>
     );
   }
 );
@@ -76,33 +139,42 @@ const SwipeToReveal = forwardRef(
 export default SwipeToReveal;
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 10,
-  },
+  container: {},
   row: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
     height: 70,
-    justifyContent: "center",
     overflow: "hidden",
   },
   card: {
     backgroundColor: "white",
-    padding: 20,
     position: "absolute",
     width: "100%",
     height: "100%",
     justifyContent: "center",
     overflow: "hidden",
   },
-  deleteButton: {
-    position: "relative",
-    backgroundColor: "#0099FF",
+  button: {
+    backgroundColor: "#0099ff4d",
     justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "center",
+    width: 80,
     height: "100%",
-    paddingRight: 15,
   },
-  deleteText: {
-    width: 50,
-    height: 50,
+  buttonOtraOpcions: {
+    backgroundColor: "#6161614d",
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    resizeMode: "cover",
+  },
+
+  contentMessage: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    borderWidth: 1,
+    zIndex: 10
   },
 });

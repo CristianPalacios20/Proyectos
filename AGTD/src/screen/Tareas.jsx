@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
+import { useChat } from "../context/chatContext";
 
 import HeaderHome from "../components/HeaderHome";
 import SwipeToReveal from "../animaciones/SwipeToReveal";
@@ -24,15 +25,17 @@ moment.locale("es"); //establece el idioma en español
 
 export default function Tareas(props) {
   const {
-    data = [],
-    isLoading,
+    // data = [],
     selectedTab,
     setSelectedTab,
     openModal,
   } = props;
+
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const navigation = useNavigation();
   const refs = useRef({});
+
+  const { dataChats, isLoading, setSelectedChat } = useChat();
 
   const diasSemana = Array.from({ length: 7 }).map((_, index) => {
     const dia = moment()
@@ -85,7 +88,7 @@ export default function Tareas(props) {
         </View>
         {isLoading ? (
           <ActivityIndicator size="large" color="#007BFF" style={{ flex: 1 }} />
-        ) : !data || data.length === 0 ? (
+        ) : !dataChats || dataChats.length === 0 ? (
           <View style={stylesTareas.emptyState}>
             <Text style={stylesTareas.emptyStateText}>
               Aún no tienes tareas. ¿Deseas crear una?
@@ -99,7 +102,7 @@ export default function Tareas(props) {
           </View>
         ) : (
           <View style={stylesTareas.containerChats}>
-            {data.map((chat, index) => {
+            {dataChats.map((chat, index) => {
               if (!refs.current[chat.chatId]) {
                 refs.current[chat.chatId] = React.createRef();
               }
@@ -132,12 +135,8 @@ export default function Tareas(props) {
                       setTimeout(() => {
                         if (!currentRef.current?.isOpen()) {
                           // Doble verificación
-                          navigation.navigate("Chat", {
-                            chatId: chat.chatId,
-                            titulo: chat.title,
-                            message:
-                              chat.messages?.[0]?.content ?? "sin mensajes",
-                          });
+                          setSelectedChat(chat.chatId);
+                          navigation.navigate("Chat");
                         }
                       }, 150); // Delay óptimo para evitar conflicto con gestos
                     }}
@@ -185,6 +184,7 @@ const stylesTareas = StyleSheet.create({
   },
   taskBody: {
     flex: 1,
+
   },
   title: {
     fontSize: 30,
@@ -238,7 +238,7 @@ const stylesTareas = StyleSheet.create({
     fontSize: 16,
     color: "#777",
     textAlign: "center",
-    marginBottom: 8,
+    // marginBottom: 8,
   },
   createTaskButton: {
     backgroundColor: "#007BFF",
@@ -246,8 +246,10 @@ const stylesTareas = StyleSheet.create({
     padding: 12,
   },
   containerChats: {
+    flex: 1,
     marginTop: 20,
-    gap: 5,
+    paddingLeft: 20,
+    borderWidth: 1
   },
   task: {
     flexDirection: "row",

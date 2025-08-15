@@ -15,6 +15,7 @@ import {
 import AnimatedScreenWrapper from "../animaciones/AnimatedScreenWrapper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useChat } from "../context/chatContext";
+import { useAuth } from "../context/AuthContext";
 
 import iconUser from "../../assets/icons/iconUser.png";
 import iconAdd from "../../assets/icons/iconAdd.png";
@@ -27,19 +28,20 @@ import iconError from "../../assets/icons/iconError.png";
 export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
   const [visible, setVisible] = useState(false);
   const [prioridad, setPrioridad] = useState("");
-  const opcionesPrioridad = [" ", "Alta", "Media", "Baja"];
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(new Date());
-  const [participantsIds, setParticipantsIds] = useState([]);
-  const [subTasksArray, setSubTasksArray] = useState([]);
   const [subTasksInput, setsubTasksInput] = useState("");
-
-  const [showPicker, setShowPicker] = useState(false);
+  const [subTasksArray, setSubTasksArray] = useState([]);
+  const [participantsIds, setParticipantsIds] = useState([]);
   const [mensaje, setMensaje] = useState(null);
   const [tipoMensaje, setTipoMensaje] = useState(null);
 
-  const { user } = useChat();
+  const opcionesPrioridad = [" ", "Alta", "Media", "Baja"];
+
+  const [showPicker, setShowPicker] = useState(false);
+
+  const { crearTarea } = useChat();
 
   const onChangeDate = (e, selectedDate) => {
     if (Platform.OS === "android") {
@@ -61,55 +63,37 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
     { icon: iconUser },
   ];
 
-  const crearTarea = async () => {
-    if (!title || !description || !dueDate || !prioridad) {
+  const handleCrearTarea = async () => {
+    if (!title.trim() || !description.trim() || !dueDate || !prioridad.trim()) {
       setMensaje("Por favor, completa los campos requeridos.");
       setTimeout(() => setMensaje(null), 3000);
       return;
     }
-    const nuevaTarea = {
+
+    const ok = await crearTarea({
       title,
       description,
-      dueDate: dueDate.toISOString().split("T")[0],
-      priority: prioridad.toLowerCase(),
-      createdBy: user?.id,
-      participants: participantsIds,
-      subTasks: subTasksArray.map((st) => ({
-        name: st.name,
-        completed: st.completed ?? false,
-      })),
-    };
+      dueDate,
+      prioridad,
+      participantsIds,
+      subTasks: subTasksArray,
+    });
 
-    try {
-      const res = await fetch("http://192.168.1.9/backend/registerTask.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(nuevaTarea),
-      });
-
-      const text = await res.text();
-
-      // Intenta convertir a JSON si es posible
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (jsonErr) {
-        throw new Error("La respuesta del servidor no es JSON:\n" + text);
-      }
-
-      if (!res.ok || data.success !== true) {
-        throw new Error(data.message || "Error desconocido del servidor");
-      }
-
+    if (ok) {
       setMensaje(`Tarea creada`);
       setTipoMensaje("success");
-
       setTimeout(() => {
         setMensaje(null);
         setTipoMensaje(null);
       }, 4000);
-    } catch (err) {
-      console.error("❌ Error al guardar tarea:", err.message);
+
+      setTitle("");
+      setDescription("");
+      setDueDate(new Date());
+      setPrioridad("");
+      setParticipantsIds([]);
+      setSubTasksArray([]);
+    } else {
       setMensaje("Error al guardar tarea.");
       setTipoMensaje("error");
 
@@ -131,7 +115,10 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
             >
               <Text style={styles.bottomText}>Cancelar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton} onPress={crearTarea}>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={handleCrearTarea}
+            >
               <Text style={styles.bottomText}>Guardar</Text>
             </TouchableOpacity>
           </View>
@@ -319,7 +306,7 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
                 </View>
                 <TouchableOpacity
                   style={styles.saveButton}
-                  onPress={crearTarea}
+                  onPress={handleCrearTarea}
                 >
                   <Text style={styles.saveText}>Guardar</Text>
                 </TouchableOpacity>

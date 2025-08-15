@@ -25,11 +25,17 @@ import iconDuplicar from "../../assets/icons/iconDuplicar.png";
 import iconRecordar from "../../assets/icons/iconRecordar.png";
 
 export default function ChatScreen({ route }) {
-  const { titulo, chatId } = route.params;
+  // const { titulo, chatId } = route.params;
   const navigation = useNavigation();
-  const { dataChats, selectedChat, setSelectedChat } = useChat();
 
-  const chatActual = dataChats.find((chat) => chat.chatId === selectedChat);
+  const { chatActual, chatId, setSelectedChat } = useChat();
+
+  useEffect(() => {
+
+    if (chatId != null) {
+      setSelectedChat(Number(chatId)); // lo guardamos como número
+    }
+  }, [chatId, setSelectedChat]);
 
   const participantes = [
     {
@@ -89,12 +95,6 @@ export default function ChatScreen({ route }) {
     }
   };
 
-  useEffect(() => {
-    if (chatId) {
-      setSelectedChat(chatId); // <-- Establece el chat actual al montar
-    }
-  }, [chatId]);
-
   return (
     <SafeAreaView edges={["top"]} style={stylesChatScreen.content}>
       <View style={stylesChatScreen.body}>
@@ -113,7 +113,7 @@ export default function ChatScreen({ route }) {
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {titulo}
+            {chatActual.title}
           </Text>
           <TouchableOpacity
             style={stylesChatScreen.openModal}
@@ -159,7 +159,7 @@ export default function ChatScreen({ route }) {
               <Text style={stylesChatScreen.title}>Descripción</Text>
               <Text style={stylesChatScreen.subtitle}>
                 {chatActual ? (
-                  <Text>{chatActual.description}</Text>
+                  <Text>{chatActual?.description ?? ""}</Text>
                 ) : (
                   <Text>Selecciona un chat</Text>
                 )}
@@ -172,7 +172,7 @@ export default function ChatScreen({ route }) {
                   Fecha vencimiento
                 </Text>
                 <Text style={stylesChatScreen.detailValue}>
-                  {chatActual.dueDate}
+                  {chatActual?.dueDate ?? "Sin fecha"}
                 </Text>
               </View>
               <View style={stylesChatScreen.detailItem}>
@@ -202,14 +202,14 @@ export default function ChatScreen({ route }) {
                     ]}
                   />
                   <Text style={stylesChatScreen.detailValue}>
-                    {chatActual.priority}
+                    {chatActual?.priority ?? "Sin prioridad"}
                   </Text>
                 </View>
               </View>
               <View style={stylesChatScreen.detailItem}>
                 <Text style={stylesChatScreen.detailLabel}>Categoria</Text>
                 <Text style={stylesChatScreen.detailValue}>
-                  {chatActual.category}
+                  {chatActual?.category ?? "sin categoría"}
                 </Text>
               </View>
             </View>
@@ -227,7 +227,7 @@ export default function ChatScreen({ route }) {
                 </TouchableOpacity>
               </View>
               <View style={stylesChatScreen.contentSubtask}>
-                {chatActual.subtasks.map((subtask, index) => (
+                {chatActual?.subtasks?.map((subtask, index) => (
                   <View
                     key={subtask.subtaskId}
                     style={[
@@ -266,7 +266,7 @@ export default function ChatScreen({ route }) {
                 </View>
 
                 <View style={stylesChatScreen.participantsList}>
-                  {chatActual.participants.map((item, index) => (
+                  {chatActual?.participants?.map((item, index) => (
                     <View
                       key={index}
                       style={[
@@ -290,8 +290,16 @@ export default function ChatScreen({ route }) {
             <View style={stylesChatScreen.commentsSection}>
               <Text style={stylesChatScreen.sectionTitle}>Comentarios</Text>
               <View style={stylesChatScreen.commentsList}>
-                {chatActual.comments.map((item, index) => (
-                  <View key={index} style={stylesChatScreen.containerComment}>
+                {chatActual?.comments?.map((item, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      stylesChatScreen.containerComment,
+                      chatActual.comments === null
+                        ? { borderColor: "transparent" }
+                        : "",
+                    ]}
+                  >
                     <View style={stylesChatScreen.commentItem}>
                       <View style={stylesChatScreen.commentAvatar}>
                         <Image
@@ -584,14 +592,14 @@ const stylesChatScreen = StyleSheet.create({
   },
 
   commentsList: {
-    borderWidth: 1,
-    borderColor: "#B3B6B7",
-    borderRadius: 10,
+    // borderWidth: 1,
   },
 
   containerComment: {
     padding: 10,
     gap: 10,
+    borderColor: "#B3B6B7",
+    borderRadius: 10,
   },
 
   commentItem: {
