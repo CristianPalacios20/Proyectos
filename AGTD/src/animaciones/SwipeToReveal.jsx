@@ -11,6 +11,7 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
 import iconMenu from "../../assets/icons/iconMenu3.png";
+import iconChecked from "../../assets/icons/iconChecked.png";
 
 const AnimatedIcon = Animated.createAnimatedComponent(Ionicons);
 
@@ -21,7 +22,7 @@ const SwipeToReveal = forwardRef(
     const MAX_TRANSLATE = -160;
     const messageOpacity = useSharedValue(0);
 
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(true);
 
     const closeSwipe = () => {
       translateX.value = withTiming(0);
@@ -40,10 +41,6 @@ const SwipeToReveal = forwardRef(
     const iconScaleStyle = useAnimatedStyle(() => ({
       transform: [{ scale: scale.value }],
     }));
-
-    // const iconAnimatedProps = useDerivedValue(() => ({
-    //   color: color.value,
-    // }));
 
     const deleteButtonStyle = useAnimatedStyle(() => ({
       opacity: translateX.value < 0 ? withTiming(1) : withTiming(0),
@@ -78,8 +75,8 @@ const SwipeToReveal = forwardRef(
       });
 
       // Mostrar mensaje
-      messageOpacity.value = withTiming(1, { duration: 300 }, () => {
-        messageOpacity.value = withTiming(0, { duration: 5000 });
+      messageOpacity.value = withTiming(1, { duration: 2000 }, () => {
+        messageOpacity.value = withTiming(0, { duration: 2000 });
       });
     };
 
@@ -123,8 +120,9 @@ const SwipeToReveal = forwardRef(
           style={[styles.contentMessage, messageStyle]}
           pointerEvents="none"
         >
-          <View style={styles.message}>
-            <Text>
+          <View style={styles.glass}>
+            <Image source={iconChecked} style={styles.iconChecked} />
+            <Text style={styles.text}>
               {liked
                 ? "Agregada a la lista de destacados"
                 : "Eliminada a la lista de destacados"}
@@ -172,9 +170,31 @@ const styles = StyleSheet.create({
 
   contentMessage: {
     position: "absolute",
-    bottom: 0,
+    bottom: "20%",
     width: "100%",
-    borderWidth: 1,
-    zIndex: 10
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 10,
+  },
+  glass: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    maxWidth: "90%",
+    height: 50,
+    gap: 10,
+    paddingHorizontal: 15,
+    borderRadius: 100,
+    backgroundColor: "black",
+  },
+  iconChecked: {
+    width: 25,
+    height: 25,
+    resizeMode: "cover",
+  },
+  text: {
+    color: "white",
+    fontSize: 15
   },
 });

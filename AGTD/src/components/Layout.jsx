@@ -72,7 +72,7 @@ export default function Layout({
         openModal={openModal}
         isLoading={isLoading}
       />
-      <IAbtn />
+      {/* <IAbtn /> */}
       {modalVisible === "menu" && (
         <ModalMenu
           closeModal={closeModal}

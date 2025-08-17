@@ -59,7 +59,7 @@ export default function Main({
           <Stack.Screen name="Informacion" component={InformacionScreen} />
           <Stack.Screen name="EditarTarea" component={EditarTarea} />
           <Stack.Screen name="NuevaSubTarea" component={NuevaSubtarea} />
-          <Stack.Screen name="Destacadas" component={Destacadas} />
+          <Stack.Screen name="DestacarTarea" component={Destacadas} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

@@ -12,6 +12,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useChat } from "../context/chatContext";
 
+import LongPressWrapper from "../animaciones/LongPressWrapper";
+import MultiModals from "../modals/MultiModals";
+
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import iconMenu from "../../assets/icons/iconMenu.png";
 import iconUser from "../../assets/icons/iconUser.png";
@@ -24,14 +27,14 @@ import iconCompartir from "../../assets/icons/iconCompartir2.png";
 import iconDuplicar from "../../assets/icons/iconDuplicar.png";
 import iconRecordar from "../../assets/icons/iconRecordar.png";
 
-export default function ChatScreen({ route }) {
-  // const { titulo, chatId } = route.params;
+export default function ChatScreen() {
+  const [modalActivo, setModalActivo] = useState(null);
+  const [textoActivo, setTextoActivo] = useState(null);
   const navigation = useNavigation();
 
   const { chatActual, chatId, setSelectedChat } = useChat();
 
   useEffect(() => {
-
     if (chatId != null) {
       setSelectedChat(Number(chatId)); // lo guardamos como número
     }
@@ -63,10 +66,22 @@ export default function ChatScreen({ route }) {
   ];
   const opciones = [
     { icon: iconEditar, opcion: "editar tarea", tab: "EditarTarea" },
-    { icon: iconEliminar, opcion: "eliminar tarea", tab: "EliminarTarea" },
-    { icon: iconMarcar, opcion: "marcar como completada", tab: "MarcarTarea" },
+    {
+      icon: iconEliminar,
+      opcion: "eliminar tarea",
+      openModal: "EliminarTarea",
+    },
+    {
+      icon: iconMarcar,
+      opcion: "marcar como completada",
+      openModal: "MarcarTarea",
+    },
     { icon: iconDestacar, opcion: "destacar", tab: "DestacarTarea" },
-    { icon: iconCompartir, opcion: "compartir tarea", tab: "CompartirTarea" },
+    {
+      icon: iconCompartir,
+      opcion: "compartir tarea",
+      openModal: "CompartirTarea",
+    },
     { icon: iconDuplicar, opcion: "duplicar tarea", tab: "DuplicarTarea" },
     {
       icon: iconRecordar,
@@ -75,17 +90,13 @@ export default function ChatScreen({ route }) {
     },
   ];
 
-  const [textoActivo, setTextoActivo] = useState(null);
-  const [modalActivo, setModalActivo] = useState(false);
-  const [prioridad, setPrioridad] = useState("");
-
   const toggleColor = (index) => {
     setTextoActivo(index === textoActivo ? null : index);
-    setModalActivo(false);
+    setModalActivo(null);
   };
 
-  const toggleModal = () => {
-    setModalActivo((prev) => !prev);
+  const toggleModal = (type) => {
+    setModalActivo((prev) => (prev === type ? null : type));
   };
 
   const handleOpcionPresss = (index, item) => {
@@ -93,11 +104,16 @@ export default function ChatScreen({ route }) {
     if (item.tab) {
       navigation.navigate(item.tab);
     }
+
+    if (item.openModal) {
+      setModalActivo(item.openModal);
+    }
   };
 
   return (
-    <SafeAreaView edges={["top"]} style={stylesChatScreen.content}>
-      <View style={stylesChatScreen.body}>
+    // <SafeAreaView edges={["top"]} style={stylesChatScreen.content}>
+    <View style={stylesChatScreen.content}>
+      <SafeAreaView style={stylesChatScreen.body}>
         <View style={stylesChatScreen.headerChat}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -117,16 +133,17 @@ export default function ChatScreen({ route }) {
           </Text>
           <TouchableOpacity
             style={stylesChatScreen.openModal}
-            onPress={toggleModal}
+            onPress={() => toggleModal("opciones")}
           >
             <Image source={iconMenu} style={stylesChatScreen.menu} />
           </TouchableOpacity>
         </View>
 
-        {modalActivo && (
+        {/* Modal opciones */}
+        {modalActivo === "opciones" && (
           <Pressable
             style={stylesChatScreen.contentModal}
-            onPress={toggleModal}
+            onPress={() => setModalActivo(null)}
           >
             <View style={stylesChatScreen.modal}>
               {opciones.map((item, index) => (
@@ -235,12 +252,16 @@ export default function ChatScreen({ route }) {
                       index >= 1 ? stylesChatScreen.borderTop : null,
                     ]}
                   >
-                    <TouchableOpacity style={stylesChatScreen.buttomSubTask}>
-                      <View style={stylesChatScreen.circleII}></View>
-                      <Text style={[stylesChatScreen.subtaskItem]}>
-                        {subtask.name}
-                      </Text>
-                    </TouchableOpacity>
+                    <LongPressWrapper
+                      onLongPress={() => console.log("Presionado")}
+                    >
+                      <TouchableOpacity style={stylesChatScreen.buttomSubTask}>
+                        <View style={stylesChatScreen.circleII}></View>
+                        <Text style={[stylesChatScreen.subtaskItem]}>
+                          {subtask.name}
+                        </Text>
+                      </TouchableOpacity>
+                    </LongPressWrapper>
                   </View>
                 ))}
               </View>
@@ -257,7 +278,7 @@ export default function ChatScreen({ route }) {
                     />
                   </View>
                   <Text style={stylesChatScreen.participantName}>
-                    {chatActual.createdBy}
+                    {chatActual.createdBy.name}
                   </Text>
                   <Image
                     source={iconStar}
@@ -328,17 +349,14 @@ export default function ChatScreen({ route }) {
             </View>
           </View>
         </ScrollView>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+      <MultiModals type={modalActivo} setType={setModalActivo} />
+    </View>
   );
 }
 
 const stylesChatScreen = StyleSheet.create({
   content: {
-    flex: 1,
-  },
-
-  body: {
     flex: 1,
   },
 
@@ -390,7 +408,7 @@ const stylesChatScreen = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     overflow: "hidden",
-    zIndex: 1,
+    zIndex: 1000,
   },
 
   modal: {

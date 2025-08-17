@@ -66,7 +66,7 @@ export default function AnimatedScreenWrapper({
   }, [visible]);
 
   return (
-    <Animated.View style={[{ flex: 1 }, animatedStyle, style]}>
+    <Animated.View style={[{ flex: 1, }, animatedStyle, style]}>
       {children}
     </Animated.View>
   );

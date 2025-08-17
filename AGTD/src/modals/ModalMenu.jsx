@@ -72,7 +72,7 @@ export default function ModalMenu({
     (chat) => chat.chatId === selectedChat
   );
   const tituloChat = chatSeleccionado?.title || "titulo no disponible";
-  console.log(selectedChat);
+
   return (
     <Pressable style={stylesModalTarea.wrapper} onPress={handleClose}>
       <AnimatedScreenWrapper
@@ -158,13 +158,13 @@ const stylesModalTarea = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   headerInfo: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    width: "90%"
+    width: "90%",
   },
   porcentaje: {
     width: 20,

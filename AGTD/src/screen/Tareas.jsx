@@ -24,17 +24,11 @@ import { Ionicons } from "@expo/vector-icons";
 moment.locale("es"); //establece el idioma en español
 
 export default function Tareas(props) {
-  const {
-    // data = [],
-    selectedTab,
-    setSelectedTab,
-    openModal,
-  } = props;
+  const { selectedTab, setSelectedTab, openModal } = props;
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const navigation = useNavigation();
   const refs = useRef({});
-
   const { dataChats, isLoading, setSelectedChat } = useChat();
 
   const diasSemana = Array.from({ length: 7 }).map((_, index) => {
@@ -82,7 +76,11 @@ export default function Tareas(props) {
           </TouchableOpacity>
         ))}
       </View>
-      <ScrollView style={stylesTareas.taskBody}>
+      <ScrollView
+        style={stylesTareas.taskBody}
+        // Le decimos al scrollView que tome que crezca para que el conteinerChats tome el heigth 100%
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
         <View style={{ left: 20, top: 10 }}>
           <Text style={stylesTareas.title}>Tus tareas</Text>
         </View>
@@ -134,14 +132,13 @@ export default function Tareas(props) {
                       // 2. Si ESTÁ CERRADO: Navega después de un pequeño delay
                       setTimeout(() => {
                         if (!currentRef.current?.isOpen()) {
-                          // Doble verificación
                           setSelectedChat(chat.chatId);
                           navigation.navigate("Chat");
                         }
                       }, 150); // Delay óptimo para evitar conflicto con gestos
                     }}
                   >
-                    <View style={stylesTareas.contentTask}>
+                    <View style={stylesTareas.contentPorcentaje}>
                       <PorcentajeCircular />
                     </View>
                     <View
@@ -184,7 +181,6 @@ const stylesTareas = StyleSheet.create({
   },
   taskBody: {
     flex: 1,
-
   },
   title: {
     fontSize: 30,
@@ -238,7 +234,6 @@ const stylesTareas = StyleSheet.create({
     fontSize: 16,
     color: "#777",
     textAlign: "center",
-    // marginBottom: 8,
   },
   createTaskButton: {
     backgroundColor: "#007BFF",
@@ -246,10 +241,9 @@ const stylesTareas = StyleSheet.create({
     padding: 12,
   },
   containerChats: {
-    flex: 1,
+    height: "100%",
     marginTop: 20,
     paddingLeft: 20,
-    borderWidth: 1
   },
   task: {
     flexDirection: "row",
@@ -260,7 +254,7 @@ const stylesTareas = StyleSheet.create({
     overflow: "hidden",
   },
 
-  contentTask: {
+  contentPorcentaje: {
     alignItems: "center",
     justifyContent: "center",
     width: 50,
