@@ -14,13 +14,12 @@ import {
 } from "react-native";
 import { useAuth } from "../context/AuthContext";
 
-import ArrowLeft from "../../assets/icons/arrowLeft.png";
 import iconUser from "../../assets/icons/iconUser.png";
 import iconLockPassword from "../../assets/icons/iconLockPassword.png";
 import iconView from "../../assets/icons/iconView.png";
 import iconFacebook from "../../assets/icons/iconFacebook.png";
-import iconGmail from "../../assets/icons/iconGmail.png";
-import vector from "../../assets/img/waveTop.png";
+import iconGoogle from "../../assets/icons/iconGoogle.png";
+import vector2 from "../../assets/img/wavesBottomBlack.png";
 import iconError from "../../assets/icons/iconError.png";
 
 export default function LoginScreen() {
@@ -29,9 +28,7 @@ export default function LoginScreen() {
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const { setScreen, login } = useAuth();
-
-  const [focusedIndex, setFocusedIndex] = useState(null);
+  const { setScreen, login, isLoadingloading } = useAuth();
 
   const inputs = [
     {
@@ -58,9 +55,7 @@ export default function LoginScreen() {
 
     const ok = await login(identificador, contrasena);
 
-    if (ok) {
-      setScreen("main");
-    } else {
+    if (!ok) {
       setMensaje("Usuario y/o contraseña incorrectos");
     }
   };
@@ -77,8 +72,9 @@ export default function LoginScreen() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={stylesLoginScreen.conteiner}>
-        <Image source={vector} style={stylesLoginScreen.vector} />
+        <Image source={vector2} style={stylesLoginScreen.vector} />
         <SafeAreaView edges={["top"]} style={stylesLoginScreen.body}>
+          <Text style={stylesLoginScreen.textLogin}>Login</Text>
           <View style={stylesLoginScreen.contentTextMoti}>
             <Text style={stylesLoginScreen.title}>Bienvenido a AGT</Text>
             <Text style={stylesLoginScreen.text}>
@@ -137,15 +133,7 @@ export default function LoginScreen() {
               onPress={handleLogin}
               style={stylesLoginScreen.buttonLogin}
             >
-              <View style={stylesLoginScreen.contentTextLogin}>
-                <Text style={stylesLoginScreen.textLogin}>Iniciar</Text>
-                <ImageBackground style={stylesLoginScreen.contentImg}>
-                  <Image
-                    source={ArrowLeft}
-                    style={stylesLoginScreen.imgLogin}
-                  />
-                </ImageBackground>
-              </View>
+              <Text style={stylesLoginScreen.textLoguear}>Login</Text>
             </TouchableOpacity>
 
             <View style={stylesLoginScreen.containerRegister}>
@@ -171,17 +159,26 @@ export default function LoginScreen() {
                 <View style={stylesLoginScreen.span}></View>
               </View>
               <View style={stylesLoginScreen.contentIcons}>
-                <TouchableOpacity onPress={() => alert("Iniciar con Facebook")}>
+                <TouchableOpacity
+                  style={stylesLoginScreen.button}
+                  onPress={() => alert("Iniciar con Google")}
+                >
+                  <Image source={iconGoogle} style={[stylesLoginScreen.icon]} />
+                  <Text style={{ fontWeight: "bold", lineHeight: 22 }}>
+                    Continuar con Google
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={stylesLoginScreen.button}
+                  onPress={() => alert("Iniciar con Facebook")}
+                >
                   <Image
                     source={iconFacebook}
-                    style={stylesLoginScreen.iconFacebook}
+                    style={[stylesLoginScreen.iconFacebook]}
                   />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => alert("Iniciar con Gmail")}>
-                  <Image
-                    source={iconGmail}
-                    style={stylesLoginScreen.iconGmail}
-                  />
+                  <Text style={{ fontWeight: "bold", lineHeight: 22 }}>
+                    Continuar con Facebook
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -204,50 +201,51 @@ export default function LoginScreen() {
 const stylesLoginScreen = StyleSheet.create({
   conteiner: {
     flex: 1,
-    backgroundColor: "black",
+    gap: 0,
   },
   vector: {
     position: "absolute",
-    top: 0,
-    width: "100%",
+    bottom: 0,
+    height: "150",
+    zIndex: 100,
+    resizeMode: "cover",
   },
   body: {
     flex: 1,
   },
+  textLogin: {
+    textAlign: "center",
+    marginTop: 10,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
   contentTextMoti: {
-    justifyContent: "flex-end",
     width: "100%",
-    height: "20%",
-    padding: 20,
+    paddingHorizontal: 22,
+    marginTop: 30,
     gap: 8,
   },
   title: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "bold",
-    color: "#0099FF",
+    textAlign: "center",
   },
   text: {
+    textAlign: "center",
     width: "100%",
-    fontSize: 15,
-    color: "white",
+    fontWeight: "bold",
+    color: "#00000050",
   },
   form: {
-    position: "absolute",
     width: "100%",
-    height: "84%",
-    bottom: 0,
+    height: "100%",
     paddingHorizontal: 20,
-    alignItems: "center",
-    backgroundColor: "white",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
     overflow: "hidden",
   },
   contentInputs: {
     width: "100%",
     gap: 20,
     paddingVertical: 20,
-    marginTop: 40,
     overflow: "hidden",
   },
   inputs: {
@@ -260,7 +258,8 @@ const stylesLoginScreen = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 10,
     borderRadius: 10,
-    borderWidth: 1.5,
+    borderWidth: 1,
+    borderColor: "#7B7D7D"
   },
   input: {
     width: "80%",
@@ -293,48 +292,28 @@ const stylesLoginScreen = StyleSheet.create({
     left: "44%",
   },
   forgotPass: {
+    fontSize: 15,
+    fontWeight: "bold",
     color: "#a6acaf",
   },
-
-  contentTextLogin: {
-    flexDirection: "row",
-    justifyContent: "center",
+  buttonLogin: {
     alignItems: "center",
-    height: 50,
-    gap: 10,
+    justifyContent: "center",
+    height: 40,
+    backgroundColor: "black",
+    borderRadius: 10,
   },
-  textLogin: {
+  textLoguear: {
     fontWeight: "bold",
-    color: "#0099FF",
+    fontSize: 16,
+    textTransform: "uppercase",
+    color: "white",
     ...Platform.select({
-      ios: {
-        fontSize: 40,
-      },
+      ios: {},
       android: {
         fontSize: 30,
       },
     }),
-  },
-  contentImg: {
-    padding: 10,
-    borderRadius: 20,
-    backgroundColor: "#0099FF",
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.4,
-        shadowRadius: 3,
-      },
-      android: {
-        padding: 8,
-        elevation: 3,
-      },
-    }),
-  },
-  imgLogin: {
-    width: 30,
-    height: 20,
   },
 
   containerRegister: {
@@ -380,28 +359,35 @@ const stylesLoginScreen = StyleSheet.create({
     fontWeight: "bold",
   },
   contentIcons: {
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
-  },
-  iconFacebook: {
-    width: 30,
-    height: 30,
-    resizeMode: "contain",
-  },
-  iconGmail: {
-    width: 30,
-    height: 30,
-    resizeMode: "contain",
-  },
-  contentMessageError: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    top: "6%",
     width: "100%",
   },
+  button: {
+    flexDirection: "row",
+    alignItems: "center", 
+    justifyContent: "center",
+    gap: 12,
+    width: "100%",
+    height: 45,
+    borderWidth: 1,
+    borderColor: "#7B7D7D",
+    borderRadius: 10,
+  },
+
+  icon: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain", 
+  },
+
+  iconFacebook: {
+    width: 25,
+    height: 25,
+    resizeMode: "contain",
+  },
+
   message: {
     flexDirection: "row",
     alignItems: "center",
@@ -409,8 +395,9 @@ const stylesLoginScreen = StyleSheet.create({
     height: 40,
     gap: 8,
     paddingHorizontal: 20,
-    backgroundColor: "#E7E5E4",
-    borderRadius: 15,
+    backgroundColor: "black",
+    // backgroundColor: "#E7E5E4",
+    borderRadius: 50,
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -429,11 +416,8 @@ const stylesLoginScreen = StyleSheet.create({
     height: 20,
   },
   textError: {
-    fontWeight: "bold",
+    fontWeight: "500",
     textAlign: "center",
-    color: "#0099FF",
-  },
-  buttonLogin: {
-    left: "22%",
+    color: "white",
   },
 });

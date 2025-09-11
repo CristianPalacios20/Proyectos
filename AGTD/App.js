@@ -41,11 +41,11 @@ function AppContent() {
           <View style={stylesApp.contentLogo}>
             <Splash
               onFinish={async () => {
-                const usuario = await verificarUsuario();
+                const usuario = await verificarUsuario(); // se lee de AsyncStore
                 if (usuario) {
-                  setScreen("main");
+                  setScreen("layout"); // 👍 Si está logueado -> se va a layout
                 } else {
-                  setScreen("welcome");
+                  setScreen("welcome"); // 👎 Sino a -> welcome
                 }
               }}
             />
@@ -82,7 +82,7 @@ function AppContent() {
           </ScreenWrapper>
         );
 
-      case "main":
+      case "layout":
         return (
           <Layout
             selectedTab={selectedTab}

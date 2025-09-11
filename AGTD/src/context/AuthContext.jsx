@@ -15,15 +15,15 @@ export const AuthProvider = ({ children }) => {
       if (storedUser) {
         const userObj = JSON.parse(storedUser);
         setUser(userObj);
-        return userObj;
+        setScreen("layout");
       } else {
         setUser(null);
-        return null;
+        setScreen("splash");
       }
     } catch (error) {
       console.error("Error al cargar usuario: ", error);
       setUser(null);
-      return null;
+      setScreen("login");
     } finally {
       setIsLoading(false);
     }
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (identificador, contrasena) => {
     try {
       const response = await fetch(
-        "http://192.168.1.10/proyectoEnReact-Backend/backend/back-end-AGT/login.php",
+        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/login.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -49,9 +49,12 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
 
+      console.log(data);
+
       if (data.success) {
-        await AsyncStorage.setItem("user", JSON.stringify(data.users));
-        setUser(data.users);
+        await AsyncStorage.setItem("user", JSON.stringify(data.users)); //Guardame al usuario en AsyncStorage
+        setUser(data.users); // Actualizamos el contexto con el usuario
+        setScreen("layout");
         return true;
       } else {
         return false;
@@ -65,7 +68,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (nombre, correo, celular, contrasena) => {
     try {
       const response = await fetch(
-        "http://192.168.1.10/proyectoEnReact-Backend/backend/back-end-AGT/register.php",
+        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/register.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

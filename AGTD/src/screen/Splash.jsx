@@ -14,17 +14,18 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-import Waves from "../../assets/img/WavesBlue.png";
+import Waves from "../../assets/img/wavesBottom.png";
 import IconArrow from "../../assets/icons/iconArrow.png";
 
 const { width, height } = Dimensions.get("window");
 
 const AnimatedImage = Animated.createAnimatedComponent(RNImage);
 
-export default function Splash({ setScreen, onFinish }) {
+export default function Splash({ onFinish }) {
   const [textoColor, setTextoColor] = useState("#fff");
   const scale = useSharedValue(1);
   const circuloOpacity = useSharedValue(1);
+  const circuloTranslateY = useSharedValue(0);
   const agtTranslateX = useSharedValue(0);
   const agtTranslateY = useSharedValue(0);
   const agtScale = useSharedValue(1);
@@ -68,8 +69,10 @@ export default function Splash({ setScreen, onFinish }) {
       }, 1000)
     );
     setTimeout(() => {
-      circuloOpacity.value = withTiming(0, { duracion: 400 });
-      setTextoColor("#0094ff");
+      circuloTranslateY.value = withTiming(-250, { duration: 3500 });
+
+      // circuloOpacity.value = withTiming(0, { duracion: 400 });
+      setTextoColor("black");
     }, 2000);
 
     // Animar waves
@@ -80,7 +83,7 @@ export default function Splash({ setScreen, onFinish }) {
           duration: 800,
           easing: Easing.out(Easing.exp),
         });
-      }, 1800)
+      }, 5000)
     );
 
     timeouts.push(
@@ -90,7 +93,7 @@ export default function Splash({ setScreen, onFinish }) {
           damping: 8,
           stiffness: 120,
         });
-      }, 2500)
+      }, 5500)
     );
 
     return () => {
@@ -99,8 +102,11 @@ export default function Splash({ setScreen, onFinish }) {
   }, []);
 
   const circleStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-    opacity: circuloOpacity.value,
+    transform: [
+      { scale: scale.value },
+      { translateY: circuloTranslateY.value },
+    ],
+    // opacity: circuloOpacity.value,
   }));
 
   const agtTextStyle = useAnimatedStyle(() => ({
@@ -147,10 +153,7 @@ export default function Splash({ setScreen, onFinish }) {
       </Animated.Text>
       <AnimatedImage source={Waves} style={[styles.waves, wavesStyle]} />
       <Animated.View style={[styles.contenedorBotonContinuar, continuarStyle]}>
-        <TouchableOpacity
-          style={styles.botonContinuar}
-          onPress={onFinish}
-        >
+        <TouchableOpacity style={styles.botonContinuar} onPress={onFinish}>
           <RNImage source={IconArrow} style={[styles.iconArrow]} />
         </TouchableOpacity>
       </Animated.View>
@@ -172,7 +175,7 @@ const styles = StyleSheet.create({
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
-    backgroundColor: "#0094ff",
+    backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
   waves: {
     position: "absolute",
     width: width,
-    height: 450,
+    // height: "100%",
     bottom: 0,
     resizeMode: "cover",
   },

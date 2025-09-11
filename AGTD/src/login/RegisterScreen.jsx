@@ -20,8 +20,10 @@ import iconEmail from "../../assets/icons/iconEmail3.png";
 import iconPhone from "../../assets/icons/iconPhone2.png";
 import iconLockPassword from "../../assets/icons/iconLockPassword.png";
 import iconView from "../../assets/icons/iconView.png";
-import vector from "../../assets/img/waveTop.png";
+import vector2 from "../../assets/img/wavesBottomBlack.png";
 import iconError from "../../assets/icons/iconError.png";
+import iconFacebook from "../../assets/icons/iconFacebook.png";
+import iconGoogle from "../../assets/icons/iconGoogle.png";
 
 export default function RegisterScreen() {
   const [ocultar, setOcultar] = useState(true);
@@ -119,14 +121,9 @@ export default function RegisterScreen() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={sttyleregisterScreen.conteiner}>
-        <Image source={vector} style={sttyleregisterScreen.vector} />
+        <Image source={vector2} style={sttyleregisterScreen.vector} />
         <SafeAreaView edges={["top"]} style={sttyleregisterScreen.body}>
-          <View style={sttyleregisterScreen.headerTextContainer}>
-            <Text style={sttyleregisterScreen.title}>Bienvenido a AGT</Text>
-            <Text style={sttyleregisterScreen.text}>
-              ¡Haz florecer tus tareas y mejora tu productividad desde hoy!.
-            </Text>
-          </View>
+          <Text style={sttyleregisterScreen.titleRegistrar}>Registrar</Text>
           <View style={sttyleregisterScreen.form}>
             <View style={sttyleregisterScreen.conteinerInputs}>
               {inputsRegister.map((item, index) => (
@@ -137,10 +134,7 @@ export default function RegisterScreen() {
                     focusedIndex === index && sttyleregisterScreen.focusInput,
                   ]}
                 >
-                  <Image
-                    source={item.icon}
-                    style={sttyleregisterScreen.icon}
-                  />
+                  <Image source={item.icon} style={sttyleregisterScreen.icon} />
 
                   <TextInput
                     ref={inputsRefs[index]}
@@ -183,15 +177,7 @@ export default function RegisterScreen() {
                 onPress={handleRegister}
                 style={sttyleregisterScreen.buttonRegister}
               >
-                <View style={sttyleregisterScreen.contentTextLogin}>
-                  <Text style={sttyleregisterScreen.textLogin}>Continuar</Text>
-                  <View style={sttyleregisterScreen.contentImg}>
-                    <Image
-                      source={ArrowLeft}
-                      style={sttyleregisterScreen.imgRegister}
-                    />
-                  </View>
-                </View>
+                <Text style={sttyleregisterScreen.textLogin}>Registrar</Text>
               </TouchableOpacity>
             </View>
             <View style={sttyleregisterScreen.loginContainer}>
@@ -206,6 +192,39 @@ export default function RegisterScreen() {
                   Iniciar sesión
                 </Text>
               </TouchableOpacity>
+            </View>
+            <View style={sttyleregisterScreen.contentRedes}>
+              <View style={sttyleregisterScreen.registerContainer}>
+                <View style={sttyleregisterScreen.span}></View>
+                <Text style={sttyleregisterScreen.textCreateAccount}>O</Text>
+                <View style={sttyleregisterScreen.span}></View>
+              </View>
+              <View style={sttyleregisterScreen.contentIcons}>
+                <TouchableOpacity
+                  style={sttyleregisterScreen.button}
+                  onPress={() => alert("Iniciar con Google")}
+                >
+                  <Image
+                    source={iconGoogle}
+                    style={[sttyleregisterScreen.icon]}
+                  />
+                  <Text style={{ fontWeight: "bold", lineHeight: 22 }}>
+                    Continuar con Google
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={sttyleregisterScreen.button}
+                  onPress={() => alert("Iniciar con Facebook")}
+                >
+                  <Image
+                    source={iconFacebook}
+                    style={[sttyleregisterScreen.iconFacebook]}
+                  />
+                  <Text style={{ fontWeight: "bold", lineHeight: 22 }}>
+                    Continuar con Facebook
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
           {/* Mensaje de error */}
@@ -229,36 +248,29 @@ export default function RegisterScreen() {
 const sttyleregisterScreen = StyleSheet.create({
   conteiner: {
     flex: 1,
-    backgroundColor: "black",
+    // backgroundColor: "black",
   },
   vector: {
     position: "absolute",
     width: "100%",
+    height: "150",
+    bottom: 0,
+    zIndex: 100,
+    resizeMode: "cover",
   },
   body: {
     flex: 1,
   },
-  headerTextContainer: {
-    justifyContent: "flex-end",
-    width: "100%",
-    height: "20%",
-    padding: 20,
-    gap: 8,
-  },
-  title: {
-    width: "100%",
-    fontSize: 30,
+  titleRegistrar: {
+    fontSize: 28,
+    textAlign: "center",
     fontWeight: "bold",
-    color: "#0099FF",
-  },
-  text: {
-    fontSize: 15,
-    color: "white",
   },
   form: {
     position: "absolute",
     bottom: 0,
-    height: "84%",
+    height: "100%",
+    width: "100%",
     gap: 20,
     paddingHorizontal: 20,
     backgroundColor: "white",
@@ -272,19 +284,20 @@ const sttyleregisterScreen = StyleSheet.create({
     gap: 10,
     marginTop: 40,
   },
-  input: {
-    width: "80%",
-    height: "100%",
-  },
   contentInput: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
     gap: 10,
     height: 40,
-    borderWidth: 1.5,
+    borderWidth: 1,
+    borderColor: "#7B7D7D",
     paddingHorizontal: 10,
     borderRadius: 10,
+  },
+  input: {
+    width: "80%",
+    height: "100%",
   },
   focusInput: {
     borderWidth: 2,
@@ -331,40 +344,20 @@ const sttyleregisterScreen = StyleSheet.create({
     color: "#a6acaf",
   },
   contentButtonRegister: {
-    alignItems: "flex-end",
     width: "100%",
   },
-  contentTextLogin: {
-    flexDirection: "row",
-    justifyContent: "center",
+  buttonRegister: {
     alignItems: "center",
-    height: 50,
-    gap: 10,
+    justifyContent: "center",
+    height: 40,
+    backgroundColor: "black",
+    borderRadius: 10,
   },
   textLogin: {
+    color: "white",
     fontWeight: "bold",
-    color: "#0099FF",
-    ...Platform.select({
-      ios: { fontSize: 30 },
-      android: { fontSize: 25 },
-    }),
-  },
-  contentImg: {
-    padding: 10,
-    borderRadius: 20,
-    backgroundColor: "#0099FF",
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.4,
-        shadowRadius: 3,
-      },
-      android: {
-        padding: 8,
-        elevation: 3,
-      },
-    }),
+    textTransform: "uppercase",
+    fontSize: 16,
   },
   imgRegister: {
     width: 28,
@@ -397,6 +390,59 @@ const sttyleregisterScreen = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  contentRedes: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    gap: 20,
+    paddingVertical: 20,
+    marginTop: 20,
+    overflow: "hidden",
+  },
+  registerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    overflow: "hidden",
+  },
+  span: {
+    borderWidth: 1,
+    borderColor: "#b8b8b8ff",
+    width: "100%",
+  },
+  textCreateAccount: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  contentIcons: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    width: "100%",
+  },
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 12,
+    width: "100%",
+    height: 45,
+    borderWidth: 1,
+    borderColor: "#7B7D7D",
+    borderRadius: 10,
+  },
+
+  icon: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
+  },
+
+  iconFacebook: {
+    width: 25,
+    height: 25,
+    resizeMode: "contain",
+  },
   contentMessageError: {
     position: "absolute",
     alignItems: "center",
@@ -412,8 +458,9 @@ const sttyleregisterScreen = StyleSheet.create({
     height: 40,
     gap: 8,
     paddingHorizontal: 20,
-    backgroundColor: "#E7E5E4",
-    borderRadius: 15,
+    backgroundColor: "black",
+    // backgroundColor: "#E7E5E4",
+    borderRadius: 50,
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -432,9 +479,9 @@ const sttyleregisterScreen = StyleSheet.create({
     height: 20,
   },
   textError: {
-    fontWeight: "bold",
+    fontWeight: "500",
     textAlign: "center",
-    color: "#0099FF",
+    color: "white",
   },
   buttonLogin: {
     left: "22%",

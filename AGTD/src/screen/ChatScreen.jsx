@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useChat } from "../context/chatContext";
+import { useAuth } from "../context/AuthContext";
 
 import LongPressWrapper from "../animaciones/LongPressWrapper";
 import MultiModals from "../modals/MultiModals";
@@ -33,6 +34,7 @@ export default function ChatScreen() {
   const navigation = useNavigation();
 
   const { chatActual, chatId, setSelectedChat } = useChat();
+  const {user} = useAuth();
 
   useEffect(() => {
     if (chatId != null) {
@@ -64,6 +66,7 @@ export default function ChatScreen() {
       comentario: "Lorem ipsum dolor sit amet",
     },
   ];
+
   const opciones = [
     { icon: iconEditar, opcion: "editar tarea", tab: "EditarTarea" },
     {
@@ -278,7 +281,7 @@ export default function ChatScreen() {
                     />
                   </View>
                   <Text style={stylesChatScreen.participantName}>
-                    {chatActual.createdBy.name}
+                    {user.nombre}
                   </Text>
                   <Image
                     source={iconStar}

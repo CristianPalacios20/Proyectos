@@ -7,7 +7,6 @@ import CrearTarea from "../screen/CrearTarea";
 import EditarPerfil from "../screen/EditarPerfil";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useContext } from "react";
 import { useChat } from "../context/chatContext";
 
 export default function MainContent({

@@ -114,7 +114,7 @@ const stylesLogin = StyleSheet.create({
     height: 40,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "#28a3f6",
+    backgroundColor: "black",
   },
   buttonLogin: {
     alignItems: "center",
@@ -123,11 +123,11 @@ const stylesLogin = StyleSheet.create({
     height: 40,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "#28a3f6",
+    backgroundColor: "black",
   },
   buttonText: {
-    fontSize: 15,
     fontWeight: "bold",
+    textTransform: "uppercase",
     color: "white",
   },
 });

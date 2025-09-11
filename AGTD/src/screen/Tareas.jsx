@@ -226,9 +226,9 @@ const stylesTareas = StyleSheet.create({
 
   emptyState: {
     flex: 1,
-    marginTop: 10,
     alignItems: "center",
     justifyContent: "center",
+    gap: 20
   },
   emptyStateText: {
     fontSize: 16,

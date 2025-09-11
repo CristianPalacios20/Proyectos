@@ -12,36 +12,45 @@ export const ChatProvider = ({ children }) => {
 
   const { user } = useAuth();
 
-  useEffect(() => {
-    const obtenerTareas = async () => {
-      try {
-        const response = await fetch(
-          "http://192.168.1.10/proyectoEnReact-Backend/backend/back-end-AGT/chats.php"
+useEffect(() => {
+  if (!user) return; // ⬅️ no ejecuta hasta que user exista
+
+  const obtenerTareas = async () => {
+    try {
+      const response = await fetch(
+        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/chats.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: user.id }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Servidor respondió con estatus:  ${response.status}`
         );
-
-        if (!response.ok) {
-          throw new Error(
-            `Servidor respondió con estatus:  ${response.status}`
-          );
-        }
-
-        const data = await response.json();
-        // console.log("Datos recibidos: ", data);
-
-        if (data.success) {
-          setDataChats(data.data);
-        } else {
-          console.warn("la API respondió: ", data);
-        }
-      } catch (error) {
-        console.error("Error al obtner tareas: ", error.message);
       }
-    };
-    obtenerTareas();
-  }, []);
+
+      const data = await response.json();
+      console.log("Datos recibidos: ", data);
+
+      if (data.success) {
+        setDataChats(data.data);
+      } else {
+        console.warn("la API respondió: ", data);
+      }
+    } catch (error) {
+      console.error("Error al obtener tareas: ", error.message);
+    }
+  };
+
+  obtenerTareas();
+}, [user]); // <- se dispara cuando user cambie
+
 
   const chatActual = dataChats.find(
-    (chat) => Number(chat.chatId) === Number(selectedChat),
+    (chat) => Number(chat.chatId) === Number(selectedChat)
   );
 
   const crearTarea = async ({
@@ -80,7 +89,7 @@ export const ChatProvider = ({ children }) => {
       }, 5000);
 
       const res = await fetch(
-        "http://192.168.1.10/proyectoEnReact-Backend/backend/back-end-AGT/registerTask.php",
+        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/registerTask.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
