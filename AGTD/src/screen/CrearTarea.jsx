@@ -15,7 +15,6 @@ import {
 import AnimatedScreenWrapper from "../animaciones/AnimatedScreenWrapper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useChat } from "../context/chatContext";
-import { useAuth } from "../context/AuthContext";
 
 import iconUser from "../../assets/icons/iconUser.png";
 import iconAdd from "../../assets/icons/iconAdd.png";
@@ -94,7 +93,7 @@ export default function CrearTarea({ selectedTab, setSelectedTab, openModal }) {
       setParticipantsIds([]);
       setSubTasksArray([]);
     } else {
-      setMensaje("Error al guardar tarea.");
+      setMensaje("Error al guardar tarea");
       setTipoMensaje("error");
 
       setTimeout(() => {

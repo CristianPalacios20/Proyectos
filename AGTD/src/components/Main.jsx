@@ -6,6 +6,8 @@ import {
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { useAuth } from "../context/AuthContext";
+
 import MainContent from "./MainContent";
 import ChatScreen from "../screen/ChatScreen";
 import InformacionScreen from "../screen/InformacionScreen";
@@ -16,13 +18,12 @@ import Destacadas from "../screen/Destacadas";
 const Stack = createStackNavigator();
 
 export default function Main({
-  selectedTab,
   onLogout,
-  setSelectedTab,
   setCurrentRoute,
   openModal,
   isLoading,
 }) {
+  const { selectedTab, setSelectedTab } = useAuth();
   const navRef = useNavigationContainerRef();
 
   return (

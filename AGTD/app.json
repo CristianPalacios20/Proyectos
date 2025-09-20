@@ -14,9 +14,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.tuempresa.AGTD",
       "statusBar": {
-        "barStyle": "dark-content", 
+        "barStyle": "dark-content",
         "backgroundColor": "#ffffff",
-        "translucent": false 
+        "translucent": false
       }
     },
     "android": {
@@ -26,7 +26,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
   }
 }
-

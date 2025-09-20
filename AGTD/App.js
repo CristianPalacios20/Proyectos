@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -8,6 +8,9 @@ import Layout from "./src/components/Layout";
 import LoggenIn from "./src/login/LoggedIn";
 import LoginScreen from "./src/login/LoginScreen";
 import RegisterScreen from "./src/login/RegisterScreen";
+import RecuperarContrasena from "./src/screen/recuperarContrasena";
+import ResetearContrasena from "./src/screen/resetearContrasena";
+import CrearContrasena from "./src/screen/crearContrasena";
 import AppProvider from "./src/context/AppProvider";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,13 +18,14 @@ import Splash from "./src/screen/Splash";
 import { useAuth } from "./src/context/AuthContext";
 
 function AppContent() {
-  const [selectedTab, setSelectedTab] = useState("Tareas");
   const [currentRoute, setCurrentRoute] = useState(null);
   const {
     setUser,
     selectedChat,
     screen,
     setScreen,
+    selectedTab,
+    setSelectedTab,
     setIsLoading,
     verificarUsuario,
   } = useAuth();
@@ -97,6 +101,12 @@ function AppContent() {
             setCurrentRoute={setCurrentRoute}
           />
         );
+      case "recuperarContrasena":
+        return <RecuperarContrasena />;
+      case "resetearContrasena":
+        return <ResetearContrasena />;
+      case "crearContrasena":
+        return <CrearContrasena />;
       default:
         return null;
     }

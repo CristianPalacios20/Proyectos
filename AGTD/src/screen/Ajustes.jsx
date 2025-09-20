@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import perfil from "../../assets/icons/iconUser2.png";
+import iconEditar from "../../assets/icons/iconEdit2.png";
 import iconArrowLeft from "../../assets/icons/iconArrowLeft.png";
 import iconKey from "../../assets/icons/iconKey.png";
 import iconPadlock from "../../assets/icons/iconPadlock.png";
@@ -46,25 +47,20 @@ export default function Ajustes({ onLogout, setSelectedTab }) {
 
       <View style={stylesAjustes.contentOptions}>
         <View style={stylesAjustes.extraOptions}>
-          <View
-            style={[
-              stylesAjustes.optionGroup,
-              stylesAjustes.optionButtonPerfil,
-            ]}
-          >
-            <View style={stylesAjustes.contenedorinfo}>
-              <View style={stylesAjustes.contenedorImgPerfil}>
-                <Image source={perfil} style={stylesAjustes.perfil} />
-              </View>
-              <Text style={stylesAjustes.textNombre}>{user?.nombre}</Text>
+          <View style={[stylesAjustes.optionGroup, stylesAjustes.optionPerfil]}>
+            <View style={stylesAjustes.contenedorImgPerfil}>
+              <Image source={perfil} style={stylesAjustes.perfil} />
             </View>
-            <View style={stylesAjustes.contentEditarperfil}>
-              <TouchableOpacity onPress={() => setSelectedTab("EditarPerfil")}>
-                <Text
-                  style={[stylesAjustes.optionText, stylesAjustes.perfiltext]}
-                >
-                  Editar perfil
-                </Text>
+            <View style={stylesAjustes.contentEdit}>
+              <TouchableOpacity style={stylesAjustes.userInfo}>
+                <Text style={stylesAjustes.textNombre}>{user?.nombre}</Text>
+                <Image source={iconArrowBack} style={stylesAjustes.iconArrow}/>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={stylesAjustes.edit}
+                onPress={() => setSelectedTab("EditarPerfil")}
+              >
+                <Image source={iconEditar} style={stylesAjustes.iconEditar} />
               </TouchableOpacity>
             </View>
           </View>
@@ -139,7 +135,6 @@ const stylesAjustes = StyleSheet.create({
   content: {
     flex: 1,
   },
-
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -147,7 +142,6 @@ const stylesAjustes = StyleSheet.create({
     height: 80,
     padding: 10,
   },
-
   title: {
     fontSize: 25,
     fontWeight: "600",
@@ -155,7 +149,6 @@ const stylesAjustes = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 16,
   },
-
   buttonBack: {
     position: "absolute",
     flexDirection: "row",
@@ -182,58 +175,65 @@ const stylesAjustes = StyleSheet.create({
     width: "100%",
     borderRadius: 10,
   },
-  optionButtonPerfil: {
+  optionPerfil: {
+    alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    maxHeight: 120,
     gap: 15,
     padding: 20,
-    backgroundColor: "white",
+    // backgroundColor: "white",
+    // borderWidth: 1,
   },
-
-  contenedorinfo: {
-    flexDirection: "row",
-    gap: 20,
-    alignItems: "center",
-  },
-
   contenedorImgPerfil: {
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
-    height: 50,
+    width: 120,
+    height: 120,
     borderRadius: 80,
     backgroundColor: "#D9D9D9",
   },
-
+  contentEdit: {
+    flexDirection: "row",
+    gap: "10",
+  },
+  userInfo: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 5
+  },
+  iconArrow: {
+    width: 20,
+    height: 20,
+    transform: [{rotate: "-90deg"}]
+  },
+  edit: {
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
+    left: 160,
+    width: 50,
+    height: 30,
+    borderRadius: 20,
+    backgroundColor: "#d9d9d985",
+  },
+  iconEditar: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
+  },
   perfil: {
-    width: 40,
-    height: 40,
+    width: 80,
+    height: 80,
     resizeMode: "cover",
   },
   textNombre: {
-    fontSize: 20,
-    fontWeight: "400",
+    fontSize: 18,
+    fontWeight: "600",
   },
   optionText: {
     height: 20,
     fontSize: 16,
   },
-
-  contentEditarperfil: {
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderColor: "#D9D9D9",
-    // borderWidth: 1
-  },
-
-  perfiltext: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#0099FF",
-    height: 30,
-  },
-
   optionButton: {
     flexDirection: "row",
     position: "relative",
@@ -242,7 +242,6 @@ const stylesAjustes = StyleSheet.create({
   },
   optionGroupCuenta: {
     justifyContent: "center",
-    height: 120,
     gap: 15,
   },
 
@@ -274,7 +273,6 @@ const stylesAjustes = StyleSheet.create({
   },
   optionGroupExtras: {
     justifyContent: "center",
-    height: 80,
     gap: 15,
     marginTop: 20,
   },

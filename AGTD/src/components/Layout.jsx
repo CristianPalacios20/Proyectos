@@ -9,14 +9,14 @@ import ModalAddparticipant from "../modals/ModalAddparticipant";
 import { useChat, dataChatas } from "../context/chatContext";
 
 export default function Layout({
-  selectedTab,
-  setSelectedTab,
   setIsLoggedIn,
   onLogout,
   setCurrentRoute,
   onLoginSuccess,
 }) {
   const {
+    selectedTab,
+    setSelectedTab,
     setDataChats,
     selectedChat,
     setSelectedChat,

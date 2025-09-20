@@ -53,7 +53,7 @@ const SwipeToReveal = forwardRef(
     const panGesture = Gesture.Pan()
       .onUpdate((e) => {
         if (e.translationX < 0) {
-          runOnJS(onSwipeStart)?.();
+          onSwipeStart?.();
           translateX.value = e.translationX;
         }
       })
@@ -81,7 +81,7 @@ const SwipeToReveal = forwardRef(
     };
 
     return (
-      <>
+      <View style={{flex: 1}}>
         <View style={styles.container}>
           {/* Botón de opciones */}
           <Animated.View style={[styles.row, style]}>
@@ -129,7 +129,7 @@ const SwipeToReveal = forwardRef(
             </Text>
           </View>
         </Animated.View>
-      </>
+      </View>
     );
   }
 );

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -12,19 +12,18 @@ import Animated, {
   withTiming,
   withSpring,
   Easing,
+  interpolateColor,
 } from "react-native-reanimated";
 
 import Waves from "../../assets/img/wavesBottom.png";
 import IconArrow from "../../assets/icons/iconArrow.png";
 
 const { width, height } = Dimensions.get("window");
-
 const AnimatedImage = Animated.createAnimatedComponent(RNImage);
 
 export default function Splash({ onFinish }) {
-  const [textoColor, setTextoColor] = useState("#fff");
+  // Animaciones
   const scale = useSharedValue(1);
-  const circuloOpacity = useSharedValue(1);
   const circuloTranslateY = useSharedValue(0);
   const agtTranslateX = useSharedValue(0);
   const agtTranslateY = useSharedValue(0);
@@ -33,8 +32,11 @@ export default function Splash({ onFinish }) {
   const welcomeTraslateY = useSharedValue(200);
   const wavesTraslateY = useSharedValue(200);
   const wavesOpacity = useSharedValue(0);
-  const continuarTraslateX = useSharedValue(200);
+  const continuarTraslateX = useSharedValue(80);
   const continuarOpacity = useSharedValue(0);
+
+  // Color del texto (0 = blanco, 1 = negro)
+  const colorProgress = useSharedValue(0);
 
   useEffect(() => {
     const timeouts = [];
@@ -61,19 +63,21 @@ export default function Splash({ onFinish }) {
     // Mostrar "Bienvenido"
     timeouts.push(
       setTimeout(() => {
-        welcomeOpacity.value = withTiming(1, { duration: 400 });
+        welcomeOpacity.value = withTiming(1, { duration: 1000 });
         welcomeTraslateY.value = withSpring(0, {
           damping: 10,
           stiffness: 100,
         });
       }, 1000)
     );
-    setTimeout(() => {
-      circuloTranslateY.value = withTiming(-250, { duration: 3500 });
 
-      // circuloOpacity.value = withTiming(0, { duracion: 400 });
-      setTextoColor("black");
-    }, 2000);
+    // Mover círculo y cambiar color
+    timeouts.push(
+      setTimeout(() => {
+        circuloTranslateY.value = withTiming(-250, { duration: 2800 });
+        colorProgress.value = withTiming(1, { duration: 1000 }); // blanco → negro
+      }, 3000)
+    );
 
     // Animar waves
     timeouts.push(
@@ -86,12 +90,13 @@ export default function Splash({ onFinish }) {
       }, 5000)
     );
 
+    // Botón continuar
     timeouts.push(
       setTimeout(() => {
         continuarOpacity.value = withTiming(1, { duration: 500 });
         continuarTraslateX.value = withSpring(0, {
           damping: 8,
-          stiffness: 120,
+          stiffness: 100,
         });
       }, 5500)
     );
@@ -101,12 +106,9 @@ export default function Splash({ onFinish }) {
     };
   }, []);
 
+  // Estilos animados
   const circleStyle = useAnimatedStyle(() => ({
-    transform: [
-      { scale: scale.value },
-      { translateY: circuloTranslateY.value },
-    ],
-    // opacity: circuloOpacity.value,
+    transform: [{ scale: scale.value }, { translateY: circuloTranslateY.value }],
   }));
 
   const agtTextStyle = useAnimatedStyle(() => ({
@@ -115,11 +117,17 @@ export default function Splash({ onFinish }) {
       { translateY: agtTranslateY.value },
       { scale: agtScale.value },
     ],
+    color: interpolateColor(
+      colorProgress.value,
+      [0, 1],
+      ["#fff", "#000"] // blanco → negro
+    ),
   }));
 
   const welcomeTextStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: welcomeTraslateY.value }],
     opacity: welcomeOpacity.value,
+    color: interpolateColor(colorProgress.value, [0, 1], ["#fff", "#000"]),
   }));
 
   const wavesStyle = useAnimatedStyle(() => ({
@@ -136,22 +144,14 @@ export default function Splash({ onFinish }) {
     <View style={styles.contenedor}>
       <Animated.View style={[styles.circulo, circleStyle]} />
 
-      <Animated.Text
-        style={[styles.textoAGT, agtTextStyle, { color: textoColor }]}
-      >
-        AGT
-      </Animated.Text>
+      <Animated.Text style={[styles.textoAGT, agtTextStyle]}>AGT</Animated.Text>
 
-      <Animated.Text
-        style={[
-          styles.textoBienvenida,
-          welcomeTextStyle,
-          { color: textoColor },
-        ]}
-      >
+      <Animated.Text style={[styles.textoBienvenida, welcomeTextStyle]}>
         Bienvenido
       </Animated.Text>
+
       <AnimatedImage source={Waves} style={[styles.waves, wavesStyle]} />
+
       <Animated.View style={[styles.contenedorBotonContinuar, continuarStyle]}>
         <TouchableOpacity style={styles.botonContinuar} onPress={onFinish}>
           <RNImage source={IconArrow} style={[styles.iconArrow]} />
@@ -191,21 +191,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textTransform: "uppercase",
   },
-
   waves: {
     position: "absolute",
     width: width,
-    // height: "100%",
+    height: 400,
     bottom: 0,
-    resizeMode: "cover",
   },
-
   contenedorBotonContinuar: {
     position: "absolute",
     top: "80%",
     left: "10%",
   },
-
   botonContinuar: {
     alignItems: "center",
     justifyContent: "center",
@@ -218,7 +214,6 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     transform: [{ rotate: "-45deg" }],
   },
-
   iconArrow: {
     width: 25,
     height: 25,

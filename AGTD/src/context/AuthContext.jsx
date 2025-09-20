@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [screen, setScreen] = useState("splash");
+  const [selectedTab, setSelectedTab] = useState("Tareas");
 
   const verificarUsuario = async () => {
     setIsLoading(true);
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (identificador, contrasena) => {
     try {
       const response = await fetch(
-        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/login.php",
+        "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/login.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -49,11 +50,10 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
 
-      console.log(data);
-
       if (data.success) {
         await AsyncStorage.setItem("user", JSON.stringify(data.users)); //Guardame al usuario en AsyncStorage
         setUser(data.users); // Actualizamos el contexto con el usuario
+        setSelectedTab("Tareas");
         setScreen("layout");
         return true;
       } else {
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (nombre, correo, celular, contrasena) => {
     try {
       const response = await fetch(
-        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/register.php",
+        "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/register.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -112,6 +112,8 @@ export const AuthProvider = ({ children }) => {
         logout,
         screen,
         setScreen,
+        selectedTab,
+        setSelectedTab,
         isLoading,
         setIsLoading,
         verificarUsuario,

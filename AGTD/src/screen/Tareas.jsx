@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  SafeAreaView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import { useRef } from "react";
 import { useChat } from "../context/chatContext";
 
 import HeaderHome from "../components/HeaderHome";
@@ -28,8 +27,16 @@ export default function Tareas(props) {
 
   const [diaSeleccionado, setDiaSeleccionado] = useState(null);
   const navigation = useNavigation();
-  const refs = useRef({});
   const { dataChats, isLoading, setSelectedChat } = useChat();
+
+  const refs = useRef({});
+  const getChatRef = useCallback((chatId) => {
+    if (!chatId) return null; // Evitar refs inválidos
+    if (!refs.current[chatId]) {
+      refs.current[chatId] = React.createRef();
+    }
+    return refs.current[chatId];
+  }, []);
 
   const diasSemana = Array.from({ length: 7 }).map((_, index) => {
     const dia = moment()
@@ -100,42 +107,43 @@ export default function Tareas(props) {
           </View>
         ) : (
           <View style={stylesTareas.containerChats}>
-            {dataChats.map((chat, index) => {
-              if (!refs.current[chat.chatId]) {
-                refs.current[chat.chatId] = React.createRef();
-              }
-              return (
-                <SwipeToReveal
-                  key={chat.chatId}
-                  ref={refs.current[chat.chatId]}
-                  // Cierra todos excepto este
-                  onSwipeStart={() => {
-                    Object.entries(refs.current).forEach(([id, ref]) => {
-                      if (id !== chat.chatId && ref.current?.isOpen()) {
-                        ref.current.closeSwipe();
-                      }
-                    });
-                  }}
-                  openModal={() => openModal("menu", chat.chatId)}
-                >
+            {dataChats
+              .filter((chat) => chat?.chatId)
+              .map((chat, index) => {
+                if (!chat.chatId) return null; // 👈 Evita renderizar si no hay chatId
+                return (
+                  // <SwipeToReveal
+                  //   key={chat.chatId ?? `temp-${index}`}
+                  //   ref={getChatRef(chat.chatId)}
+                  //   // Cierra todos excepto este
+                  //   onSwipeStart={() => {
+                  //     Object.entries(refs.current).forEach(([id, ref]) => {
+                  //       if (id !== chat.chatId && ref.current?.isOpen()) {
+                  //         ref.current.closeSwipe();
+                  //       }
+                  //     });
+                  //   }}
+                  //   openModal={() => openModal("menu", chat.chatId)}
+                  // >
                   <TouchableOpacity
+                    key={index}
                     style={[stylesTareas.task]}
                     onPress={async () => {
-                      const currentRef = refs.current[chat.chatId];
+                      // const currentRef = refs.current[chat.chatId];
 
-                      // 1. Si ESTÁ ABIERTO: Cierra y NO navega
-                      if (currentRef.current?.isOpen()) {
-                        await currentRef.current.closeSwipe();
-                        return;
-                      }
+                      // // 1. Si ESTÁ ABIERTO: Cierra y NO navega
+                      // if (currentRef.current?.isOpen()) {
+                      //   await currentRef.current.closeSwipe();
+                      //   return;
+                      // }
 
-                      // 2. Si ESTÁ CERRADO: Navega después de un pequeño delay
-                      setTimeout(() => {
-                        if (!currentRef.current?.isOpen()) {
-                          setSelectedChat(chat.chatId);
-                          navigation.navigate("Chat");
-                        }
-                      }, 150); // Delay óptimo para evitar conflicto con gestos
+                      // // 2. Si ESTÁ CERRADO: Navega después de un pequeño delay
+                      // setTimeout(() => {
+                      //   if (!currentRef.current?.isOpen()) {
+                      setSelectedChat(chat.chatId);
+                      navigation.navigate("Chat");
+                      //   }
+                      // }, 150); // Delay óptimo para evitar conflicto con gestos
                     }}
                   >
                     <View style={stylesTareas.contentPorcentaje}>
@@ -147,13 +155,18 @@ export default function Tareas(props) {
                         index >= 0 ? stylesTareas.borderTopTask : null,
                       ]}
                     >
-                      <Text
-                        style={stylesTareas.chatTitle}
-                        numberOfLines={1}
-                        ellipsizeMode="tail"
-                      >
-                        {chat.title}
-                      </Text>
+                      <View style={stylesTareas.chatItem}>
+                        <Text
+                          style={stylesTareas.chatTitle}
+                          numberOfLines={1}
+                          ellipsizeMode="tail"
+                        >
+                          {chat.title}
+                        </Text>
+                        <Text style={stylesTareas.prioridadTarea}>
+                          {chat.priority}
+                        </Text>
+                      </View>
                       <View style={stylesTareas.desTask}>
                         <View style={stylesTareas.countTask}>
                           <Text style={{ color: "#0099FF" }}>
@@ -164,9 +177,9 @@ export default function Tareas(props) {
                       </View>
                     </View>
                   </TouchableOpacity>
-                </SwipeToReveal>
-              );
-            })}
+                  // </SwipeToReveal>
+                );
+              })}
           </View>
         )}
       </ScrollView>
@@ -177,10 +190,12 @@ export default function Tareas(props) {
 const stylesTareas = StyleSheet.create({
   content: {
     flex: 1,
+    width: "100%",
     backgroundColor: "white",
   },
   taskBody: {
     flex: 1,
+    width: "100%",
   },
   title: {
     fontSize: 30,
@@ -228,7 +243,7 @@ const stylesTareas = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 20
+    gap: 20,
   },
   emptyStateText: {
     fontSize: 16,
@@ -241,6 +256,7 @@ const stylesTareas = StyleSheet.create({
     padding: 12,
   },
   containerChats: {
+    width: "100%",
     height: "100%",
     marginTop: 20,
     paddingLeft: 20,
@@ -251,14 +267,12 @@ const stylesTareas = StyleSheet.create({
     gap: 10,
     width: "100%",
     height: 70,
-    overflow: "hidden",
+    // overflow: "hidden",
   },
 
   contentPorcentaje: {
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
-    height: 50,
     shadowOpacity: 0.2,
     shadowRadius: 4,
     borderRadius: 30,
@@ -272,25 +286,35 @@ const stylesTareas = StyleSheet.create({
     paddingTop: 8,
     paddingLeft: 15,
     paddingRight: 15,
-    paddingBottom: 8,
+    paddingBottom: 15,
   },
 
   borderTopTask: {
     borderTopWidth: 1,
     borderColor: "#d7dbdd",
   },
+  chatItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "85%",
+    gap: 10,
+  },
   chatTitle: {
     fontSize: 16,
     fontWeight: "600",
-    width: "80%",
     flexShrink: 1,
-    flexGrow: 1,
+    flexGrow: 0.85,
     overflow: "hidden",
+  },
+  prioridadTarea: {
+    fontWeight: "500",
+    fontSize: 14,
+    textTransform: "capitalize",
+    color: "#999999",
   },
   desTask: {
     flexDirection: "row",
     gap: 5,
-    left: 10,
     color: "#777",
     width: 100,
   },

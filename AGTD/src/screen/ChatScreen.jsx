@@ -7,9 +7,15 @@ import {
   ScrollView,
   TouchableOpacity,
   Pressable,
-  SafeAreaView,
+  StatusBar,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
 import { useChat } from "../context/chatContext";
 import { useAuth } from "../context/AuthContext";
 
@@ -17,6 +23,7 @@ import LongPressWrapper from "../animaciones/LongPressWrapper";
 import MultiModals from "../modals/MultiModals";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
+import iconCerrar from "../../assets/icons/iconCerrar.png";
 import iconMenu from "../../assets/icons/iconMenu.png";
 import iconUser from "../../assets/icons/iconUser.png";
 import iconStar from "../../assets/icons/iconStar.png";
@@ -28,13 +35,15 @@ import iconCompartir from "../../assets/icons/iconCompartir2.png";
 import iconDuplicar from "../../assets/icons/iconDuplicar.png";
 import iconRecordar from "../../assets/icons/iconRecordar.png";
 
+const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
+
 export default function ChatScreen() {
   const [modalActivo, setModalActivo] = useState(null);
   const [textoActivo, setTextoActivo] = useState(null);
   const navigation = useNavigation();
 
   const { chatActual, chatId, setSelectedChat } = useChat();
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (chatId != null) {
@@ -113,10 +122,36 @@ export default function ChatScreen() {
     }
   };
 
+  const scale = useSharedValue(1);
+  const transtaleX = useSharedValue(0);
+  const borderRadius = useSharedValue(0);
+  const top = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }, { translateX: transtaleX.value }],
+    borderRadius: borderRadius.value,
+    top: top.value,
+  }));
+
+  const animar = () => {
+    scale.value = withTiming(0.65, { duration: 600 });
+    transtaleX.value = withTiming(300, { duration: 600 });
+    top.value = withTiming(-50, { duration: 600 });
+    borderRadius.value = withTiming(50, { duration: 500 });
+  };
+
+  const reset = () => {
+    scale.value = withTiming(1, { duration: 600 });
+    transtaleX.value = withTiming(0, { duration: 600 });
+    top.value = withTiming(0, { duration: 600 });
+    borderRadius.value = withTiming(0, { duration: 500 });
+  };
+
   return (
     // <SafeAreaView edges={["top"]} style={stylesChatScreen.content}>
-    <View style={stylesChatScreen.content}>
-      <SafeAreaView style={stylesChatScreen.body}>
+    <Pressable onPress={reset} style={stylesChatScreen.content}>
+      <AnimatedSafeArea style={[stylesChatScreen.body, animatedStyle]}>
+        <StatusBar barStyle="dart-content" />
         <View style={stylesChatScreen.headerChat}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -134,44 +169,10 @@ export default function ChatScreen() {
           >
             {chatActual.title}
           </Text>
-          <TouchableOpacity
-            style={stylesChatScreen.openModal}
-            onPress={() => toggleModal("opciones")}
-          >
+          <TouchableOpacity style={stylesChatScreen.openModal} onPress={animar}>
             <Image source={iconMenu} style={stylesChatScreen.menu} />
           </TouchableOpacity>
         </View>
-
-        {/* Modal opciones */}
-        {modalActivo === "opciones" && (
-          <Pressable
-            style={stylesChatScreen.contentModal}
-            onPress={() => setModalActivo(null)}
-          >
-            <View style={stylesChatScreen.modal}>
-              {opciones.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => handleOpcionPresss(index, item)}
-                  style={stylesChatScreen.botonOpcion}
-                >
-                  <Image
-                    source={item.icon}
-                    style={stylesChatScreen.opcionIcon}
-                  />
-                  <Text
-                    style={[
-                      stylesChatScreen.opcionTexto,
-                      { color: index === textoActivo ? "#0099FF" : "black" },
-                    ]}
-                  >
-                    {item.opcion}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </Pressable>
-        )}
 
         <ScrollView style={stylesChatScreen.containerInfo}>
           <View style={stylesChatScreen.contentInfo}>
@@ -352,15 +353,51 @@ export default function ChatScreen() {
             </View>
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </AnimatedSafeArea>
+      {/* Modal opciones */}
+      {/* {modalActivo === "opciones" && ( */}
+      <Pressable
+        style={stylesChatScreen.contentModal}
+        // pointerEvents={modalActivo === true ? "auto" : "none"}
+      >
+        {/* <StatusBar barStyle="light-content" /> */}
+        <TouchableOpacity onPress={reset}>
+          <Image source={iconCerrar} style={stylesChatScreen.imgCerrar} />
+        </TouchableOpacity>
+        <View style={stylesChatScreen.modal}>
+          {opciones.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleOpcionPresss(index, item)}
+              style={stylesChatScreen.botonOpcion}
+            >
+              <Image source={item.icon} style={stylesChatScreen.opcionIcon} />
+              <Text
+                style={[
+                  stylesChatScreen.opcionTexto,
+                  { color: index === textoActivo ? "#0099FF" : "white" },
+                ]}
+              >
+                {item.opcion}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={stylesChatScreen.fondo}></View>
+      </Pressable>
       <MultiModals type={modalActivo} setType={setModalActivo} />
-    </View>
+    </Pressable>
   );
 }
 
 const stylesChatScreen = StyleSheet.create({
   content: {
     flex: 1,
+  },
+  body: {
+    zIndex: 1000,
+    backgroundColor: "white",
+    // position: "absolute",
   },
 
   headerChat: {
@@ -369,11 +406,12 @@ const stylesChatScreen = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 15,
+    gap: 10,
   },
 
   containerButtonback: {
     justifyContent: "center",
-    width: 50,
+    width: 40,
     height: 40,
   },
 
@@ -387,8 +425,9 @@ const stylesChatScreen = StyleSheet.create({
     height: 20,
   },
   nameTask: {
-    fontSize: 18,
-    fontWeight: "bold",
+    width: "50%",
+    fontSize: 20,
+    fontWeight: "500",
     flexShrink: 1,
     flexGrow: 1,
     overflow: "hidden",
@@ -401,42 +440,15 @@ const stylesChatScreen = StyleSheet.create({
     height: 40,
     borderRadius: 50,
   },
-
-  contentModal: {
-    position: "absolute",
-    alignItems: "flex-end",
-    top: 50,
-    width: "100%",
-    height: "100%",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    overflow: "hidden",
-    zIndex: 1000,
-  },
-
-  modal: {
-    justifyContent: "center",
-    width: 250,
-    // right: 20,
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-  },
-
-  botonOpcion: {
-    flexDirection: "row",
-    gap: 10,
-    padding: 8,
-  },
-
-  opcionTexto: {
-    fontSize: 14,
-    fontWeight: "500",
-    textTransform: "capitalize",
+  menu: {
+    width: 28,
+    height: 28,
+    resizeMode: "contain",
   },
 
   /************************* */
   containerInfo: {
+    height: "100%",
     padding: 20,
   },
 
@@ -689,5 +701,45 @@ const stylesChatScreen = StyleSheet.create({
     height: 30,
     borderRadius: 50,
     resizeMode: "cover",
+  },
+
+  contentModal: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    padding: 20,
+    overflow: "hidden",
+    backgroundColor: "black",
+  },
+  imgCerrar: {
+    width: 30,
+    height: 30,
+    top: 50,
+  },
+  modal: {
+    width: 220,
+    top: "20%",
+  },
+
+  botonOpcion: {
+    flexDirection: "row",
+    gap: 10,
+    padding: 8,
+  },
+
+  opcionTexto: {
+    fontSize: 14,
+    fontWeight: "500",
+    textTransform: "capitalize",
+  },
+  fondo: {
+    position: "absolute",
+    width: "70%",
+    height: "60%",
+    top: "20%",
+    left: "60%",
+    borderRadius: 25,
+    backgroundColor: "rgba(255, 255, 255, 0.19)",
+    zIndex: -1000,
   },
 });

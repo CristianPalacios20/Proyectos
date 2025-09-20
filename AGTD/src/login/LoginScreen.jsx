@@ -6,12 +6,11 @@ import {
   Image,
   StyleSheet,
   TextInput,
-  ImageBackground,
   Platform,
-  SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
 
 import iconUser from "../../assets/icons/iconUser.png";
@@ -119,7 +118,7 @@ export default function LoginScreen() {
                 ))}
               </View>
               <TouchableOpacity
-                onPress={() => alert("Recuperar contraseña")}
+                onPress={() => setScreen("recuperarContrasena")}
                 style={stylesLoginScreen.buttonPass}
               >
                 <Text style={stylesLoginScreen.forgotPass}>
@@ -206,6 +205,7 @@ const stylesLoginScreen = StyleSheet.create({
   vector: {
     position: "absolute",
     bottom: 0,
+    width: "100%",
     height: "150",
     zIndex: 100,
     resizeMode: "cover",
@@ -259,7 +259,7 @@ const stylesLoginScreen = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#7B7D7D"
+    borderColor: "#7B7D7D",
   },
   input: {
     width: "80%",
@@ -366,7 +366,7 @@ const stylesLoginScreen = StyleSheet.create({
   },
   button: {
     flexDirection: "row",
-    alignItems: "center", 
+    alignItems: "center",
     justifyContent: "center",
     gap: 12,
     width: "100%",
@@ -379,7 +379,7 @@ const stylesLoginScreen = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
-    resizeMode: "contain", 
+    resizeMode: "contain",
   },
 
   iconFacebook: {

@@ -10,11 +10,10 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Pressable,
-  SafeAreaView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
 
-import ArrowLeft from "../../assets/icons/arrowLeft.png";
 import iconUser from "../../assets/icons/iconUser.png";
 import iconEmail from "../../assets/icons/iconEmail3.png";
 import iconPhone from "../../assets/icons/iconPhone2.png";
@@ -248,7 +247,6 @@ export default function RegisterScreen() {
 const sttyleregisterScreen = StyleSheet.create({
   conteiner: {
     flex: 1,
-    // backgroundColor: "black",
   },
   vector: {
     position: "absolute",
@@ -267,10 +265,9 @@ const sttyleregisterScreen = StyleSheet.create({
     fontWeight: "bold",
   },
   form: {
-    position: "absolute",
     bottom: 0,
-    height: "100%",
     width: "100%",
+    height: "100%",
     gap: 20,
     paddingHorizontal: 20,
     backgroundColor: "white",

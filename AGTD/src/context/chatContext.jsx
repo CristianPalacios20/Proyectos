@@ -12,42 +12,50 @@ export const ChatProvider = ({ children }) => {
 
   const { user } = useAuth();
 
-useEffect(() => {
-  if (!user) return; // ⬅️ no ejecuta hasta que user exista
+  useEffect(() => {
+    if (!user) return;
 
-  const obtenerTareas = async () => {
-    try {
-      const response = await fetch(
-        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/chats.php",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: user.id }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Servidor respondió con estatus:  ${response.status}`
+    const obtenerTareas = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/chats.php",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: user.userId }),
+          }
         );
+
+        if (!response.ok) {
+          throw new Error(`Servidor respondió con estatus: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          // 🔎 Filtrar: solo chats creados por el usuario o donde participe
+          const filtrados = data.data.filter(
+            (chat) =>
+              Number(chat.createdBy) === Number(user.userId) ||
+              chat.participants?.some(
+                (p) => Number(p.userId) === Number(user.userId)
+              )
+          );
+
+          setDataChats(filtrados);
+        } else {
+          console.warn("la API respondió: ", data);
+        }
+      } catch (error) {
+        console.error("Error al obtener tareas: ", error.message);
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      const data = await response.json();
-      console.log("Datos recibidos: ", data);
-
-      if (data.success) {
-        setDataChats(data.data);
-      } else {
-        console.warn("la API respondió: ", data);
-      }
-    } catch (error) {
-      console.error("Error al obtener tareas: ", error.message);
-    }
-  };
-
-  obtenerTareas();
-}, [user]); // <- se dispara cuando user cambie
-
+    obtenerTareas();
+  }, [user]);
 
   const chatActual = dataChats.find(
     (chat) => Number(chat.chatId) === Number(selectedChat)
@@ -72,7 +80,7 @@ useEffect(() => {
       description,
       dueDate: fechaFormateada,
       priority: prioridad.toLowerCase(),
-      createdBy: user?.id,
+      createdBy: user?.userId,
       participants: participantsIds,
       subtasks: Array.isArray(subTasks)
         ? subTasks.map((st) => ({
@@ -89,7 +97,7 @@ useEffect(() => {
       }, 5000);
 
       const res = await fetch(
-        "http://192.168.1.7/proyectoEnReact-Backend/backend/back-end-AGT/registerTask.php",
+        "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/registerTask.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -124,7 +132,7 @@ useEffect(() => {
             description,
             dueDate: fechaFormateada,
             priority: prioridad.toLowerCase(),
-            createdBy: user?.id,
+            createdBy: user?.userId,
             subtasks: subTasks,
             participants: participantsIds,
           },

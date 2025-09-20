@@ -25,7 +25,7 @@ export default function Buscar({ setSelectedTab }) {
     { name: "Destacadas", value: "dest" },
   ];
   return (
-    <SafeAreaView edges={["top"]} style={style.container}>
+    <View style={style.container}>
       <View style={style.overlay}>
         <View style={style.panelWrapper}>
           <View style={style.searchRow}>
@@ -82,7 +82,7 @@ export default function Buscar({ setSelectedTab }) {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

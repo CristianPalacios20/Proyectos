@@ -27,7 +27,9 @@ export default function MultiModals({ type, setType }) {
           >
             <View style={styles.contentEliminar}>
               <View style={styles.message}>
-                <Text>¿Estas seguro de eliminar la tarea </Text>
+                <Text style={styles.pregunta}>
+                  ¿Estas seguro de eliminar la tarea:
+                </Text>
                 <Text style={styles.nameTask}>{chatActual.title}?</Text>
               </View>
               <View style={styles.actionsEliminar}>
@@ -100,24 +102,32 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(0,0,0,0.1)",
-    zIndex: 1,
+    backgroundColor: "rgba(0,0,0,0.3)",
+    zIndex: 1000,
   },
   contentEliminar: {
     position: "absolute",
-    bottom: 40,
     alignItems: "center",
+    bottom: 40,
     width: "90%",
     gap: 20,
     padding: 20,
     backgroundColor: "white",
-    borderRadius: 20,
+    borderRadius: 15,
   },
   message: {
-    flexDirection: "row",
+    textAlign: "center",
+  },
+  pregunta: {
+    fontSize: 17,
+    textAlign: "center",
+    fontWeight: "bold",
   },
   nameTask: {
+    fontSize: 17,
+    textAlign: "center",
     fontWeight: "bold",
+    color: "#999999"
   },
   actionsEliminar: {
     flexDirection: "row",
