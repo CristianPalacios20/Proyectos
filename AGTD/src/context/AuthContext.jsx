@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [screen, setScreen] = useState("splash");
   const [selectedTab, setSelectedTab] = useState("Tareas");
+  // const [correo, setCorreo] = useState("");
 
   const verificarUsuario = async () => {
     setIsLoading(true);

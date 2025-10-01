@@ -34,8 +34,6 @@ export default function Splash({ onFinish }) {
   const wavesOpacity = useSharedValue(0);
   const continuarTraslateX = useSharedValue(80);
   const continuarOpacity = useSharedValue(0);
-
-  // Color del texto (0 = blanco, 1 = negro)
   const colorProgress = useSharedValue(0);
 
   useEffect(() => {
@@ -75,7 +73,7 @@ export default function Splash({ onFinish }) {
     timeouts.push(
       setTimeout(() => {
         circuloTranslateY.value = withTiming(-250, { duration: 2800 });
-        colorProgress.value = withTiming(1, { duration: 1000 }); // blanco → negro
+        colorProgress.value = withTiming(1, { duration: 1000 });
       }, 3000)
     );
 
@@ -120,7 +118,7 @@ export default function Splash({ onFinish }) {
     color: interpolateColor(
       colorProgress.value,
       [0, 1],
-      ["#fff", "#000"] // blanco → negro
+      ["#fff", "#000"]
     ),
   }));
 
