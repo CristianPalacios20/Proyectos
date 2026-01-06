@@ -16,8 +16,10 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
+
 import { useChat } from "../context/chatContext";
 import { useAuth } from "../context/AuthContext";
+import { useModal } from "../context/modalContext";
 
 import LongPressWrapper from "../animaciones/LongPressWrapper";
 import MultiModals from "../modals/MultiModals";
@@ -42,8 +44,9 @@ export default function ChatScreen() {
   const [textoActivo, setTextoActivo] = useState(null);
   const navigation = useNavigation();
 
-  const { chatActual, chatId, setSelectedChat } = useChat();
+  const { chatActual, chatId, setSelectedChat, setSelectedSubtask } = useChat();
   const { user } = useAuth();
+  const { setType } = useModal();
 
   useEffect(() => {
     if (chatId != null) {
@@ -107,9 +110,9 @@ export default function ChatScreen() {
     setModalActivo(null);
   };
 
-  const toggleModal = (type) => {
-    setModalActivo((prev) => (prev === type ? null : type));
-  };
+  // const toggleModal = (type) => {
+  //   setModalActivo((prev) => (prev === type ? null : type));
+  // };
 
   const handleOpcionPresss = (index, item) => {
     toggleColor(index);
@@ -257,14 +260,21 @@ export default function ChatScreen() {
                     ]}
                   >
                     <LongPressWrapper
-                      onLongPress={() => console.log("Presionado")}
+                      onPress={() => {
+                        setSelectedSubtask(subtask.subtaskId);
+                        alert(`Seleccionate: ${subtask.name}`);
+                      }}
+                      onLongPress={() => {
+                        setSelectedSubtask(subtask.subtaskId);
+                        setType("modalSubtask");
+                      }}
                     >
-                      <TouchableOpacity style={stylesChatScreen.buttomSubTask}>
+                      <View style={stylesChatScreen.buttomSubTask}>
                         <View style={stylesChatScreen.circleII}></View>
-                        <Text style={[stylesChatScreen.subtaskItem]}>
+                        <Text style={stylesChatScreen.subtaskItem}>
                           {subtask.name}
                         </Text>
-                      </TouchableOpacity>
+                      </View>
                     </LongPressWrapper>
                   </View>
                 ))}
@@ -354,13 +364,10 @@ export default function ChatScreen() {
           </View>
         </ScrollView>
       </AnimatedSafeArea>
+
       {/* Modal opciones */}
-      {/* {modalActivo === "opciones" && ( */}
-      <Pressable
-        style={stylesChatScreen.contentModal}
-        // pointerEvents={modalActivo === true ? "auto" : "none"}
-      >
-        {/* <StatusBar barStyle="light-content" /> */}
+
+      <Pressable style={stylesChatScreen.contentModal}>
         <TouchableOpacity onPress={reset}>
           <Image source={iconCerrar} style={stylesChatScreen.imgCerrar} />
         </TouchableOpacity>
@@ -385,6 +392,7 @@ export default function ChatScreen() {
         </View>
         <View style={stylesChatScreen.fondo}></View>
       </Pressable>
+
       <MultiModals type={modalActivo} setType={setModalActivo} />
     </Pressable>
   );
@@ -432,7 +440,6 @@ const stylesChatScreen = StyleSheet.create({
     flexGrow: 1,
     overflow: "hidden",
   },
-
   openModal: {
     alignItems: "center",
     justifyContent: "center",
@@ -441,8 +448,8 @@ const stylesChatScreen = StyleSheet.create({
     borderRadius: 50,
   },
   menu: {
-    width: 28,
-    height: 28,
+    width: 25,
+    height: 25,
     resizeMode: "contain",
   },
 
@@ -451,21 +458,17 @@ const stylesChatScreen = StyleSheet.create({
     height: "100%",
     padding: 20,
   },
-
   contentInfo: {
     flex: 1,
     gap: 20,
   },
-
   descripcion: {
     gap: 5,
   },
-
   title: {
     fontSize: 16,
     fontWeight: "bold",
   },
-
   detailsSection: {
     paddingTop: 10,
     paddingBottom: 10,
@@ -473,19 +476,16 @@ const stylesChatScreen = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#B3B6B7",
   },
-
   detailItem: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 10,
     paddingBottom: 10,
   },
-
   detailLabel: {
     color: "#7B7D7D",
     fontWeight: "bold",
   },
-
   contenPrioridad: {
     flexDirection: "row",
     alignItems: "center",
@@ -495,109 +495,90 @@ const stylesChatScreen = StyleSheet.create({
     maxWidth: 80,
     borderRadius: 20,
   },
-
   priorytyAA: {
     backgroundColor: "#ff00005b",
   },
   priorityMM: {
     backgroundColor: "#ffff0057",
   },
-
   prioridadBB: {
     backgroundColor: "#0099ff50",
   },
-
   circle: {
     width: 10,
     height: 10,
     backgroundColor: "#a6acaf",
     borderRadius: 50,
   },
-
   priorytyA: {
     backgroundColor: "#FF0000",
   },
   priorityM: {
     backgroundColor: "#FFFF00",
   },
-
   prioridadB: {
     backgroundColor: "#0099FF",
   },
-
   detailValue: {
     textAlign: "right",
     fontSize: 16,
     fontWeight: "bold",
     textTransform: "capitalize",
   },
-
   subtasksSection: {
+    position: "relative",
     gap: 10,
   },
-
   subtasksHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-
   sectionTitle: {
     fontSize: 16,
     fontWeight: "bold",
   },
-
   addSubtaskText: {
     fontSize: 16,
     color: "#0099FF",
   },
-
   contentSubtask: {
     justifyContent: "center",
     borderWidth: 1,
     borderColor: "#B3B6B7",
     borderRadius: 10,
   },
-
   contentBottom: {
     padding: 5,
   },
-
   buttomSubTask: {
     flexDirection: "row",
     alignItems: "center",
   },
-
   circleII: {
     width: 18,
     height: 18,
     borderWidth: 1,
     borderRadius: 50,
   },
-
   subtaskItem: {
     padding: 5,
   },
-
   borderTop: {
     borderTopWidth: 1,
     borderColor: "#B3B6B7",
   },
-
   participantsSection: {
     gap: 8,
   },
-
   participants: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-
   participantInfo: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
   },
-
   contentParticipant: {
     alignItems: "center",
     justifyContent: "center",
@@ -608,39 +589,29 @@ const stylesChatScreen = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#fff",
   },
-
   participantImage: {
     width: 30,
     height: 30,
   },
-
   participantName: {
     fontSize: 15,
     fontWeight: "bold",
     textTransform: "capitalize",
   },
-
   commentsSection: {
     gap: 10,
   },
-
-  commentsList: {
-    // borderWidth: 1,
-  },
-
   containerComment: {
     padding: 10,
     gap: 10,
     borderColor: "#B3B6B7",
     borderRadius: 10,
   },
-
   commentItem: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
   },
-
   commentAvatar: {
     flexDirection: "row",
     alignItems: "center",
@@ -652,39 +623,30 @@ const stylesChatScreen = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#fff",
   },
-
   commentImage: {
     width: 30,
     height: 30,
   },
-
   commentContent: {
     flexDirection: "row",
     justifyContent: "space-between",
     flex: 0.8,
   },
-
   commentName: {
     fontWeight: "600",
     textTransform: "capitalize",
     flex: 1,
   },
-
   commentDate: {
     color: "#979A9A",
   },
-
   viewComment: {
     paddingLeft: 10,
   },
-
-  /* ************ */
-
   participantsList: {
     flexDirection: "row",
     width: 90,
   },
-
   participant: {
     alignItems: "center",
     justifyContent: "center",
@@ -695,14 +657,12 @@ const stylesChatScreen = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#fff",
   },
-
   participantIcon: {
     width: 30,
     height: 30,
     borderRadius: 50,
     resizeMode: "cover",
   },
-
   contentModal: {
     position: "absolute",
     width: "100%",
@@ -720,13 +680,11 @@ const stylesChatScreen = StyleSheet.create({
     width: 220,
     top: "20%",
   },
-
   botonOpcion: {
     flexDirection: "row",
     gap: 10,
     padding: 8,
   },
-
   opcionTexto: {
     fontSize: 14,
     fontWeight: "500",

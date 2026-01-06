@@ -1,14 +1,25 @@
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { View, Text, StyleSheet } from "react-native";
 
+import { useChat } from "../context/chatContext";
+
 const getColorByPercentage = (porcentaje) => {
-  if (porcentaje <= 30) return "#FF0000";   // rojo: 0 - 30
-  if (porcentaje <= 70) return "#FFFF00";   // amarillo: 31 - 70
-  return "#0099FF";                         // azul: 71 - 100
+  if (porcentaje <= 30) return "#FF0000"; // rojo: 0 - 30
+  if (porcentaje <= 70) return "#FFFF00"; // amarillo: 31 - 70
+  return "#0099FF"; // azul: 71 - 100
 };
 
-export default function PorcentajeCircular() {
-  const fillValue = 80;
+const calcularPorcentaje = (chat) => {
+  if (!chat?.subtareas || chat.subtareas.length === 0) return 0;
+  const completadas = chat.subtareas.filter((st) => st.completada).length;
+  return (completadas / chat.subtareas.length) * 100;
+};
+
+export default function PorcentajeCircular({ chatId }) {
+  const { dataChats } = useChat();
+
+  const chatActual = dataChats.find((c) => Number(c.chatId) === Number(chatId));
+  const fillValue = calcularPorcentaje(chatActual);
   return (
     <View style={styles.porcentajeCircular}>
       <AnimatedCircularProgress
@@ -30,6 +41,6 @@ const styles = StyleSheet.create({
     height: 40,
   },
   text: {
-    fontSize: 12
+    fontSize: 12,
   },
-})
+});

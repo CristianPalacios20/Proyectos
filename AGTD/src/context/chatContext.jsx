@@ -9,6 +9,7 @@ export const ChatProvider = ({ children }) => {
   const [dataChats, setDataChats] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedChat, setSelectedChat] = useState("");
+  const [selectedSubtask, setSelectedSubtask] = useState(null);
 
   const { user } = useAuth();
 
@@ -19,7 +20,7 @@ export const ChatProvider = ({ children }) => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/chats.php",
+          "http://192.168.1.5/proyectoEnReact-Backend/backend/back-end-AGT/chats.php",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -97,7 +98,7 @@ export const ChatProvider = ({ children }) => {
       }, 5000);
 
       const res = await fetch(
-        "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/registerTask.php",
+        "http://192.168.1.5/proyectoEnReact-Backend/backend/back-end-AGT/registerTask.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -162,6 +163,8 @@ export const ChatProvider = ({ children }) => {
         selectedChat,
         setSelectedChat,
         crearTarea,
+        selectedSubtask,
+        setSelectedSubtask,
       }}
     >
       {children}

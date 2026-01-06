@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (identificador, contrasena) => {
     try {
       const response = await fetch(
-        "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/login.php",
+        "http://192.168.1.5/proyectoEnReact-Backend/backend/back-end-AGT/login.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (nombre, correo, celular, contrasena) => {
     try {
       const response = await fetch(
-        "http://192.168.1.2/proyectoEnReact-Backend/backend/back-end-AGT/register.php",
+        "http://192.168.1.5/proyectoEnReact-Backend/backend/back-end-AGT/register.php",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

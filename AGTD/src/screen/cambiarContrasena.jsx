@@ -28,6 +28,7 @@ export default function crearContrasena() {
   const [contrasena, setContrasena] = useState("");
   const [confirmar, setConfirmar] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const [buttons, setButtons] = useState({
     first: false,
@@ -46,11 +47,13 @@ export default function crearContrasena() {
 
     if (!contrasena || !confirmar) {
       setMensaje("Debes completar ambos campos");
+      setIsError(true);
       return;
     }
 
     if (contrasena !== confirmar) {
       setMensaje("Las constraseñas no coinciden");
+      setIsError(true);
       return;
     }
 
@@ -70,9 +73,11 @@ export default function crearContrasena() {
 
       if (!data.success) {
         setMensaje(data.message);
+        setIsError(true);
       } else {
         // setUserId(data.userId);
         setMensaje("Contraseña actualizada correctamente");
+        setIsError(false);
         setContrasena("");
         setConfirmar("");
       }
@@ -132,7 +137,7 @@ export default function crearContrasena() {
                   <View
                     style={[
                       styles.inputContainer,
-                      mensaje ? { borderColor: "red" } : {},
+                      isError ? { borderColor: "red" } : {},
                     ]}
                   >
                     <TextInput
@@ -159,7 +164,7 @@ export default function crearContrasena() {
                   <View
                     style={[
                       styles.inputContainer,
-                      mensaje ? { borderColor: "red" } : {},
+                      isError ? { borderColor: "red" } : {},
                     ]}
                   >
                     <TextInput

@@ -21,11 +21,8 @@ function AppContent() {
   const [currentRoute, setCurrentRoute] = useState(null);
   const {
     setUser,
-    selectedChat,
     screen,
     setScreen,
-    selectedTab,
-    setSelectedTab,
     setIsLoading,
     verificarUsuario,
   } = useAuth();
@@ -89,9 +86,6 @@ function AppContent() {
       case "layout":
         return (
           <Layout
-            selectedTab={selectedTab}
-            setSelectedTab={setSelectedTab}
-            selectedChat={selectedChat}
             onLogout={async () => {
               await AsyncStorage.removeItem("user");
               setUser(null);
@@ -116,7 +110,7 @@ function AppContent() {
 
 export default function App() {
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider style={stylesApp.contenedor}>
         <AppProvider>
           <AppContent />

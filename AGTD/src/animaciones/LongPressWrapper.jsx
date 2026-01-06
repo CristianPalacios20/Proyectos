@@ -1,17 +1,20 @@
-import React from "react";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Pressable } from "react-native-gesture-handler";
 
 export default function LongPressWrapper({
   children,
-  minDuration = 800,
+  onPress,
   onLongPress,
+  minDuration = 800,
 }) {
-  const longPressGesture = Gesture.LongPress()
-    .minDuration(minDuration)
-    .onStart(() => {
-      if (onLongPress) onLongPress();
-    });
   return (
-    <GestureDetector gesture={longPressGesture}>{children}</GestureDetector>
+    <>
+      <Pressable
+        onPress={onPress}
+        onLongPress={onLongPress}
+        delayLongPress={minDuration} // tiempo mínimo para activar long press
+      >
+        {children}
+      </Pressable>
+    </>
   );
 }

@@ -10,7 +10,11 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaFrame,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { useAuth } from "../context/AuthContext";
 
 import iconUser from "../../assets/icons/iconUser.png";
@@ -22,12 +26,14 @@ import vector2 from "../../assets/img/wavesBottomBlack.png";
 import iconError from "../../assets/icons/iconError.png";
 
 export default function LoginScreen() {
+  const insets = useSafeAreaInsets(); // respeta la barra de estado
+
   const [ocultar, setOcultar] = useState(true);
   const [identificador, setIdentificador] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
 
-  const { setScreen, login, isLoadingloading } = useAuth();
+  const { setScreen, login } = useAuth();
 
   const inputs = [
     {
@@ -184,7 +190,12 @@ export default function LoginScreen() {
           </View>
           {/* Mensaje de error */}
           {mensaje && (
-            <View style={stylesLoginScreen.contentMessageError}>
+            <View
+              style={[
+                stylesLoginScreen.contentMessageError,
+                { top: insets.top },
+              ]}
+            >
               <View style={stylesLoginScreen.message}>
                 <Image source={iconError} style={stylesLoginScreen.iconError} />
                 <Text style={stylesLoginScreen.textError}>{mensaje}</Text>
@@ -212,6 +223,7 @@ const stylesLoginScreen = StyleSheet.create({
   },
   body: {
     flex: 1,
+    position: "relative",
   },
   textLogin: {
     textAlign: "center",
@@ -388,10 +400,21 @@ const stylesLoginScreen = StyleSheet.create({
     resizeMode: "contain",
   },
 
+  contentMessageError: {
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    left: 0,
+    right: 0,
+    width: "100%",
+  },
+
   message: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+
+    width: "80%",
     height: 40,
     gap: 8,
     paddingHorizontal: 20,
