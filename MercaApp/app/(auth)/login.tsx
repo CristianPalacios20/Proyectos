@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   TextInput,
   Image,
   StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { router } from "expo-router";
 
@@ -13,86 +15,120 @@ import iconUser from "../../assets/icons/iconUserII.png";
 import iconApple from "../../assets/icons/iconApple.png";
 import iconGoogle from "../../assets/icons/iconGoogle.png";
 
-type LoginProps = {
-  onNext: (phone: string) => void;
-};
+// type LoginProps = {
+//   onNext: (phone: string) => void;
+// };
 
-export default function Login({ onNext }: LoginProps) {
-  const [valor, setValor] = useState("");
+export default function Login() {
   const [phone, setPhone] = useState("");
+  const [mensaje, setMensaje] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMensaje("");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [mensaje]);
 
   const manejarCambio = (texto: string) => {
     const soloNumeros = texto.replace(/[^0-9]/g, "");
-    setValor(soloNumeros);
+    setPhone(soloNumeros);
   };
 
-  // const manejarLogueo = () =>{
-  //   if () {
+  const validarNumero = (phone: string) => {
+    if (!phone.startsWith("3")) return false;
+    if (phone.length !== 10) {
+      setMensaje("Ingresa un número válido de 10 números");
+      return;
+    }
+    return true;
+  };
 
-  //   }
-  // }
+  const onNext = async () => {
+    if (phone === "") {
+      setMensaje("Por favor ingresa tu número de celular");
+      return;
+    }
+
+    if (!validarNumero(phone)) {
+      setMensaje("Número inválido");
+      return;
+    }
+
+    router.push({
+      pathname: "/(auth)/step1",
+      params: { phone },
+    });
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentTitle}>
-        <Text style={styles.title}>MercaApp</Text>
-      </View>
-      {/* ------------------------------------ */}
-      <View style={styles.phoneContainer}>
-        <Text style={styles.phoneLabel}>Número de teléfono móvil</Text>
-        <View style={styles.phoneInputWrapper}>
-          <View style={styles.flagContainer}>
-            <Text style={styles.arrow}>flecha</Text>
-          </View>
-          <View style={styles.inputAndIcon}>
-            <View style={styles.textAndInput}>
-              <Text style={styles.placeholderText}>+57</Text>
-              <TextInput
-                value={valor}
-                onChangeText={manejarCambio}
-                keyboardType="numeric"
-                placeholder="Ingresa tu número"
-                style={styles.phoneInput}
-              />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.contentTitle}>
+          <Text style={styles.title}>MercaApp</Text>
+        </View>
+        {/* ------------------------------------ */}
+        <View style={styles.phoneContainer}>
+          <Text style={styles.phoneLabel}>Número de teléfono móvil</Text>
+          <View style={styles.phoneInputWrapper}>
+            <View style={styles.flagContainer}>
+              <Text style={styles.arrow}>flecha</Text>
             </View>
-            <Image source={iconUser} style={styles.phoneImage} />
+            <View style={styles.inputAndIcon}>
+              <View style={styles.textAndInput}>
+                <Text style={styles.placeholderText}>+57</Text>
+                <TextInput
+                  value={phone}
+                  onChangeText={manejarCambio}
+                  keyboardType="numeric"
+                  placeholder="Ingresa tu número"
+                  style={styles.phoneInput}
+                />
+              </View>
+              <Image source={iconUser} style={styles.phoneImage} />
+            </View>
           </View>
         </View>
-      </View>
-      {/* ------------------------------------ */}
-      <TouchableOpacity
-        onPress={() => router.push("/(auth)/step1")}
-        style={styles.buttonContinue}
-      >
-        <Text style={styles.buttonContinueText}>Continuar</Text>
-      </TouchableOpacity>
-      {/* ------------------------------------ */}
-      <View style={styles.separatorContainer}>
-        <View style={styles.separatorLine}></View>
-        <Text style={styles.separatorText}>O</Text>
-        <View style={styles.separatorLine}></View>
-      </View>
-      {/* ------------------------------------ */}
-      <View style={styles.socialContainer}>
-        <TouchableOpacity style={styles.socialButton}>
-          <Image source={iconApple} style={styles.socialButtonImage} />
-          <Text style={styles.socialButtonText}>Continúe con Apple</Text>
+        {/* ------------------------------------ */}
+        <TouchableOpacity
+          onPress={() => onNext()}
+          style={styles.buttonContinue}
+        >
+          <Text style={styles.buttonContinueText}>Continuar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
-          <Image source={iconGoogle} style={styles.socialButtonImage} />
-          <Text style={styles.socialButtonText}>Continúe con Google</Text>
-        </TouchableOpacity>
+        {/* ------------------------------------ */}
+        <View style={styles.separatorContainer}>
+          <View style={styles.separatorLine}></View>
+          <Text style={styles.separatorText}>O</Text>
+          <View style={styles.separatorLine}></View>
+        </View>
+        {/* ------------------------------------ */}
+        <View style={styles.socialContainer}>
+          <TouchableOpacity style={styles.socialButton}>
+            <Image source={iconApple} style={styles.socialButtonImage} />
+            <Text style={styles.socialButtonText}>Continúe con Apple</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.socialButton}>
+            <Image source={iconGoogle} style={styles.socialButtonImage} />
+            <Text style={styles.socialButtonText}>Continúe con Google</Text>
+          </TouchableOpacity>
+        </View>
+        {mensaje !== "" && (
+          <View style={styles.message}>
+            <Text style={styles.textMessage}>{mensaje}</Text>
+          </View>
+        )}
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
     paddingHorizontal: 20,
     backgroundColor: "white",
+    alignItems: "center",
   },
   title: {
     fontSize: 36,
@@ -182,6 +218,7 @@ const styles = StyleSheet.create({
   },
   separatorText: {},
   socialContainer: {
+    width: "100%",
     marginTop: 20,
     gap: 11,
     // borderWidth: 1,
@@ -190,6 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
     height: 50,
     gap: 7,
     borderWidth: 1,
@@ -204,5 +242,22 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     resizeMode: "contain",
+  },
+  message: {
+    borderWidth: 1,
+    position: "absolute",
+    minWidth: 150,
+    top: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    backgroundColor: "black",
+    padding: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+  },
+  textMessage: {
+    fontWeight: "500",
+    color: "white",
   },
 });
