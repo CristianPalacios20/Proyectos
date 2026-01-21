@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
 import iconOk from "../../assets/icons/iconOk1.png";
+import iconOk2 from "../../assets/icons/iconOk2.png";
 
 export default function Step4() {
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
@@ -17,16 +18,21 @@ export default function Step4() {
     }, 5000);
 
     return () => clearTimeout(timer);
-  });
+  }, [mensaje]);
 
   const aceptar = () => {
-    setAceptarTerminos((prev) => !prev);
-    setMensaje(
-      !aceptarTerminos
-        ? "Términos aceptados"
-        : "Debes aceptar los términos y condiciones",
-    );
-    setEsError(false);
+    setAceptarTerminos((prev) => {
+      const nuevoValor = !prev;
+      setMensaje(
+        nuevoValor
+          ? "Términos aceptados"
+          : "Debes aceptar los términos y condiciones",
+      );
+
+      setEsError(!nuevoValor);
+
+      return nuevoValor;
+    });
   };
 
   const irSiguiente = () => {
@@ -61,7 +67,10 @@ export default function Step4() {
               aceptarTerminos ? styles.mostarImage : styles.ocultarImage,
             ]}
           >
-            <Image style={styles.checkboxIcon} />
+            <Image
+              source={iconOk2}
+              style={[styles.checkboxIcon, { opacity: esError ? 0 : 1 }]}
+            />
           </TouchableOpacity>
         </View>
 
@@ -75,7 +84,11 @@ export default function Step4() {
 
           <TouchableOpacity
             onPress={() => irSiguiente()}
-            style={styles.nextButton}
+            disabled={!aceptarTerminos}
+            style={[
+              styles.nextButton,
+              !aceptarTerminos && styles.nextTextDisabled,
+            ]}
           >
             <Text style={styles.nextText}>
               <Text style={styles.nextTextBold}>Siguiente</Text>
@@ -132,6 +145,8 @@ export const styles = StyleSheet.create({
   acceptText: {},
 
   checkboxContainer: {
+    alignItems: "center",
+    justifyContent: "center",
     width: 20,
     height: 20,
     borderWidth: 1,
@@ -148,7 +163,11 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  checkboxIcon: {},
+  checkboxIcon: {
+    width: 10,
+    height: 10,
+    opacity: 0,
+  },
 
   buttonsContainer: {
     width: "100%",
@@ -179,6 +198,10 @@ export const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 30,
+  },
+
+  nextTextDisabled: {
+    backgroundColor: "#CCC",
   },
 
   nextText: {
