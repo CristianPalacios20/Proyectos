@@ -30,7 +30,7 @@ export default function Step3() {
   }, [mensaje]);
 
   const manejarCambio = () => {
-    if (nombres === "" && apellidos === "") {
+    if (nombres === "" || apellidos === "") {
       setMensaje("Por favor ingresa tus datos");
       setError(true);
       return;
@@ -59,7 +59,7 @@ export default function Step3() {
           </View>
 
           <View style={styles.fieldContainer}>
-            <View style={styles.contentInput}>
+            <View style={[styles.contentInput, error && styles.error]}>
               <TextInput
                 placeholder="ingresa tu apellido"
                 value={apellidos}
@@ -89,8 +89,10 @@ export default function Step3() {
           </TouchableOpacity>
         </View>
         {mensaje && (
-          <View>
-            <Text>{mensaje}</Text>
+          <View style={styles.containerMessage}>
+            <View style={styles.contentMessage}>
+              <Text style={styles.message}>{mensaje}</Text>
+            </View>
           </View>
         )}
       </View>
@@ -194,4 +196,23 @@ export const styles = StyleSheet.create({
     borderColor: "red",
     borderRadius: 20,
   },
+
+  containerMessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%"
+  },
+
+  contentMessage: {
+    width: "auto",
+    padding: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "black",
+    borderRadius: 20
+  },
+
+  message: {
+    color: "white"
+  }
+
 });

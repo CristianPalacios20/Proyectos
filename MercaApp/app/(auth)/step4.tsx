@@ -1,17 +1,43 @@
 import { router } from "expo-router";
-import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
+import iconOk from "../../assets/icons/iconOk1.png";
 
 export default function Step4() {
+  const [aceptarTerminos, setAceptarTerminos] = useState(false);
+  const [esError, setEsError] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMensaje("");
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  });
+
+  const aceptar = () => {
+    setAceptarTerminos((prev) => !prev);
+    setMensaje(
+      !aceptarTerminos
+        ? "Términos aceptados"
+        : "Debes aceptar los términos y condiciones",
+    );
+    setEsError(false);
+  };
+
+  const irSiguiente = () => {
+    if (!aceptarTerminos) {
+      setMensaje("Debes aceptar los términos y condiciones");
+      setEsError(true);
+      return;
+    }
+    router.replace("/(tabs)/home");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -28,9 +54,15 @@ export default function Step4() {
       <View style={styles.actionsWrapper}>
         <View style={styles.acceptContainer}>
           <Text style={styles.acceptText}>Aceptar</Text>
-          <View style={styles.checkboxContainer}>
+          <TouchableOpacity
+            onPress={() => aceptar()}
+            style={[
+              styles.checkboxContainer,
+              aceptarTerminos ? styles.mostarImage : styles.ocultarImage,
+            ]}
+          >
             <Image style={styles.checkboxIcon} />
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.buttonsContainer}>
@@ -42,7 +74,7 @@ export default function Step4() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => router.push("/home")}
+            onPress={() => irSiguiente()}
             style={styles.nextButton}
           >
             <Text style={styles.nextText}>
@@ -52,6 +84,14 @@ export default function Step4() {
           </TouchableOpacity>
         </View>
       </View>
+      {mensaje && (
+        <View style={styles.messageContainer}>
+          <View style={styles.messageContent}>
+            <Image style={styles.image} source={esError ? iconOk : iconOk} />
+            <Text style={styles.message}>{mensaje}</Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -97,6 +137,15 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: "#979A9A",
+  },
+
+  mostarImage: {
+    backgroundColor: "black",
+    borderWidth: 0,
+  },
+
+  ocultarImage: {
+    backgroundColor: "white",
   },
 
   checkboxIcon: {},
@@ -145,5 +194,33 @@ export const styles = StyleSheet.create({
     width: 20,
     height: 20,
     tintColor: "#FFF",
+  },
+
+  messageContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    top: "15%",
+  },
+
+  messageContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "auto",
+    gap: 8,
+    padding: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "black",
+    borderRadius: 20,
+  },
+
+  image: {
+    width: 20,
+    height: 20,
+  },
+
+  message: {
+    color: "white",
   },
 });
