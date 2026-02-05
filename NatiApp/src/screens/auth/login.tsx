@@ -11,14 +11,14 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 
-import colores from "../../assets/theme/colores"
+import colores from "../../assets/theme/colores";
 
 import iconUser from "../../assets/icons/iconUserII.png";
 import iconApple from "../../assets/icons/iconApple.png";
 import iconGoogle from "../../assets/icons/iconGoogle.png";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-
-export default function Login() {
+export default function Login({ navigation }: any) {
   const [phone, setPhone] = useState("");
   const [mensaje, setMensaje] = useState("");
 
@@ -54,71 +54,76 @@ export default function Login() {
       return;
     }
 
-    router.push({
-      pathname: "/(tabs)/home",
-      params: { phone },
+    navigation.navigate("App", {
+      screen: "Home",
     });
+    // router.push({
+    //   pathname: "/(tabs)/home",
+    //   params: { phone },
+    // });
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <View style={styles.contentTitle}>
-          <Text style={styles.title}>NatiApp</Text>
-        </View>
-        {/* ------------------------------------ */}
-        <View style={styles.phoneContainer}>
-          <Text style={styles.phoneLabel}>Número de teléfono móvil</Text>
-          <View style={styles.phoneInputWrapper}>
-            {/* <View style={styles.flagContainer}>
+    <SafeAreaView style={{flex: 1}}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <View style={styles.contentTitle}>
+            <Text style={styles.title}>NatiApp</Text>
+          </View>
+          {/* ------------------------------------ */}
+          <View style={styles.phoneContainer}>
+            <Text style={styles.phoneLabel}>Número de teléfono móvil</Text>
+            <View style={styles.phoneInputWrapper}>
+              {/* <View style={styles.flagContainer}>
               <Text style={styles.arrow}>flecha</Text>
             </View> */}
-            <View style={styles.inputAndIcon}>
-              <View style={styles.textAndInput}>
-                <Text style={styles.placeholderText}>+57</Text>
-                <TextInput
-                  value={phone}
-                  onChangeText={manejarCambio}
-                  keyboardType="numeric"
-                  placeholder="Ingresa tu número"
-                  style={styles.phoneInput}
-                />
+              <View style={styles.inputAndIcon}>
+                <View style={styles.textAndInput}>
+                  <Text style={styles.placeholderText}>+57</Text>
+                  <TextInput
+                    value={phone}
+                    onChangeText={manejarCambio}
+                    keyboardType="numeric"
+                    placeholder="Ingresa tu número"
+                    style={styles.phoneInput}
+                  />
+                </View>
+                <Image source={iconUser} style={styles.phoneImage} />
               </View>
-              <Image source={iconUser} style={styles.phoneImage} />
             </View>
           </View>
-        </View>
-        {/* ------------------------------------ */}
-        <TouchableOpacity
-          onPress={() => onNext()}
-          style={styles.buttonContinue}
-        >
-          <Text style={styles.buttonContinueText}>Continuar</Text>
-        </TouchableOpacity>
-        {/* ------------------------------------ */}
-        <View style={styles.separatorContainer}>
-          <View style={styles.separatorLine}></View>
-          <Text style={styles.separatorText}>O</Text>
-          <View style={styles.separatorLine}></View>
-        </View>
-        {/* ------------------------------------ */}
-        <View style={styles.socialContainer}>
-          <TouchableOpacity style={styles.socialButton}>
-            <Image source={iconApple} style={styles.socialButtonImage} />
-            <Text style={styles.socialButtonText}>Continúe con Apple</Text>
+          {/* ------------------------------------ */}
+          <TouchableOpacity
+            onPress={() => onNext()}
+            style={styles.buttonContinue}
+          >
+            <Text style={styles.buttonContinueText}>Continuar</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.socialButton}>
-            <Image source={iconGoogle} style={styles.socialButtonImage} />
-            <Text style={styles.socialButtonText}>Continúe con Google</Text>
-          </TouchableOpacity>
-        </View>
-        {mensaje !== "" && (
-          <View style={styles.message}>
-            <Text style={styles.textMessage}>{mensaje}</Text>
+          {/* ------------------------------------ */}
+          <View style={styles.separatorContainer}>
+            <View style={styles.separatorLine}></View>
+            <Text style={styles.separatorText}>O</Text>
+            <View style={styles.separatorLine}></View>
           </View>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+          {/* ------------------------------------ */}
+          <View style={styles.socialContainer}>
+            <TouchableOpacity style={styles.socialButton}>
+              <Image source={iconApple} style={styles.socialButtonImage} />
+              <Text style={styles.socialButtonText}>Continúe con Apple</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.socialButton}>
+              <Image source={iconGoogle} style={styles.socialButtonImage} />
+              <Text style={styles.socialButtonText}>Continúe con Google</Text>
+            </TouchableOpacity>
+          </View>
+          {mensaje !== "" && (
+            <View style={styles.message}>
+              <Text style={styles.textMessage}>{mensaje}</Text>
+            </View>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
@@ -126,7 +131,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: "white",
     alignItems: "center",
   },
   title: {
@@ -236,7 +240,7 @@ const styles = StyleSheet.create({
   socialButtonText: {
     fontSize: 16,
     fontWeight: "500",
-    color: colores.textoOscuro
+    color: colores.textoOscuro,
   },
   socialButtonImage: {
     width: 20,

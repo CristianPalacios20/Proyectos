@@ -42,7 +42,7 @@ export default function Splash() {
       <Animated.Text
         style={[styles.text, { transform: [{ translateY }, { scale }] }]}
       >
-        NatiApp
+        MercaApp
       </Animated.Text>
     </View>
   );
