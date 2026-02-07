@@ -1,26 +1,27 @@
-import { router } from "expo-router";
+import { useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import colores from "@/assets/theme/colores";
+import colores from "../../assets/theme/colores";
 
 import iconEyeHide from "../../assets/icons/iconEyeHide.png";
 import iconVisible from "../../assets/icons/iconVisible.png";
 
 import iconArrowRight from "../../assets/icons/iconArrowRight.png";
 import vector6 from "../../assets/images/vector.png";
-import { useState } from "react";
-
-import { StatusBar } from "expo-status-bar";
 
 export default function Home() {
+  const insets = useSafeAreaInsets();
+
   const [seeMonto, setSeeMonto] = useState(false);
 
   return (
     <View style={[styles.container]}>
       <StatusBar backgroundColor="transparent" />
       <LinearGradient
-        style={styles.header}
+        style={[styles.header, {paddingTop: insets.top}]}
         colors={[colores.inicioGradienteInicio, colores.inicioGradienteFin]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -82,7 +83,7 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    height: 320,
+    height: 350,
     padding: 10,
     gap: 10,
   },

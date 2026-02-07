@@ -1,4 +1,3 @@
-import { router, useLocalSearchParams } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   View,
@@ -10,21 +9,21 @@ import {
   Keyboard,
   TouchableNativeFeedback,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "../../context/AuthContext";
 
-import colores from "@/assets/theme/colores";
+import colores from "../../assets/theme/colores";
 
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
 
-export default function Step1() {
+export default function Step1({ navigation, route, onLoginSuccess }: any) {
   const [codigo, setCodigo] = useState(["", "", "", ""]);
   const inputsRef = useRef<Array<TextInput | null>>([]);
   const [mensaje, setMensaje] = useState("");
+  const { login } = useAuth();
 
-  const { phone, usuarioExiste } = useLocalSearchParams<{
-    phone?: string;
-    usuarioExiste?: string;
-  }>();
+  const { phone, usuarioExiste } = route?.params ?? {};
 
   const manejarCambio = (text: string, index: number) => {
     const valor = text.replace(/[^0-9]/g, "");
@@ -61,71 +60,73 @@ export default function Step1() {
     const usuarioExiste = phone === "3121234567";
 
     if (usuarioExiste === true) {
-      router.replace("/(tabs)/home");
+      login();
     } else {
-      router.replace("/(auth)/step2");
+      navigation.replace("Step2", { phone });
     }
   };
 
   return (
-    <TouchableNativeFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text style={styles.textDescription}>
-            Ingresa el código de 4 dígitos enviado a través de SMS al
-          </Text>
-          <Text style={styles.phoneNumber}>#</Text>
-        </View>
-
-        <View style={styles.codeContainer}>
-          {codigo.map((digito, index) => (
-            <View key={index} style={styles.inputBox}>
-              <TextInput
-                ref={(ref) => {
-                  inputsRef.current[index] = ref;
-                }}
-                style={styles.codeInput}
-                keyboardType="numeric"
-                maxLength={1}
-                value={digito}
-                onChangeText={(text) => manejarCambio(text, index)}
-                onKeyPress={(e) => manejarKeyPress(e, index)}
-              />
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.actionsContainer}>
-          <TouchableOpacity style={[styles.actionItem]}>
-            <Text style={styles.actionText}>Reenviar código de SMS</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.actionItem, styles.actionItemLlamarme]}
-          >
-            <Text style={styles.actionText}>Llamarme</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Image source={iconArrow} style={styles.imgBack} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => validarCodigo()}
-            style={styles.nextButton}
-          >
-            <Text style={styles.nextText}>
-              <Text style={styles.nextTextBold}>Siguiente</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <TouchableNativeFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={styles.textDescription}>
+              Ingresa el código de 4 dígitos enviado a través de SMS al
             </Text>
-            <Image source={iconArrow1} style={styles.nextIcon} />
-          </TouchableOpacity>
+            <Text style={styles.phoneNumber}>#</Text>
+          </View>
+
+          <View style={styles.codeContainer}>
+            {codigo.map((digito, index) => (
+              <View key={index} style={styles.inputBox}>
+                <TextInput
+                  ref={(ref) => {
+                    inputsRef.current[index] = ref;
+                  }}
+                  style={styles.codeInput}
+                  keyboardType="numeric"
+                  maxLength={1}
+                  value={digito}
+                  onChangeText={(text) => manejarCambio(text, index)}
+                  onKeyPress={(e) => manejarKeyPress(e, index)}
+                />
+              </View>
+            ))}
+          </View>
+
+          <View style={styles.actionsContainer}>
+            <TouchableOpacity style={[styles.actionItem]}>
+              <Text style={styles.actionText}>Reenviar código de SMS</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.actionItem, styles.actionItemLlamarme]}
+            >
+              <Text style={styles.actionText}>Llamarme</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Image source={iconArrow} style={styles.imgBack} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => validarCodigo()}
+              style={styles.nextButton}
+            >
+              <Text style={styles.nextText}>
+                <Text style={styles.nextTextBold}>Siguiente</Text>
+              </Text>
+              <Image source={iconArrow1} style={styles.nextIcon} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </TouchableNativeFeedback>
+      </TouchableNativeFeedback>
+    </SafeAreaView>
   );
 }
 

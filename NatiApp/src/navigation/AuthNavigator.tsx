@@ -8,14 +8,24 @@ import Step4 from "../screens/auth/step4";
 
 const Stack = createNativeStackNavigator();
 
-export default function AuthNavigator() {
+export default function AuthNavigator({ onloginSuccess }: any) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Step1" component={Step1} />
-      <Stack.Screen name="Step2" component={Step2} />
-      <Stack.Screen name="Step3" component={Step3} />
-      <Stack.Screen name="Step4" component={Step4} />
+      <Stack.Screen name="Login">
+        {(props) => <Login {...props} />}
+      </Stack.Screen>
+      <Stack.Screen name="Step1">
+        {(props) => <Step1 {...props} onLoginSuccess={onloginSuccess} />}
+      </Stack.Screen>
+      <Stack.Screen name="Step2">
+        {(props) => <Step2 {...props} onLoginSuccess={onloginSuccess} />}
+      </Stack.Screen>
+      <Stack.Screen name="Step3">
+        {(props) => <Step3 {...props} />}
+      </Stack.Screen>
+      <Stack.Screen name="Step4">
+        {(props) => <Step4 {...props} />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }

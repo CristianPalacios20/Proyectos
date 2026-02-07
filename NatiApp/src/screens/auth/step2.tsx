@@ -10,13 +10,14 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-import colores from "@/assets/theme/colores";
+import colores from "../../assets/theme/colores";
 
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
-import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+// import { router } from "expo-router";
 
-export default function Step2() {
+export default function Step2({ navigation }: any) {
   const [correo, setCorreo] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [errorCorreo, setErrorCorreo] = useState(false);
@@ -50,58 +51,60 @@ export default function Step2() {
       setErrorCorreo(true);
       return;
     }
-    router.replace("/(auth)/step3");
+    navigation.replace("Step3")
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>
-            Ingresa tu dirección de correo electrónico
-          </Text>
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.labelText}>Correo electrónico</Text>
-          <View
-            style={[styles.inputWrapper, errorCorreo && styles.errorCorreo]}
-          >
-            <TextInput
-              placeholder="nombre@ejemplo.com"
-              value={correo}
-              onChangeText={validarCambioCorreo}
-              keyboardType="email-address"
-              style={[styles.input]}
-            />
+    <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>
+              Ingresa tu dirección de correo electrónico
+            </Text>
           </View>
-        </View>
 
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Image source={iconArrow} style={styles.imgBack} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => manejarCambio()}
-            style={styles.nextButton}
-          >
-            <Text style={styles.nextText}>Siguiente</Text>
-            <Image source={iconArrow1} style={styles.nextIcon} />
-          </TouchableOpacity>
-        </View>
-        {mensaje && (
-          <View style={styles.contentMessage}>
-            <View style={styles.message}>
-              <Text style={styles.textMessage}>{mensaje}</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.labelText}>Correo electrónico</Text>
+            <View
+              style={[styles.inputWrapper, errorCorreo && styles.errorCorreo]}
+            >
+              <TextInput
+                placeholder="nombre@ejemplo.com"
+                value={correo}
+                onChangeText={validarCambioCorreo}
+                keyboardType="email-address"
+                style={[styles.input]}
+              />
             </View>
           </View>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Image source={iconArrow} style={styles.imgBack} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => manejarCambio()}
+              style={styles.nextButton}
+            >
+              <Text style={styles.nextText}>Siguiente</Text>
+              <Image source={iconArrow1} style={styles.nextIcon} />
+            </TouchableOpacity>
+          </View>
+          {mensaje && (
+            <View style={styles.contentMessage}>
+              <View style={styles.message}>
+                <Text style={styles.textMessage}>{mensaje}</Text>
+              </View>
+            </View>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 

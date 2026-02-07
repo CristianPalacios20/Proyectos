@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "NatiApp",
+    "slug": "NatiApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "natiapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+
+    "platforms": ["ios", "android"],
+
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIViewControllerBasedStatusBarAppearance": true,
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.anonymous.NatiAppn"
+    },
+
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.NatiApp"
+    },
+
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+
+    "extra": {
+      "eas": {
+        "projectId": "db3bbdfe-48b7-4bef-b8c4-75e35968b541"
+      }
+    }
+  }
+}

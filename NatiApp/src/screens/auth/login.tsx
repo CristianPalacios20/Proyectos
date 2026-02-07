@@ -9,7 +9,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import { router } from "expo-router";
+// import { router } from "expo-router";
 
 import colores from "../../assets/theme/colores";
 
@@ -54,17 +54,11 @@ export default function Login({ navigation }: any) {
       return;
     }
 
-    navigation.navigate("App", {
-      screen: "Home",
-    });
-    // router.push({
-    //   pathname: "/(tabs)/home",
-    //   params: { phone },
-    // });
+    navigation.navigate("Step1", { phone });
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <View style={styles.contentTitle}>
@@ -132,6 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     alignItems: "center",
+    // borderWidth: 10
+    // width: "100%"
   },
   title: {
     fontSize: 36,

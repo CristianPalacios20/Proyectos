@@ -10,13 +10,14 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-import colores from "@/assets/theme/colores";
+import colores from "../../assets/theme/colores";
 
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
-import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+// import { router } from "expo-router";
 
-export default function Step3() {
+export default function Step3({ navigation, route }: any) {
   const [nombres, setNombres] = useState("");
   const [apellidos, setApellidos] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -38,67 +39,69 @@ export default function Step3() {
       return;
     }
 
-    router.replace("/(auth)/step4");
+    navigation.replace("Step4");
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>¿Cuál es tu nombre?</Text>
-        </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>¿Cuál es tu nombre?</Text>
+          </View>
 
-        <View style={styles.containerInputs}>
-          <View style={[styles.fieldContainer]}>
-            <View style={[styles.contentInput, error && styles.error]}>
-              <TextInput
-                placeholder="ingresa tu nombre"
-                value={nombres}
-                onChangeText={setNombres}
-                style={styles.input}
-              />
+          <View style={styles.containerInputs}>
+            <View style={[styles.fieldContainer]}>
+              <View style={[styles.contentInput, error && styles.error]}>
+                <TextInput
+                  placeholder="ingresa tu nombre"
+                  value={nombres}
+                  onChangeText={setNombres}
+                  style={styles.input}
+                />
+              </View>
+            </View>
+
+            <View style={styles.fieldContainer}>
+              <View style={[styles.contentInput, error && styles.error]}>
+                <TextInput
+                  placeholder="ingresa tu apellido"
+                  value={apellidos}
+                  onChangeText={setApellidos}
+                  style={styles.input}
+                />
+              </View>
             </View>
           </View>
 
-          <View style={styles.fieldContainer}>
-            <View style={[styles.contentInput, error && styles.error]}>
-              <TextInput
-                placeholder="ingresa tu apellido"
-                value={apellidos}
-                onChangeText={setApellidos}
-                style={styles.input}
-              />
-            </View>
-          </View>
-        </View>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.backButton}
+              // onPress={() => router.back()}
+            >
+              <Image source={iconArrow} style={styles.imgBack} />
+            </TouchableOpacity>
 
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Image source={iconArrow} style={styles.imgBack} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => manejarCambio()}
-            style={styles.nextButton}
-          >
-            <Text style={styles.nextText}>
-              <Text style={styles.nextTextBold}>Siguiente</Text>
-            </Text>
-            <Image source={iconArrow1} style={styles.nextIcon} />
-          </TouchableOpacity>
-        </View>
-        {mensaje && (
-          <View style={styles.containerMessage}>
-            <View style={styles.contentMessage}>
-              <Text style={styles.message}>{mensaje}</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => manejarCambio()}
+              style={styles.nextButton}
+            >
+              <Text style={styles.nextText}>
+                <Text style={styles.nextTextBold}>Siguiente</Text>
+              </Text>
+              <Image source={iconArrow1} style={styles.nextIcon} />
+            </TouchableOpacity>
           </View>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+          {mensaje && (
+            <View style={styles.containerMessage}>
+              <View style={styles.contentMessage}>
+                <Text style={styles.message}>{mensaje}</Text>
+              </View>
+            </View>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
@@ -202,7 +205,7 @@ export const styles = StyleSheet.create({
   containerMessage: {
     alignItems: "center",
     justifyContent: "center",
-    width: "100%"
+    width: "100%",
   },
 
   contentMessage: {
@@ -210,11 +213,10 @@ export const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     backgroundColor: "black",
-    borderRadius: 20
+    borderRadius: 20,
   },
 
   message: {
-    color: "white"
-  }
-
+    color: "white",
+  },
 });

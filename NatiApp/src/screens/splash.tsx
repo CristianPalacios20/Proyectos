@@ -1,9 +1,13 @@
 import { useRef, useEffect } from "react";
 import { View, StyleSheet, Animated, Dimensions } from "react-native";
-import { useRouter } from "expo-router";
+// import { useRouter } from "expo-router";
 
-export default function Splash() {
-  const router = useRouter();
+type Props = {
+  onFinish: () => void;
+};
+
+export default function Splash({ onFinish }: Props) {
+  // const router = useRouter();
   const { height } = Dimensions.get("window");
 
   const translateY = useRef(new Animated.Value(0)).current;
@@ -30,7 +34,7 @@ export default function Splash() {
           useNativeDriver: true,
         }),
       ]).start(() => {
-        router.replace("/(auth)/login");
+        onFinish();
       });
     }, 2000);
 
@@ -42,7 +46,7 @@ export default function Splash() {
       <Animated.Text
         style={[styles.text, { transform: [{ translateY }, { scale }] }]}
       >
-        MercaApp
+        NatiApp
       </Animated.Text>
     </View>
   );
