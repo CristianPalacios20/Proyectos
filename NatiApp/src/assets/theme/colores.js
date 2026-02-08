@@ -9,6 +9,7 @@ const colores = {
 
   /* ✨ Extra */
   extra: "#2DB964",
+  fondoPantalla: "#E7E5E4",
 
   /* 📝 Textos recomendados */
   textoOscuro: "#020617",

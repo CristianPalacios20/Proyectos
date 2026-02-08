@@ -1,18 +1,29 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import colores from "../../assets/theme/colores";
 
+import vector7 from "../../assets/images/vector7.png";
+import iconUser from "../../assets/icons/iconUserII.png";
 import iconEyeHide from "../../assets/icons/iconEyeHide.png";
 import iconVisible from "../../assets/icons/iconVisible.png";
-
 import iconArrowRight from "../../assets/icons/iconArrowRight.png";
-import vector6 from "../../assets/images/vector.png";
+import iconUsers from "../../assets/icons/iconUsers.png";
+import iconPrestamos from "../../assets/icons/iconPrestamo.png";
+import iconAportes from "../../assets/icons/iconAportes.png";
+import iconResumenAnual from "../../assets/icons/iconResumenAnual.png";
 
-export default function Home() {
+export default function Home({navigation} : any) {
   const insets = useSafeAreaInsets();
 
   const [seeMonto, setSeeMonto] = useState(false);
@@ -20,15 +31,18 @@ export default function Home() {
   return (
     <View style={[styles.container]}>
       <StatusBar backgroundColor="transparent" />
-      <LinearGradient
-        style={[styles.header, {paddingTop: insets.top}]}
-        colors={[colores.inicioGradienteInicio, colores.inicioGradienteFin]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <ImageBackground
+        source={vector7}
+        style={[styles.header, { paddingTop: insets.top }]}
+        // colors={[colores.inicioGradienteInicio, colores.inicioGradienteFin]}
+        // start={{ x: 0, y: 0 }}
+        // end={{ x: 1, y: 1 }}
       >
         {/* Perfil */}
         <View style={styles.profileContainer}>
-          <View style={styles.avatarContainer} />
+          <TouchableOpacity style={styles.avatarContainer}>
+            <Image source={iconUser} style={styles.iconUser} />
+          </TouchableOpacity>
         </View>
 
         {/* Contenido principal */}
@@ -60,7 +74,7 @@ export default function Home() {
           </View>
 
           {/* Total natillera */}
-          <TouchableOpacity style={styles.totalNatilleraContainer}>
+          <TouchableOpacity style={styles.totalNatilleraContainer} onPress={()=> navigation.navigate("InfoNatillera")}>
             <Text style={styles.totalNatilleraText}>Total natillera</Text>
             <Image source={iconArrowRight} style={styles.totalNatilleraIcon} />
           </TouchableOpacity>
@@ -68,7 +82,28 @@ export default function Home() {
           {/* Periodo */}
           <Text style={styles.periodoText}>Enero 2026</Text>
         </View>
-      </LinearGradient>
+      </ImageBackground>
+      <View style={styles.menuContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Personas")} style={styles.menuButton}>
+          <Image source={iconUsers} style={styles.menuIcon} />
+          <Text style={styles.menuText}>Personas</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("Prestamos")} style={styles.menuButton}>
+          <Image source={iconPrestamos} style={styles.menuIcon} />
+          <Text style={styles.menuText}>Préstamos/pagos</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuButton}>
+          <Image source={iconAportes} style={styles.menuIcon} />
+          <Text style={styles.menuText}>Aportes</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuButton}>
+          <Image source={iconResumenAnual} style={styles.menuIcon} />
+          <Text style={styles.menuText}>Resumen anual</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -79,13 +114,16 @@ export const styles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 0,
     backgroundColor: "white",
-    borderWidth: 1,
+    // borderWidth: 5,
+    // borderColor: "red"
   },
 
   header: {
-    height: 350,
+    width: 391,
+    height: 400,
     padding: 10,
     gap: 10,
+    resizeMode: "cover",
   },
 
   profileContainer: {
@@ -101,6 +139,12 @@ export const styles = StyleSheet.create({
     height: 35,
     backgroundColor: "#E7E5E4",
     borderRadius: 50,
+  },
+
+  iconUser: {
+    width: 30,
+    height: 30,
+    resizeMode: "cover",
   },
 
   avatarText: {
@@ -215,6 +259,38 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: colores.textoClaro,
     fontWeight: "600",
-    marginTop: 30,
+    marginTop: 60,
+  },
+
+  menuContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    gap: 7,
+  },
+
+  menuButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "48%",
+    height: 48,
+    gap: 8,
+    borderRadius: 10,
+    backgroundColor: colores.botonPrimario,
+  },
+
+  menuIcon: {
+    width: 28,
+    height: 28,
+    resizeMode: "contain",
+  },
+
+  menuText: {
+    fontSize: 14,
+    color: colores.textoClaro,
   },
 });
