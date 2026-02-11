@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
+  TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colores from "../../assets/theme/colores";
@@ -42,35 +43,78 @@ export default function Personas({ navigation }: any) {
   });
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={iconArrowBack} style={styles.headerIcon} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Personas</Text>
-      </View>
-
-      <View style={styles.screenContainer}>
-        {/* Acción principal */}
-        <View style={styles.actionContainer}>
-          <TouchableOpacity style={styles.addButton}>
-            <Image source={iconPlus} style={styles.addButtonIcon} />
-            <Text style={styles.addButtonText}>Agregar persona</Text>
+    <SafeAreaView edges={["top"]} style={styles.safeArea}>
+      <View style={{ flex: 1 }}>
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={iconArrowBack} style={styles.headerIcon} />
           </TouchableOpacity>
+          <Text style={styles.headerTitle}>Personas</Text>
         </View>
 
-        {/* Tarjeta / Item de persona */}
-        {personas.map((persona, index) => (
-          <PersonCard
-            key={index}
-            persona={persona}
-            abierto={abiertoIndex === index}
-            onPress={() =>
-              setAbiertoIndex(abiertoIndex === index ? null : index)
-            }
-          />
-        ))}
+        <View style={styles.screenContainer}>
+          {/* Acción principal */}
+          <View style={styles.actionContainer}>
+            <TouchableOpacity style={styles.addButton}>
+              <Image source={iconPlus} style={styles.addButtonIcon} />
+              <Text style={styles.addButtonText}>Agregar persona</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Tarjeta / Item de persona */}
+          {personas.map((persona, index) => (
+            <PersonCard
+              key={index}
+              persona={persona}
+              abierto={abiertoIndex === index}
+              onPress={() =>
+                setAbiertoIndex(abiertoIndex === index ? null : index)
+              }
+            />
+          ))}
+        </View>
+        <View style={styles.overlay}>
+          <Animated.View style={styles.modalContainer}>
+            {/* Header del modal */}
+            <View style={styles.modalHeader}>
+              <TouchableOpacity style={styles.cancelButton}>
+                <Text style={styles.cancelButtonText}>Cancelar</Text>
+              </TouchableOpacity>
+
+              <Text style={styles.modalTitle}>Agregar personas</Text>
+
+              <TouchableOpacity style={styles.saveButton}>
+                <Text style={styles.saveButtonText}>Guardar</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Inputs principales */}
+            <View style={styles.inputsContainer}>
+              <TextInput style={styles.input} placeholder="Nombre" />
+              <TextInput style={styles.input} placeholder="Cédula" />
+            </View>
+
+            {/* Monto */}
+            <View style={styles.amountContainer}>
+              <Text style={styles.amountLabel}>Monto</Text>
+              <TextInput style={styles.amountInput} placeholder="$0" />
+            </View>
+
+            {/* Fecha */}
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateLabel}>Fecha</Text>
+              <Text style={styles.dateValue}>DD/MM/AAAA</Text>
+            </View>
+
+            {/* Acción final */}
+            <View style={styles.footerContainer}>
+              <TouchableOpacity style={styles.addPersonButton}>
+                <Text style={styles.addPersonButtonText}>Agregar persona</Text>
+              </TouchableOpacity>
+            </View>
+          </Animated.View>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -203,6 +247,112 @@ export const styles = StyleSheet.create({
   },
 
   detailsButtonText: {
+    color: colores.textoClaro,
+  },
+
+  overlay: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "white",
+    borderRadius: 20,
+  },
+
+  modalContainer: {
+    flex: 1,
+    padding: 20,
+  },
+
+  modalHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  cancelButton: {},
+
+  cancelButtonText: {
+    fontSize: 16,
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+
+  saveButton: {},
+
+  saveButtonText: {
+    fontSize: 16,
+  },
+
+  inputsContainer: {
+    marginTop: 40,
+    gap: 15,
+    // borderWidth: 1,
+  },
+
+  input: {
+    height: 40,
+    paddingHorizontal: 21,
+    borderWidth: 1,
+    borderColor: "#7B7D7D",
+    borderRadius: 10,
+  },
+
+  amountContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: 45,
+    marginTop: 10,
+  },
+
+  amountLabel: {
+    fontSize: 16,
+  },
+
+  amountInput: {
+    textAlign: "center",
+    width: 137,
+    height: 35,
+    borderWidth: 1,
+    borderColor: "#7B7D7D",
+    borderRadius: 8,
+  },
+
+  dateContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderColor: "#7B7D7D",
+  },
+
+  dateLabel: {
+    fontSize: 16,
+  },
+
+  dateValue: {
+    fontSize: 16,
+  },
+
+  footerContainer: {
+    marginTop: 30,
+  },
+
+  addPersonButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    backgroundColor: colores.botonPrimario,
+    borderRadius: 8,
+  },
+
+  addPersonButtonText: {
+    fontSize: 18,
+    fontWeight: "600",
     color: colores.textoClaro,
   },
 });
