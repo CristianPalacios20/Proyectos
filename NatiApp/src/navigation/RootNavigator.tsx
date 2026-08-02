@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 
+import ModalManager from "../components/modalManager";
 import AuthNavigator from "./AuthNavigator";
 import TabsNavigator from "./TabsNavigator";
 import Splash from "../screens/splash";
@@ -39,6 +40,7 @@ export default function RootNavigator() {
           <Stack.Screen name="App" component={TabsNavigator} />
         )}
       </Stack.Navigator>
+      <ModalManager />
     </NavigationContainer>
   );
 }

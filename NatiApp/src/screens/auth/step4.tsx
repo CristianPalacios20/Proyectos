@@ -8,10 +8,14 @@ import iconOk from "../../assets/icons/iconOk1.png";
 import iconOk2 from "../../assets/icons/iconOk2.png";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useAuth } from "../../context/AuthContext";
+
 export default function Step4({ navigation }: any) {
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [esError, setEsError] = useState(false);
   const [mensaje, setMensaje] = useState("");
+
+  const { login } = useAuth();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,17 +40,17 @@ export default function Step4({ navigation }: any) {
     });
   };
 
-  const irSiguiente = () => {
+  const finalizarRegistro = () => {
     if (!aceptarTerminos) {
       setMensaje("Debes aceptar los términos y condiciones");
       setEsError(true);
       return;
     }
-    navigation.replace("Home");
+    login();
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }} edges={["top"]}>
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.mainText}>
@@ -76,6 +80,18 @@ export default function Step4({ navigation }: any) {
             </TouchableOpacity>
           </View>
 
+          {mensaje && (
+            <View style={styles.messageContainer}>
+              <View style={styles.messageContent}>
+                <Image
+                  style={styles.image}
+                  source={esError ? iconOk : iconOk}
+                />
+                <Text style={styles.message}>{mensaje}</Text>
+              </View>
+            </View>
+          )}
+
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.backButton}
@@ -85,28 +101,18 @@ export default function Step4({ navigation }: any) {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => irSiguiente()}
+              onPress={() => finalizarRegistro()}
               disabled={!aceptarTerminos}
               style={[
                 styles.nextButton,
                 !aceptarTerminos && styles.nextTextDisabled,
               ]}
             >
-              <Text style={styles.nextText}>
-                <Text style={styles.nextTextBold}>Siguiente</Text>
-              </Text>
+              <Text style={styles.nextText}>Siguiente</Text>
               <Image source={iconArrow1} style={styles.nextIcon} />
             </TouchableOpacity>
           </View>
         </View>
-        {mensaje && (
-          <View style={styles.messageContainer}>
-            <View style={styles.messageContent}>
-              <Image style={styles.image} source={esError ? iconOk : iconOk} />
-              <Text style={styles.message}>{mensaje}</Text>
-            </View>
-          </View>
-        )}
       </View>
     </SafeAreaView>
   );
@@ -115,13 +121,12 @@ export default function Step4({ navigation }: any) {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 20,
     backgroundColor: "white",
   },
 
   textContainer: {
     gap: 40,
+    paddingHorizontal: 20,
   },
 
   mainText: {
@@ -134,14 +139,15 @@ export const styles = StyleSheet.create({
   },
 
   actionsWrapper: {
-    top: "45%",
-    gap: 50,
+    flex: 1,
+    marginTop: 10,
   },
 
   acceptContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 20,
+    paddingHorizontal: 20,
     borderTopWidth: 1,
   },
 
@@ -173,19 +179,18 @@ export const styles = StyleSheet.create({
   },
 
   buttonsContainer: {
-    width: "100%",
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 
   backButton: {
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
-    height: 50,
-    backgroundColor: "#E7E5E4",
-    borderRadius: 50,
+    width: 120,
+    height: 60,
+    borderTopRightRadius: 100,
   },
 
   imgBack: {
@@ -195,30 +200,28 @@ export const styles = StyleSheet.create({
 
   nextButton: {
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
     gap: 8,
-    backgroundColor: "#000",
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 30,
+    width: 190,
+    height: 60,
+    backgroundColor: "#2DB964",
+    borderTopLeftRadius: 100,
+  },
+
+  nextText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
   },
 
   nextTextDisabled: {
     backgroundColor: "#CCC",
   },
 
-  nextText: {
-    fontSize: 14,
-    color: "#FFF",
-  },
-
-  nextTextBold: {
-    fontWeight: "600",
-  },
-
   nextIcon: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     tintColor: "#FFF",
   },
 

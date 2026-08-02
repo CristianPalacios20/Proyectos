@@ -1,0 +1,17 @@
+//Crear Entorno Virtual:
+-python3.14 -m venv venv
+
+//Activar Entorno Virtual
+-.\venv\Scripts\Activate
+
+//Instalar uvicorn, encaragdo de ejecutar FASTAPI
+-pip install fastapi uvicorn
+
+//Ejecutar
+-uvicorn main:app
+
+//Actualizar cambios sin detener y ejecutar nuevamente la aplicación
+-uvicorn main:app --reload
+
+//Visualisar desde distintos dispositivos conectados a la misma red
+-uvicorn main:app --host 0.0.0.0

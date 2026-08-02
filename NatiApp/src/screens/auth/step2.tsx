@@ -7,7 +7,9 @@ import {
   Image,
   StyleSheet,
   Keyboard,
+  KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 
 import colores from "../../assets/theme/colores";
@@ -15,7 +17,6 @@ import colores from "../../assets/theme/colores";
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import { router } from "expo-router";
 
 export default function Step2({ navigation }: any) {
   const [correo, setCorreo] = useState("");
@@ -51,59 +52,65 @@ export default function Step2({ navigation }: any) {
       setErrorCorreo(true);
       return;
     }
-    navigation.replace("Step3")
+    navigation.replace("Step3");
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>
-              Ingresa tu dirección de correo electrónico
-            </Text>
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.labelText}>Correo electrónico</Text>
-            <View
-              style={[styles.inputWrapper, errorCorreo && styles.errorCorreo]}
-            >
-              <TextInput
-                placeholder="nombre@ejemplo.com"
-                value={correo}
-                onChangeText={validarCambioCorreo}
-                keyboardType="email-address"
-                style={[styles.input]}
-              />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }} edges={["top"]}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.container}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleText}>
+                Ingresa tu dirección de correo electrónico
+              </Text>
             </View>
-          </View>
 
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => navigation.goBack()}
-            >
-              <Image source={iconArrow} style={styles.imgBack} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => manejarCambio()}
-              style={styles.nextButton}
-            >
-              <Text style={styles.nextText}>Siguiente</Text>
-              <Image source={iconArrow1} style={styles.nextIcon} />
-            </TouchableOpacity>
-          </View>
-          {mensaje && (
-            <View style={styles.contentMessage}>
-              <View style={styles.message}>
-                <Text style={styles.textMessage}>{mensaje}</Text>
+            <View style={styles.inputContainer}>
+              <Text style={styles.labelText}>Correo electrónico</Text>
+              <View
+                style={[styles.inputWrapper, errorCorreo && styles.errorCorreo]}
+              >
+                <TextInput
+                  placeholder="nombre@ejemplo.com"
+                  value={correo}
+                  onChangeText={validarCambioCorreo}
+                  keyboardType="email-address"
+                  style={[styles.input]}
+                />
               </View>
             </View>
-          )}
-        </View>
-      </TouchableWithoutFeedback>
+
+            {mensaje && (
+              <View style={styles.contentMessage}>
+                <View style={styles.message}>
+                  <Text style={styles.textMessage}>{mensaje}</Text>
+                </View>
+              </View>
+            )}
+
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.goBack()}
+              >
+                <Image source={iconArrow} style={styles.imgBack} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => manejarCambio()}
+                style={styles.nextButton}
+              >
+                <Text style={styles.nextText}>Siguiente</Text>
+                <Image source={iconArrow1} style={styles.nextIcon} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -111,13 +118,14 @@ export default function Step2({ navigation }: any) {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    // paddingHorizontal: 20,
+    // paddingTop: 20,
     backgroundColor: "white",
   },
 
   titleContainer: {
     marginBottom: 30,
+    paddingHorizontal: 20,
   },
 
   titleText: {
@@ -128,11 +136,12 @@ export const styles = StyleSheet.create({
 
   inputContainer: {
     gap: 8,
+    paddingHorizontal: 20,
   },
 
   labelText: {
     fontSize: 14,
-    color: "#555",
+    // fontWeight: "bold"
   },
 
   inputWrapper: {
@@ -155,20 +164,18 @@ export const styles = StyleSheet.create({
   },
 
   buttonsContainer: {
-    width: "100%",
-    top: "60%",
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 
   backButton: {
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
-    height: 50,
-    backgroundColor: "#E7E5E4",
-    borderRadius: 50,
+    width: 120,
+    height: 60,
+    borderTopRightRadius: 100,
   },
 
   imgBack: {
@@ -178,29 +185,33 @@ export const styles = StyleSheet.create({
 
   nextButton: {
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
     gap: 8,
-    backgroundColor: colores.botonPrimario,
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 30,
+    width: 190,
+    height: 60,
+    backgroundColor: "#2DB964",
+    borderTopLeftRadius: 100,
   },
 
   nextText: {
-    fontSize: 14,
-    color: colores.textoClaro,
+    fontSize: 18,
     fontWeight: "600",
+    color: colores.textoClaro,
   },
 
+  nextTextBold: {},
+
   nextIcon: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     tintColor: "#FFF",
   },
 
   contentMessage: {
     alignItems: "center",
     justifyContent: "center",
+    margin: 20,
   },
 
   message: {

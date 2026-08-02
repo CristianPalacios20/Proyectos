@@ -17,7 +17,7 @@ export default function Splash({ onFinish }: Props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       Animated.parallel([
-        //parallel sirve para que todas las animaciones inicien jusntas ejemplo: translateY y scale
+        //parallel sirve para que todas las animaciones inicien juntas ejemplo: translateY y scale
         Animated.timing(translateY, {
           toValue: -height / 2 + 80,
           duration: 1000,

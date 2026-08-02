@@ -7,15 +7,27 @@ import {
   StyleSheet,
   Animated,
   TextInput,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colores from "../../assets/theme/colores";
+import { useModal } from "../../context/modalContext";
+import AgregarPersonaModal from "../../components/modals/agregarPersonaModal";
 
 import iconArrowBack from "../../assets/icons/iconArrowBack.png";
 import iconPlus from "../../assets/icons/iconPlus.png";
 import { PersonCard } from "../../components/personaCard";
 
+const { height } = Dimensions.get("window");
+
 export default function Personas({ navigation }: any) {
+  // const [visible, setVisible] = useState(false);
+  const { openModal, isVisible } = useModal();
+  const translateY = useRef(new Animated.Value(-height)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
+
   const [abiertoIndex, setAbiertoIndex] = useState<number | null>(null);
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
@@ -24,98 +36,98 @@ export default function Personas({ navigation }: any) {
     { nombre: "Denny Roa", aporte: "1.000.000" },
   ];
 
-  const toggleFooter = (index: number) => {
-    const esAbierto = abiertoIndex === index;
-    const nuevoEstado = esAbierto ? null : index;
+  // const toggleFooter = (index: number) => {
+  //   const esAbierto = abiertoIndex === index;
+  //   const nuevoEstado = esAbierto ? null : index;
 
-    setAbiertoIndex(nuevoEstado);
+  //   setAbiertoIndex(nuevoEstado);
 
-    Animated.timing(rotateAnim, {
-      toValue: esAbierto ? 1 : 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  };
+  //   Animated.timing(rotateAnim, {
+  //     toValue: esAbierto ? 1 : 0,
+  //     duration: 200,
+  //     useNativeDriver: true,
+  //   }).start();
+  // };
 
-  const rotateInterpolate = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["180deg", "270deg"],
-  });
+  // const rotateInterpolate = rotateAnim.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: ["180deg", "270deg"],
+  // });
+
+  // const abrirModal = () => {
+  //   setVisible(true);
+
+  //   Animated.parallel([
+  //     Animated.timing(translateY, {
+  //       toValue: 0,
+  //       duration: 400,
+  //       useNativeDriver: true,
+  //     }),
+  //     Animated.timing(opacity, {
+  //       toValue: 1, // 👈 debe ir a 1 para que aparezca
+  //       duration: 400,
+  //       useNativeDriver: true,
+  //     }),
+  //   ]).start();
+  // };
+
+  // const cerrarModal = () => {
+  //   Animated.parallel([
+  //     Animated.timing(translateY, {
+  //       toValue: -height,
+  //       duration: 300,
+  //       useNativeDriver: true,
+  //     }),
+  //     Animated.timing(opacity, {
+  //       toValue: 0,
+  //       duration: 300,
+  //       useNativeDriver: true,
+  //     }),
+  //   ]).start(() => setVisible(false));
+  // };
 
   return (
     <SafeAreaView edges={["top"]} style={styles.safeArea}>
-      <View style={{ flex: 1 }}>
-        {/* Header */}
-        <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image source={iconArrowBack} style={styles.headerIcon} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Personas</Text>
-        </View>
-
-        <View style={styles.screenContainer}>
-          {/* Acción principal */}
-          <View style={styles.actionContainer}>
-            <TouchableOpacity style={styles.addButton}>
-              <Image source={iconPlus} style={styles.addButtonIcon} />
-              <Text style={styles.addButtonText}>Agregar persona</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={{ flex: 1 }}>
+          {/* Header */}
+          <View style={styles.headerContainer}>
+            <TouchableOpacity
+              style={styles.bottomBack}
+              onPress={() => navigation.goBack()}
+            >
+              <Image source={iconArrowBack} style={styles.headerIcon} />
             </TouchableOpacity>
+            <Text style={styles.headerTitle}>Personas</Text>
           </View>
 
-          {/* Tarjeta / Item de persona */}
-          {personas.map((persona, index) => (
-            <PersonCard
-              key={index}
-              persona={persona}
-              abierto={abiertoIndex === index}
-              onPress={() =>
-                setAbiertoIndex(abiertoIndex === index ? null : index)
-              }
-            />
-          ))}
+          <View style={styles.screenContainer}>
+            {/* Acción principal */}
+            <View style={styles.actionContainer}>
+              <TouchableOpacity
+                onPress={() => openModal("AGREGAR_PERSONA")}
+                style={styles.addButton}
+              >
+                <Image source={iconPlus} style={styles.addButtonIcon} />
+                <Text style={styles.addButtonText}>Agregar persona</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Tarjeta / Item de persona */}
+            {personas.map((persona, index) => (
+              <PersonCard
+                key={index}
+                persona={persona}
+                abierto={abiertoIndex === index}
+                onPress={() =>
+                  setAbiertoIndex(abiertoIndex === index ? null : index)
+                }
+              />
+            ))}
+          </View>
+          {isVisible && <AgregarPersonaModal/>}
         </View>
-        <View style={styles.overlay}>
-          <Animated.View style={styles.modalContainer}>
-            {/* Header del modal */}
-            <View style={styles.modalHeader}>
-              <TouchableOpacity style={styles.cancelButton}>
-                <Text style={styles.cancelButtonText}>Cancelar</Text>
-              </TouchableOpacity>
-
-              <Text style={styles.modalTitle}>Agregar personas</Text>
-
-              <TouchableOpacity style={styles.saveButton}>
-                <Text style={styles.saveButtonText}>Guardar</Text>
-              </TouchableOpacity>
-            </View>
-
-            {/* Inputs principales */}
-            <View style={styles.inputsContainer}>
-              <TextInput style={styles.input} placeholder="Nombre" />
-              <TextInput style={styles.input} placeholder="Cédula" />
-            </View>
-
-            {/* Monto */}
-            <View style={styles.amountContainer}>
-              <Text style={styles.amountLabel}>Monto</Text>
-              <TextInput style={styles.amountInput} placeholder="$0" />
-            </View>
-
-            {/* Fecha */}
-            <View style={styles.dateContainer}>
-              <Text style={styles.dateLabel}>Fecha</Text>
-              <Text style={styles.dateValue}>DD/MM/AAAA</Text>
-            </View>
-
-            {/* Acción final */}
-            <View style={styles.footerContainer}>
-              <TouchableOpacity style={styles.addPersonButton}>
-                <Text style={styles.addPersonButtonText}>Agregar persona</Text>
-              </TouchableOpacity>
-            </View>
-          </Animated.View>
-        </View>
-      </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
@@ -137,10 +149,16 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 20,
     paddingTop: 20,
-    paddingBottom: 10,
+    padding: 10,
     marginBottom: 10,
     borderBottomWidth: 1,
-    borderColor: "#B3B6B7",
+    borderColor: colores.botonPrimario,
+  },
+
+  bottomBack: {
+    justifyContent: "center",
+    width: 40,
+    height: 40,
   },
 
   headerIcon: {
@@ -262,97 +280,5 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-
-  modalHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-
-  cancelButton: {},
-
-  cancelButtonText: {
-    fontSize: 16,
-  },
-
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-  },
-
-  saveButton: {},
-
-  saveButtonText: {
-    fontSize: 16,
-  },
-
-  inputsContainer: {
-    marginTop: 40,
-    gap: 15,
-    // borderWidth: 1,
-  },
-
-  input: {
-    height: 40,
-    paddingHorizontal: 21,
-    borderWidth: 1,
-    borderColor: "#7B7D7D",
-    borderRadius: 10,
-  },
-
-  amountContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: 45,
-    marginTop: 10,
-  },
-
-  amountLabel: {
-    fontSize: 16,
-  },
-
-  amountInput: {
-    textAlign: "center",
-    width: 137,
-    height: 35,
-    borderWidth: 1,
-    borderColor: "#7B7D7D",
-    borderRadius: 8,
-  },
-
-  dateContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
-    paddingBottom: 8,
-    borderBottomWidth: 1,
-    borderColor: "#7B7D7D",
-  },
-
-  dateLabel: {
-    fontSize: 16,
-  },
-
-  dateValue: {
-    fontSize: 16,
-  },
-
-  footerContainer: {
-    marginTop: 30,
-  },
-
-  addPersonButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 50,
-    backgroundColor: colores.botonPrimario,
-    borderRadius: 8,
-  },
-
-  addPersonButtonText: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: colores.textoClaro,
-  },
+ 
 });

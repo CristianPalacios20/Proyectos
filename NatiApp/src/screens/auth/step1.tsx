@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -7,20 +7,28 @@ import {
   Image,
   StyleSheet,
   Keyboard,
+  KeyboardAvoidingView,
   TouchableNativeFeedback,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../context/AuthContext";
 
+import ProgressSteps from "../../components/progressSteps/ProgressSteps";
+import { pasosRegistro } from "../../components/progressSteps/progessSteps";
 import colores from "../../assets/theme/colores";
 
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
+import iconOk2 from "../../assets/icons/iconOk2.png";
 
-export default function Step1({ navigation, route, onLoginSuccess }: any) {
+export default function Step1({ navigation, route }: any) {
   const [codigo, setCodigo] = useState(["", "", "", ""]);
   const inputsRef = useRef<Array<TextInput | null>>([]);
+  const [inputActive, setInputActive] = useState<number | null>(null);
   const [mensaje, setMensaje] = useState("");
+  const [tiempo, setTiempo] = useState(30);
+  const [puedeReenviar, setPuedeReenviar] = useState(false);
   const { login } = useAuth();
 
   const { phone, usuarioExiste } = route?.params ?? {};
@@ -66,66 +74,126 @@ export default function Step1({ navigation, route, onLoginSuccess }: any) {
     }
   };
 
+  useEffect(() => {
+    if (puedeReenviar) return;
+
+    const intervalo = setInterval(() => {
+      setTiempo((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalo);
+          setPuedeReenviar(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(intervalo);
+  }, [puedeReenviar]);
+
+  const reenvIarCodigo = () => {
+    setTiempo(30);
+    setPuedeReenviar(false);
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <TouchableNativeFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-          <View style={styles.textContainer}>
-            <Text style={styles.textDescription}>
-              Ingresa el código de 4 dígitos enviado a través de SMS al
-            </Text>
-            <Text style={styles.phoneNumber}>#</Text>
-          </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }} edges={["top"]}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TouchableNativeFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.container}>
+            <View style={styles.logoContainer}>
+              <View style={styles.logoIconContainer}></View>
+              <Text style={styles.logoText}>NatiApp</Text>
+            </View>
 
-          <View style={styles.codeContainer}>
-            {codigo.map((digito, index) => (
-              <View key={index} style={styles.inputBox}>
-                <TextInput
-                  ref={(ref) => {
-                    inputsRef.current[index] = ref;
-                  }}
-                  style={styles.codeInput}
-                  keyboardType="numeric"
-                  maxLength={1}
-                  value={digito}
-                  onChangeText={(text) => manejarCambio(text, index)}
-                  onKeyPress={(e) => manejarKeyPress(e, index)}
-                />
-              </View>
-            ))}
-          </View>
+            <View style={{ paddingHorizontal: 20 }}>
+              <ProgressSteps
+                pasos={pasosRegistro}
+                pasoActual={2}
+                icono={iconOk2}
+              />
+            </View>
 
-          <View style={styles.actionsContainer}>
-            <TouchableOpacity style={[styles.actionItem]}>
-              <Text style={styles.actionText}>Reenviar código de SMS</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.actionItem, styles.actionItemLlamarme]}
-            >
-              <Text style={styles.actionText}>Llamarme</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => navigation.goBack()}
-            >
-              <Image source={iconArrow} style={styles.imgBack} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => validarCodigo()}
-              style={styles.nextButton}
-            >
-              <Text style={styles.nextText}>
-                <Text style={styles.nextTextBold}>Siguiente</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.textTitle}>
+                Ingresa el código de 4 dígitos
               </Text>
-              <Image source={iconArrow1} style={styles.nextIcon} />
-            </TouchableOpacity>
+              <Text style={styles.textDescription}>Enviamos un SMS a</Text>
+              <Text style={styles.phoneNumber}>(+57) {phone} </Text>
+            </View>
+
+            <View style={styles.containerCode}>
+              <View style={styles.codeContainer}>
+                {codigo.map((digito, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.inputBox,
+                      inputActive === index && styles.codeInputFocused,
+                    ]}
+                  >
+                    <TextInput
+                      ref={(ref) => {
+                        inputsRef.current[index] = ref;
+                      }}
+                      style={[styles.codeInput]}
+                      keyboardType="numeric"
+                      maxLength={1}
+                      value={digito}
+                      onFocus={() => setInputActive(index)}
+                      onBlur={() => setInputActive(null)}
+                      onChangeText={(text) => manejarCambio(text, index)}
+                      onKeyPress={(e) => manejarKeyPress(e, index)}
+                    />
+                  </View>
+                ))}
+              </View>
+              <View style={styles.resendContainer}>
+                <Text style={styles.resendLabel}>¿No recibiste el código?</Text>
+
+                <TouchableOpacity
+                  disabled={!puedeReenviar}
+                  onPress={reenvIarCodigo}
+                  style={[
+                    styles.resendButton,
+                    !puedeReenviar && styles.resendButtonDisabled,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.resendButtonText,
+                      !puedeReenviar && styles.resendButtonTextDisabled,
+                    ]}
+                  >
+                    {puedeReenviar
+                      ? "Reenviar código"
+                      : `Reenviar en ( ${tiempo}s )`}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.goBack()}
+              >
+                <Image source={iconArrow} style={styles.imgBack} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => validarCodigo()}
+                style={styles.nextButton}
+              >
+                <Text style={styles.nextText}>Siguiente</Text>
+                <Image source={iconArrow1} style={styles.nextIcon} />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </TouchableNativeFeedback>
+        </TouchableNativeFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -133,43 +201,102 @@ export default function Step1({ navigation, route, onLoginSuccess }: any) {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 20,
     backgroundColor: "white",
     position: "relative",
   },
 
+  logoContainer: {
+    marginBottom: 20,
+    paddingHorizontal: 20,
+  },
+
+  logoIconContainer: {},
+
+  logoText: {
+    fontSize: 20,
+    fontFamily: "Hubot-Sans",
+    fontWeight: "bold",
+  },
+
   textContainer: {
     gap: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  textTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
   textDescription: {
-    fontSize: 24,
-    color: "#444",
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#7B7D7D",
   },
 
   phoneNumber: {
-    fontSize: 24,
-    fontWeight: "600",
+    fontSize: 18,
+    fontWeight: "bold",
     color: "#000",
+  },
+
+  containerCode: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    gap: 15,
+  },
+
+  resendContainer: {
+    flexDirection: "row",
+    gap: 5,
+  },
+
+  resendLabel: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#B3B6B7",
+  },
+
+  resendButton: {},
+
+  resendButtonDisabled: {
+    opacity: 0.5,
+  },
+
+  resendButtonTextDisabled: {
+    fontWeight: "bold",
+    color: "#999",
+  },
+
+  resendButtonText: {
+    fontWeight: "bold",
   },
 
   codeContainer: {
     flexDirection: "row",
-    gap: 10,
-    marginVertical: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 15,
   },
 
   inputBox: {
-    width: 45,
-    height: 45,
+    width: 55,
+    height: 61,
     borderRadius: 12,
     paddingVertical: 8,
     paddingHorizontal: 5,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "#DDD",
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  codeInputFocused: {
+    borderColor: "#2DB964",
+    borderWidth: 2,
   },
 
   codeInput: {
@@ -178,50 +305,22 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 22,
     fontWeight: "600",
-    borderBottomWidth: 1,
     borderColor: "#B3B6B7",
   },
 
-  actionsContainer: {
-    marginBottom: 20,
-    gap: 11,
-  },
-
-  actionItem: {
-    alignItems: "center",
-    width: 205,
-    height: 30,
-    paddingVertical: 8,
-    backgroundColor: "#E7E5E4",
-    borderRadius: 50,
-  },
-
-  actionItemLlamarme: {
-    width: 119,
-    paddingVertical: 6,
-  },
-
-  actionText: {
-    fontSize: 14,
-    color: "#007AFF",
-    fontWeight: "500",
-  },
-
   buttonsContainer: {
-    width: "100%",
-    top: "40%",
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 
   backButton: {
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
-    height: 50,
-    backgroundColor: "#E7E5E4",
-    borderRadius: 50,
+    width: 120,
+    height: 60,
+    borderTopRightRadius: 100,
   },
 
   imgBack: {
@@ -231,26 +330,27 @@ export const styles = StyleSheet.create({
 
   nextButton: {
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
     gap: 8,
-    backgroundColor: colores.botonPrimario,
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 30,
+    width: 190,
+    height: 60,
+    backgroundColor: "#2DB964",
+    borderTopLeftRadius: 100,
   },
 
   nextText: {
-    fontSize: 14,
+    fontSize: 18,
+    fontWeight: "600",
     color: colores.textoClaro,
   },
 
   nextTextBold: {
-    fontWeight: "600",
   },
 
   nextIcon: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     tintColor: "#FFF",
   },
 });

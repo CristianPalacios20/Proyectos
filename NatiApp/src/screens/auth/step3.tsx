@@ -7,7 +7,9 @@ import {
   TextInput,
   StyleSheet,
   Keyboard,
+  KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 
 import colores from "../../assets/theme/colores";
@@ -15,7 +17,6 @@ import colores from "../../assets/theme/colores";
 import iconArrow from "../../assets/icons/iconArrow.png";
 import iconArrow1 from "../../assets/icons/iconArrow1.png";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import { router } from "expo-router";
 
 export default function Step3({ navigation, route }: any) {
   const [nombres, setNombres] = useState("");
@@ -43,64 +44,68 @@ export default function Step3({ navigation, route }: any) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>¿Cuál es tu nombre?</Text>
-          </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }} edges={["top"]}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.container}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleText}>¿Cuál es tu nombre?</Text>
+            </View>
 
-          <View style={styles.containerInputs}>
-            <View style={[styles.fieldContainer]}>
-              <View style={[styles.contentInput, error && styles.error]}>
-                <TextInput
-                  placeholder="ingresa tu nombre"
-                  value={nombres}
-                  onChangeText={setNombres}
-                  style={styles.input}
-                />
+            <View style={styles.containerInputs}>
+              <View style={[styles.fieldContainer]}>
+                <View style={[styles.contentInput, error && styles.error]}>
+                  <TextInput
+                    placeholder="ingresa tu nombre"
+                    value={nombres}
+                    onChangeText={setNombres}
+                    style={styles.input}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.fieldContainer}>
+                <View style={[styles.contentInput, error && styles.error]}>
+                  <TextInput
+                    placeholder="ingresa tu apellido"
+                    value={apellidos}
+                    onChangeText={setApellidos}
+                    style={styles.input}
+                  />
+                </View>
               </View>
             </View>
 
-            <View style={styles.fieldContainer}>
-              <View style={[styles.contentInput, error && styles.error]}>
-                <TextInput
-                  placeholder="ingresa tu apellido"
-                  value={apellidos}
-                  onChangeText={setApellidos}
-                  style={styles.input}
-                />
+            {mensaje && (
+              <View style={styles.containerMessage}>
+                <View style={styles.contentMessage}>
+                  <Text style={styles.message}>{mensaje}</Text>
+                </View>
               </View>
+            )}
+
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.goBack()}
+              >
+                <Image source={iconArrow} style={styles.imgBack} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => manejarCambio()}
+                style={styles.nextButton}
+              >
+                <Text style={styles.nextText}>Siguiente</Text>
+                <Image source={iconArrow1} style={styles.nextIcon} />
+              </TouchableOpacity>
             </View>
           </View>
-
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={styles.backButton}
-              // onPress={() => router.back()}
-            >
-              <Image source={iconArrow} style={styles.imgBack} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => manejarCambio()}
-              style={styles.nextButton}
-            >
-              <Text style={styles.nextText}>
-                <Text style={styles.nextTextBold}>Siguiente</Text>
-              </Text>
-              <Image source={iconArrow1} style={styles.nextIcon} />
-            </TouchableOpacity>
-          </View>
-          {mensaje && (
-            <View style={styles.containerMessage}>
-              <View style={styles.contentMessage}>
-                <Text style={styles.message}>{mensaje}</Text>
-              </View>
-            </View>
-          )}
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -108,13 +113,12 @@ export default function Step3({ navigation, route }: any) {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20,
     backgroundColor: "white",
   },
 
   titleContainer: {
     marginBottom: 30,
+    paddingHorizontal: 20,
   },
 
   titleText: {
@@ -127,7 +131,9 @@ export const styles = StyleSheet.create({
     gap: 15,
   },
 
-  fieldContainer: {},
+  fieldContainer: {
+    paddingHorizontal: 20,
+  },
 
   contentInput: {
     height: 45,
@@ -150,20 +156,18 @@ export const styles = StyleSheet.create({
     color: "#000",
   },
   buttonsContainer: {
-    width: "100%",
-    top: "60%",
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 
   backButton: {
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
-    height: 50,
-    backgroundColor: "#E7E5E4",
-    borderRadius: 50,
+    width: 120,
+    height: 60,
+    borderTopRightRadius: 100,
   },
 
   imgBack: {
@@ -173,29 +177,28 @@ export const styles = StyleSheet.create({
 
   nextButton: {
     flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
     gap: 8,
-    backgroundColor: colores.botonPrimario,
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 30,
+    width: 190,
+    height: 60,
+    backgroundColor: "#2DB964",
+    borderTopLeftRadius: 100,
   },
 
   nextText: {
-    fontSize: 14,
+    fontSize: 18,
+    fontWeight: "600",
     color: colores.textoClaro,
   },
 
-  nextTextBold: {
-    fontWeight: "600",
-  },
+  nextTextBold: {},
 
   nextIcon: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     tintColor: "#FFF",
   },
-
   error: {
     borderWidth: 1,
     borderColor: "red",
@@ -205,7 +208,7 @@ export const styles = StyleSheet.create({
   containerMessage: {
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
+    margin: 20,
   },
 
   contentMessage: {

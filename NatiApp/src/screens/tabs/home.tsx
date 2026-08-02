@@ -14,7 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colores from "../../assets/theme/colores";
 
 import vector7 from "../../assets/images/vector7.png";
-import iconUser from "../../assets/icons/iconUserII.png";
+import iconUser from "../../assets/icons/iconUserIII.png";
 import iconEyeHide from "../../assets/icons/iconEyeHide.png";
 import iconVisible from "../../assets/icons/iconVisible.png";
 import iconArrowRight from "../../assets/icons/iconArrowRight.png";
@@ -22,8 +22,9 @@ import iconUsers from "../../assets/icons/iconUsers.png";
 import iconPrestamos from "../../assets/icons/iconPrestamo.png";
 import iconAportes from "../../assets/icons/iconAportes.png";
 import iconResumenAnual from "../../assets/icons/iconResumenAnual.png";
+import iconNoti from "../../assets/icons/iconNoti.png";
 
-export default function Home({navigation} : any) {
+export default function Home({ navigation }: any) {
   const insets = useSafeAreaInsets();
 
   const [seeMonto, setSeeMonto] = useState(false);
@@ -31,65 +32,105 @@ export default function Home({navigation} : any) {
   return (
     <View style={[styles.container]}>
       <StatusBar backgroundColor="transparent" />
-      <ImageBackground
-        source={vector7}
-        style={[styles.header, { paddingTop: insets.top }]}
-        // colors={[colores.inicioGradienteInicio, colores.inicioGradienteFin]}
-        // start={{ x: 0, y: 0 }}
-        // end={{ x: 1, y: 1 }}
-      >
-        {/* Perfil */}
-        <View style={styles.profileContainer}>
-          <TouchableOpacity style={styles.avatarContainer}>
-            <Image source={iconUser} style={styles.iconUser} />
-          </TouchableOpacity>
-        </View>
+      <View style={styles.headerContainer}>
+        <ImageBackground
+          source={vector7}
+          style={[styles.header, { paddingTop: insets.top }]}
+        >
+          <View style={styles.profileContainer}>
+            <TouchableOpacity style={styles.avatarContainer}>
+              <Image source={iconUser} style={styles.iconUser} />
+            </TouchableOpacity>
 
-        {/* Contenido principal */}
-        <View style={styles.infoContainer}>
-          {/* Estado / Advertencia */}
-          <View style={styles.estadoContainer}>
-            <View style={styles.containerMonto}>
-              <Text style={styles.estadoText}>Depósito bajo monto</Text>
-              <TouchableOpacity onPress={() => setSeeMonto(!seeMonto)}>
-                <Image
-                  source={seeMonto ? iconEyeHide : iconVisible}
-                  style={styles.estadoIcon}
-                />
+            <View style={styles.actionsContainer}>
+              <TouchableOpacity style={styles.summaryButton}>
+                <Image source={iconResumenAnual} style={styles.summaryIcon} />
+                <Text style={styles.summaryText}>Resumen anual</Text>
               </TouchableOpacity>
-            </View>
-            <View style={styles.montoPrincipalContainer}>
-              <Text style={styles.montoSimbolo}>$</Text>
-              <Text style={styles.montoValor}>{seeMonto ? "0" : "****"}</Text>
+
+              <Image source={iconNoti} style={styles.notificationIcon} />
             </View>
           </View>
-
-          {/* Total usuario */}
-          <View style={styles.totalUsuarioContainer}>
-            <Text style={styles.totalLabel}>Total</Text>
-            <View style={styles.totalValorContainer}>
-              <Text style={styles.totalSimbolo}>$</Text>
-              <Text style={styles.totalValor}>{seeMonto ? "0" : "***"}</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.estadoContainer}>
+              <View style={styles.containerMonto}>
+                <Text style={styles.estadoText}>Depósito bajo monto</Text>
+                <TouchableOpacity onPress={() => setSeeMonto(!seeMonto)}>
+                  <Image
+                    source={seeMonto ? iconEyeHide : iconVisible}
+                    style={styles.estadoIcon}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.montoPrincipalContainer}>
+                <Text style={styles.montoSimbolo}>$</Text>
+                <Text style={styles.montoValor}>{seeMonto ? "0" : "****"}</Text>
+              </View>
             </View>
-          </View>
+            <View style={styles.totalUsuarioContainer}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <View style={styles.totalValorContainer}>
+                <Text style={styles.totalSimbolo}>$</Text>
+                <Text style={styles.totalValor}>{seeMonto ? "0" : "***"}</Text>
+              </View>
+            </View>
 
-          {/* Total natillera */}
-          <TouchableOpacity style={styles.totalNatilleraContainer} onPress={()=> navigation.navigate("InfoNatillera")}>
-            <Text style={styles.totalNatilleraText}>Total natillera</Text>
-            <Image source={iconArrowRight} style={styles.totalNatilleraIcon} />
+            {/* Total natillera */}
+            <TouchableOpacity
+              style={styles.totalNatilleraContainer}
+              onPress={() => navigation.navigate("InfoNatillera")}
+            >
+              <Text style={styles.totalNatilleraText}>Total natillera</Text>
+              <Image
+                source={iconArrowRight}
+                style={styles.totalNatilleraIcon}
+              />
+            </TouchableOpacity>
+
+            {/* Periodo */}
+            <Text style={styles.periodoText}>Enero 2026</Text>
+          </View>
+        </ImageBackground>
+        <View>
+          <Text>Último movimientos</Text>
+          <TouchableOpacity>
+            <Text>Ver todos</Text>
           </TouchableOpacity>
-
-          {/* Periodo */}
-          <Text style={styles.periodoText}>Enero 2026</Text>
         </View>
-      </ImageBackground>
+        <View>
+          <View>
+            <View>
+              <View>
+                <Image />
+              </View>
+              <View>
+                <Text>Nombre</Text>
+                <Text>Aporte</Text>
+              </View>
+            </View>
+            <View>
+              <View>
+                <Text>+ $50000</Text>
+                <Text>Fecha</Text>
+              </View>
+              <Image />
+            </View>
+          </View>
+        </View>
+      </View>
       <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("Personas")} style={styles.menuButton}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Personas")}
+          style={styles.menuButton}
+        >
           <Image source={iconUsers} style={styles.menuIcon} />
           <Text style={styles.menuText}>Personas</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Prestamos")} style={styles.menuButton}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Prestamos")}
+          style={styles.menuButton}
+        >
           <Image source={iconPrestamos} style={styles.menuIcon} />
           <Text style={styles.menuText}>Préstamos/pagos</Text>
         </TouchableOpacity>
@@ -113,9 +154,14 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 0,
     paddingBottom: 0,
+    backgroundColor: "#000",
+  },
+
+  headerContainer: {
+    flex: 1,
     backgroundColor: "white",
-    // borderWidth: 5,
-    // borderColor: "red"
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 
   header: {
@@ -128,8 +174,9 @@ export const styles = StyleSheet.create({
 
   profileContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    gap: 10,
+    paddingHorizontal: 10,
   },
 
   avatarContainer: {
@@ -137,7 +184,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     width: 35,
     height: 35,
-    backgroundColor: "#E7E5E4",
+    backgroundColor: "#2DB964",
     borderRadius: 50,
   },
 
@@ -145,6 +192,41 @@ export const styles = StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: "cover",
+  },
+
+  actionsContainer: {
+    flexDirection: "row",
+    gap: 20,
+  },
+
+  summaryButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+    width: 165,
+    height: 30,
+    backgroundColor: "#2DB964",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#2DB964",
+  },
+
+  summaryIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: "contain",
+  },
+
+  summaryText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+
+  notificationIcon: {
+    width: 25,
+    height: 25,
+    resizeMode: "contain",
   },
 
   avatarText: {
@@ -270,6 +352,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 16,
     gap: 7,
+    borderWidth: 1
   },
 
   menuButton: {

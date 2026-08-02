@@ -4,15 +4,18 @@ import { StyleSheet, Text, View } from "react-native";
 import RootNavigator from "./src/navigation/RootNavigator";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider } from "./src/context/AuthContext";
+import { ModalProvider } from "./src/context/modalContext";
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <View style={styles.container}>
-          <StatusBar style="auto" />
-          <RootNavigator />
-        </View>
+        <ModalProvider>
+          <View style={styles.container}>
+            <StatusBar style="auto" />
+            <RootNavigator />
+          </View>
+        </ModalProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );

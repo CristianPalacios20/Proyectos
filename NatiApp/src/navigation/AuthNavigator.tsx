@@ -6,7 +6,15 @@ import Step2 from "../screens/auth/step2";
 import Step3 from "../screens/auth/step3";
 import Step4 from "../screens/auth/step4";
 
-const Stack = createNativeStackNavigator();
+export type AuthStackParamList = {
+  Login: undefined;
+  Step1: { phone: string };
+  Step2: { phone: string };
+  Step3: undefined;
+  Step4: undefined;
+};
+
+const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 export default function AuthNavigator({ onloginSuccess }: any) {
   return (
@@ -14,15 +22,23 @@ export default function AuthNavigator({ onloginSuccess }: any) {
       <Stack.Screen name="Login">
         {(props) => <Login {...props} />}
       </Stack.Screen>
+
       <Stack.Screen name="Step1">
-        {(props) => <Step1 {...props} onLoginSuccess={onloginSuccess} />}
+        {(props) => (
+          <Step1 {...props} onLoginSuccess={onloginSuccess} />
+        )}
       </Stack.Screen>
+
       <Stack.Screen name="Step2">
-        {(props) => <Step2 {...props} onLoginSuccess={onloginSuccess} />}
+        {(props) => (
+          <Step2 {...props} onLoginSuccess={onloginSuccess} />
+        )}
       </Stack.Screen>
+
       <Stack.Screen name="Step3">
         {(props) => <Step3 {...props} />}
       </Stack.Screen>
+
       <Stack.Screen name="Step4">
         {(props) => <Step4 {...props} />}
       </Stack.Screen>
