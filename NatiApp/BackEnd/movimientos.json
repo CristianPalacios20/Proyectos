@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan Pérez",
+    "tipoMovimiento": "aporte",
+    "valor": 500.000,
+    "fecha": "2026-08-01"
+  },
+  {
+    "id": 2,
+    "nombre": "María Gómez",
+    "tipoMovimiento": "préstamo",
+    "valor": 150.000,
+    "fecha": "2026-08-02"
+  },
+  {
+    "id": 3,
+    "nombre": "María Gómez",
+    "tipoMovimiento": "pago préstamo",
+    "valor": 50.000,
+    "fecha": "2026-08-05"
+  },
+  {
+    "id": 4,
+    "nombre": "Carlos Rodríguez",
+    "tipoMovimiento": "aporte",
+    "valor": 200.000,
+    "fecha": "2026-08-10"
+  },
+  {
+    "id": 5,
+    "nombre": "Laura Martínez",
+    "tipoMovimiento": "préstamo",
+    "valor": 300.000,
+    "fecha": "2026-08-12"
+  },
+  {
+    "id": 6,
+    "nombre": "Laura Martínez",
+    "tipoMovimiento": "pago préstamo",
+    "valor": 100.000,
+    "fecha": "2026-08-15"
+  },
+  {
+    "id": 7,
+    "nombre": "Andrés López",
+    "tipoMovimiento": "aporte",
+    "valor": 100.000,
+    "fecha": "2026-08-18"
+  },
+  {
+    "id": 8,
+    "nombre": "María Gómez",
+    "tipoMovimiento": "pago préstamo",
+    "valor": 100.000,
+    "fecha": "2026-08-20"
+  }
+]

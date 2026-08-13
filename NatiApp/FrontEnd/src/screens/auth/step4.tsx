@@ -200,13 +200,14 @@ export const styles = StyleSheet.create({
 
   nextButton: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
     gap: 8,
-    width: 190,
-    height: 60,
+    width: 240,
+    height: 70,
+    padding: 10,
     backgroundColor: "#2DB964",
-    borderTopLeftRadius: 100,
+    borderTopLeftRadius: "100%",
   },
 
   nextText: {

@@ -16,8 +16,8 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
-import ProgressSteps from "../../components/progressSteps/ProgressSteps";
-import { pasosRegistro } from "../../components/progressSteps/progessSteps";
+import ProgressSteps from "../../components/progress/ProgressSteps";
+import { pasosRegistro } from "../../components/progress/progessSteps";
 import ModalConfirmCodigo from "../../components/modals/modalConfirmCodigo";
 import { useModal } from "../../context/modalContext";
 
@@ -187,7 +187,7 @@ export default function Login({ navigation }: any) {
               { transform: [{ translateX: CircleThreeScale }] },
             ]}
           />
-          <BlurView intensity={10} style={styles.contentContainer}>
+          <View  style={styles.contentContainer}>
             <SafeAreaView edges={["top"]} style={{ flex: 1, padding: 20 }}>
               <View style={styles.contentTitle}>
                 <Text style={styles.title}>NatiApp</Text>
@@ -274,7 +274,7 @@ export default function Login({ navigation }: any) {
                 </View>
               </View>
             )}
-          </BlurView>
+          </View>
         </View>
       </TouchableWithoutFeedback>
       {isVisible && <ModalConfirmCodigo phone={phone} />}

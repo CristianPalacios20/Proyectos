@@ -7,6 +7,7 @@ import Prestamos from "../screens/tabs/prestamos";
 import Aportes from "../screens/tabs/aportes";
 import ResumenAnual from "../screens/tabs/resumenAnual";
 import Profile from "../screens/tabs/profile";
+import Movimientos from "../screens/tabs/movimientos";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,7 @@ export default function TabsNavigator() {
       <Tab.Screen name="Aportes" component={Aportes} />
       <Tab.Screen name="ResumenAnual" component={ResumenAnual} />
       <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Movimientos" component={Movimientos} />
     </Tab.Navigator>
   );
 }

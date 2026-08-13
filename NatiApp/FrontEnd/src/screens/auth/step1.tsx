@@ -14,8 +14,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../context/AuthContext";
 
-import ProgressSteps from "../../components/progressSteps/ProgressSteps";
-import { pasosRegistro } from "../../components/progressSteps/progessSteps";
+import ProgressSteps from "../../components/progress/ProgressSteps";
+import { pasosRegistro } from "../../components/progress/progessSteps";
 import colores from "../../assets/theme/colores";
 
 import iconArrow from "../../assets/icons/iconArrow.png";
@@ -330,13 +330,14 @@ export const styles = StyleSheet.create({
 
   nextButton: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
     gap: 8,
-    width: 190,
-    height: 60,
+    width: 240,
+    height: 70,
+    padding: 10,
     backgroundColor: "#2DB964",
-    borderTopLeftRadius: 100,
+    borderTopLeftRadius: "100%",
   },
 
   nextText: {

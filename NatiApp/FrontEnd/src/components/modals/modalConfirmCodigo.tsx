@@ -6,11 +6,11 @@ import { useNavigation } from "@react-navigation/native";
 type props = {
   phone: string;
 };
-export default function modalConfirmCodigo({phone}: any) {
+export default function modalConfirmCodigo({ phone }: any) {
   const { modalData, closeModal } = useModal();
   const navigation = useNavigation<any>();
 
-  const continuar = () =>{
+  const continuar = () => {
     closeModal();
 
     navigation.navigate("Step1", {
@@ -37,17 +37,11 @@ export default function modalConfirmCodigo({phone}: any) {
         </View>
 
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.cancelButton}
-            onPress={closeModal}
-          >
+          <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
             <Text style={styles.cancelButtonText}>Cancelar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={styles.continueButton}
-            onPress={continuar}
-          >
+          <TouchableOpacity style={styles.continueButton} onPress={continuar}>
             <Text style={styles.continueButtonText}>Continuar</Text>
           </TouchableOpacity>
         </View>
@@ -124,31 +118,32 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 80,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
     gap: 10,
+    // borderWidth: 1,
   },
 
   cancelButton: {
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    width: 170,
-    height: 50,
-    borderRadius: 10,
+    width: 150,
+    height: 60,
   },
 
   cancelButtonText: {
     fontWeight: "bold",
+    color: "red",
   },
 
   continueButton: {
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    width: 170,
-    height: 50,
+    width: 240,
+    height: 60,
     backgroundColor: "black",
-    borderRadius: 10,
+    borderTopLeftRadius: "100%",
   },
 
   continueButtonText: {

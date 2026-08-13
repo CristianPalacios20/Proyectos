@@ -6,28 +6,31 @@ import {
   Image,
   StyleSheet,
   ImageBackground,
+  ScrollView,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import movimientos from "../../data/movimientos.json";
 import colores from "../../assets/theme/colores";
+import MenuInferior from "../../components/menus/menuInferior";
 
 import vector7 from "../../assets/images/vector7.png";
 import iconUser from "../../assets/icons/iconUserIII.png";
 import iconEyeHide from "../../assets/icons/iconEyeHide.png";
 import iconVisible from "../../assets/icons/iconVisible.png";
 import iconArrowRight from "../../assets/icons/iconArrowRight.png";
-import iconUsers from "../../assets/icons/iconUsers.png";
-import iconPrestamos from "../../assets/icons/iconPrestamo.png";
-import iconAportes from "../../assets/icons/iconAportes.png";
 import iconResumenAnual from "../../assets/icons/iconResumenAnual.png";
 import iconNoti from "../../assets/icons/iconNoti.png";
 
+import { useRoute } from "@react-navigation/native";
+
 export default function Home({ navigation }: any) {
   const insets = useSafeAreaInsets();
+  const route = useRoute;
 
   const [seeMonto, setSeeMonto] = useState(false);
+  // const [iconActivo, setIconActivo] = useState(false);
 
   return (
     <View style={[styles.container]}>
@@ -38,7 +41,10 @@ export default function Home({ navigation }: any) {
           style={[styles.header, { paddingTop: insets.top }]}
         >
           <View style={styles.profileContainer}>
-            <TouchableOpacity style={styles.avatarContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Profile")}
+              style={styles.avatarContainer}
+            >
               <Image source={iconUser} style={styles.iconUser} />
             </TouchableOpacity>
 
@@ -91,60 +97,71 @@ export default function Home({ navigation }: any) {
             <Text style={styles.periodoText}>Enero 2026</Text>
           </View>
         </ImageBackground>
-        <View>
-          <Text>Último movimientos</Text>
-          <TouchableOpacity>
-            <Text>Ver todos</Text>
+
+        {/* ____________________________TRABAJANDO________________________________ */}
+
+        <View style={styles.movementsHeader}>
+          <Text style={styles.movementsTitle}>Últimos movimientos</Text>
+
+          <TouchableOpacity onPress={()=>navigation.navigate("Movimientos")} style={styles.viewAllButton}>
+            <Text style={styles.viewAllButtonText}>Ver todos</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <View>
-            <View>
-              <View>
-                <Image />
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.movementsContainer}>
+            {/* Encabezado */}
+
+            {/* Lista de movimientos */}
+            {movimientos.map((movimiento) => (
+              <View key={movimiento.id} style={styles.movementsList}>
+                <View style={styles.movementCard}>
+                  {/* Información izquierda */}
+                  <View style={styles.movementInfo}>
+                    <View
+                      style={[
+                        movimiento.tipoMovimiento != "préstamo"
+                          ? styles.movementIconContainer
+                          : styles.movementIconContainerP,
+                      ]}
+                    >
+                      <Image style={styles.movementIcon} />
+                    </View>
+
+                    <View style={styles.movementTextContainer}>
+                      <Text style={styles.userName}>{movimiento.nombre}</Text>
+                      <Text style={styles.movementType}>
+                        {movimiento.tipoMovimiento}
+                      </Text>
+                    </View>
+                  </View>
+
+                  {/* Información derecha */}
+                  <View style={styles.movementDetails}>
+                    <View style={styles.movementValueContainer}>
+                      <Text
+                        style={[
+                          movimiento.tipoMovimiento != "préstamo"
+                            ? styles.movementValue
+                            : styles.movementValueP,
+                        ]}
+                      >
+                        {movimiento.tipoMovimiento == "préstamo" ? "-" : "+"} $
+                        {movimiento.valor}
+                      </Text>
+                      <Text style={styles.movementDate}>
+                        {movimiento.fecha}
+                      </Text>
+                    </View>
+
+                    <Image style={styles.movementArrow} />
+                  </View>
+                </View>
               </View>
-              <View>
-                <Text>Nombre</Text>
-                <Text>Aporte</Text>
-              </View>
-            </View>
-            <View>
-              <View>
-                <Text>+ $50000</Text>
-                <Text>Fecha</Text>
-              </View>
-              <Image />
-            </View>
+            ))}
           </View>
-        </View>
+        </ScrollView>
       </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Personas")}
-          style={styles.menuButton}
-        >
-          <Image source={iconUsers} style={styles.menuIcon} />
-          <Text style={styles.menuText}>Personas</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Prestamos")}
-          style={styles.menuButton}
-        >
-          <Image source={iconPrestamos} style={styles.menuIcon} />
-          <Text style={styles.menuText}>Préstamos/pagos</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuButton}>
-          <Image source={iconAportes} style={styles.menuIcon} />
-          <Text style={styles.menuText}>Aportes</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuButton}>
-          <Image source={iconResumenAnual} style={styles.menuIcon} />
-          <Text style={styles.menuText}>Resumen anual</Text>
-        </TouchableOpacity>
-      </View>
+      <MenuInferior />
     </View>
   );
 }
@@ -158,6 +175,7 @@ export const styles = StyleSheet.create({
   },
 
   headerContainer: {
+    width: "100%",
     flex: 1,
     backgroundColor: "white",
     borderBottomLeftRadius: 20,
@@ -165,11 +183,10 @@ export const styles = StyleSheet.create({
   },
 
   header: {
-    width: 391,
     height: 400,
     padding: 10,
     gap: 10,
-    resizeMode: "cover",
+    resizeMode: "contain",
   },
 
   profileContainer: {
@@ -344,36 +361,109 @@ export const styles = StyleSheet.create({
     marginTop: 60,
   },
 
-  menuContainer: {
+  movementsContainer: {
+    flex: 1,
+  },
+
+  movementsHeader: {
     flexDirection: "row",
-    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+  },
+
+  movementsTitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#7B7D7D",
+  },
+
+  viewAllButton: {},
+
+  viewAllButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#2DB964",
+  },
+
+  movementsList: {
+    height: 60,
+    paddingHorizontal: 20,
+  },
+
+  movementCard: {
+    height: "100%",
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    gap: 7,
-    borderWidth: 1
+    borderTopWidth: 1,
+    borderColor: "#B3B6B7",
   },
 
-  menuButton: {
+  movementInfo: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    width: "48%",
-    height: 48,
-    gap: 8,
-    borderRadius: 10,
-    backgroundColor: colores.botonPrimario,
+    width: "auto",
+    height: "100%",
+    gap: 11,
   },
 
-  menuIcon: {
-    width: 28,
-    height: 28,
-    resizeMode: "contain",
+  movementIconContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#2db9654a",
+    borderRadius: 100,
   },
 
-  menuText: {
+  movementIconContainerP: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#ff000027",
+    borderRadius: 100,
+  },
+
+  movementIcon: {},
+
+  movementTextContainer: {},
+
+  userName: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
+  movementType: {
     fontSize: 14,
-    color: colores.textoClaro,
+    fontWeight: "600",
+    color: "#7B7D7D",
   },
+
+  movementDetails: {
+    height: "100%",
+    justifyContent: "center",
+  },
+
+  movementValueContainer: {
+    alignItems: "flex-end",
+    gap: 1,
+  },
+
+  movementValue: {
+    fontSize: 14,
+    color: "#2DB964",
+    fontWeight: "600",
+  },
+
+  movementValueP: {
+    fontSize: 14,
+    color: "red",
+    fontWeight: "600",
+  },
+
+  movementDate: {
+    fontSize: 12,
+    color: "#7B7D7D",
+    fontWeight: "600",
+  },
+
+  movementArrow: {},
 });

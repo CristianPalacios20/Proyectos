@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "titulo": "Cuenta",
+    "opciones": [
+      {
+        "id": 1,
+        "nombre": "Cuenta",
+        "icono": "cuenta",
+        "iconoAccion": "arrow-right",
+        "pantalla": "Cuenta"
+      },
+      {
+        "id": 2,
+        "nombre": "Privacidad",
+        "icono": "privacidad",
+        "iconoAccion": "arrow-right",
+        "pantalla": "Privacidad"
+      },
+      {
+        "id": 3,
+        "nombre": "Notificaciones",
+        "icono": "notificaciones",
+        "iconoAccion": "arrow-right",
+        "pantalla": "Notificaciones"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "titulo": "Gestión",
+    "opciones": [
+      {
+        "id": 1,
+        "nombre": "Editar natillera",
+        "icono": "editar",
+        "iconoAccion": "arrow-right",
+        "pantalla": "EditarNatillera"
+      },
+      {
+        "id": 2,
+        "nombre": "Exportar reporte",
+        "icono": "exportar",
+        "iconoAccion": "arrow-right",
+        "pantalla": "ExportarReporte"
+      },
+      {
+        "id": 3,
+        "nombre": "Descargar resumen anual",
+        "icono": "descargar",
+        "iconoAccion": "arrow-right",
+        "pantalla": "ResumenAnual"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "titulo": "Soporte",
+    "opciones": [
+      {
+        "id": 1,
+        "nombre": "Ayuda",
+        "icono": "ayuda",
+        "iconoAccion": "arrow-right",
+        "pantalla": "Ayuda"
+      },
+      {
+        "id": 2,
+        "nombre": "Términos y condiciones",
+        "icono": "terminos",
+        "iconoAccion": "arrow-right",
+        "pantalla": "Terminos"
+      },
+      {
+        "id": 3,
+        "nombre": "Invitar participantes",
+        "icono": "participantes",
+        "iconoAccion": "arrow-right",
+        "pantalla": "InvitarParticipantes"
+      }
+    ]
+  }
+]
