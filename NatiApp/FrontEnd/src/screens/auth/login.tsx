@@ -9,6 +9,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Animated,
+  ImageBackground,
+  StatusBar,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import {
@@ -23,12 +25,15 @@ import { useModal } from "../../context/modalContext";
 
 import colores from "../../assets/theme/colores";
 
+import group187 from "../../assets/images/Group187.png";
 import iconOk2 from "../../assets/icons/iconOk2.png";
 import iconUser from "../../assets/icons/iconUserII.png";
+import iconFacebook from "../../assets/icons/iconFacebook.png";
 import iconApple from "../../assets/icons/iconApple.png";
 import iconGoogle from "../../assets/icons/iconGoogle.png";
 import iconIphone from "../../assets/icons/iconIphone.png";
 import iconIphone2 from "../../assets/icons/iconIphone2.png";
+import iconArrow1 from "../../assets/icons/iconArrow1.png";
 import Step1 from "./step1";
 
 export default function Login({ navigation }: any) {
@@ -149,6 +154,7 @@ export default function Login({ navigation }: any) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
+      <StatusBar barStyle={"light-content"} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <AnimatedBlurView
@@ -187,17 +193,21 @@ export default function Login({ navigation }: any) {
               { transform: [{ translateX: CircleThreeScale }] },
             ]}
           />
-          <View  style={styles.contentContainer}>
-            <SafeAreaView edges={["top"]} style={{ flex: 1, padding: 20 }}>
+          <View style={styles.contentContainer}>
+            <ImageBackground style={styles.backgroundOne} source={group187}>
               <View style={styles.contentTitle}>
                 <Text style={styles.title}>NatiApp</Text>
+                <Text style={styles.textBienvenida}>
+                  Bienvenido a tu app de ahorros
+                </Text>
               </View>
-
-              <ProgressSteps
+            </ImageBackground>
+            <View style={{ flex: 1, padding: 20 }}>
+              {/* <ProgressSteps
                 pasos={pasosRegistro}
                 pasoActual={1}
                 icono={iconOk2}
-              />
+              /> */}
 
               <View style={styles.titleContainer}>
                 <Text style={styles.titleNum}>
@@ -216,7 +226,10 @@ export default function Login({ navigation }: any) {
                   <View style={styles.inputAndIcon}>
                     <View style={styles.textAndInput}>
                       <View style={styles.countryCodeContainer}>
-                        <Image source={iconIphone2} style={styles.countryFlag} />
+                        <Image
+                          source={iconIphone2}
+                          style={styles.countryFlag}
+                        />
                         <Text style={styles.placeholderText}>+57</Text>
                       </View>
                       <TextInput
@@ -231,11 +244,9 @@ export default function Login({ navigation }: any) {
                   </View>
                 </View>
               </View>
-              <TouchableOpacity
-                onPress={onNext}
-                style={styles.buttonContinue}
-              >
+              <TouchableOpacity onPress={onNext} style={styles.buttonContinue}>
                 <Text style={styles.buttonContinueText}>Continuar</Text>
+                <Image style={styles.iconArrow1} source={iconArrow1} />
               </TouchableOpacity>
               <View style={styles.separatorContainer}>
                 <View style={styles.separatorLine}></View>
@@ -244,45 +255,50 @@ export default function Login({ navigation }: any) {
               </View>
               <View style={styles.socialContainer}>
                 <TouchableOpacity style={styles.socialButton}>
+                  <Image
+                    source={iconFacebook}
+                    style={styles.socialButtonImage}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.socialButton}>
                   <Image source={iconApple} style={styles.socialButtonImage} />
-                  <Text style={styles.socialButtonText}>
-                    Continúe con Apple
-                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.socialButton}>
                   <Image source={iconGoogle} style={styles.socialButtonImage} />
-                  <Text style={styles.socialButtonText}>
-                    Continúe con Google
-                  </Text>
                 </TouchableOpacity>
               </View>
-            </SafeAreaView>
-            {mensaje !== "" && (
-              <View
-                style={[
-                  styles.message,
-                  {
-                    top: insets.top,
-                  },
-                ]}
-              >
-                <View style={styles.contentTextMessage}>
-                  <View style={styles.contenIconIphone}>
-                    <Image source={iconIphone} style={styles.iconIphone} />
-                  </View>
-                  <Text style={styles.textMessage}>{mensaje}</Text>
-                </View>
-              </View>
-            )}
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
       {isVisible && <ModalConfirmCodigo phone={phone} />}
+      {mensaje !== "" && (
+        <View
+          style={[
+            styles.message,
+            {
+              // top: insets.top,
+            },
+          ]}
+        >
+          <View style={styles.contentTextMessage}>
+            {/* <View style={[styles.contenIconIphone, ]}> */}
+            <Image source={iconIphone2} style={styles.iconIphone} />
+            {/* </View> */}
+            <Text style={styles.textMessage}>{mensaje}</Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  backgroundOne: {
+    width: "100%",
+    height: 280,
+  },
+
   container: {
     flex: 1,
     width: "100%",
@@ -321,18 +337,24 @@ const styles = StyleSheet.create({
 
   contentTitle: {
     justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
+    top: 90,
+    paddingLeft: 20,
   },
   title: {
-    fontSize: 36,
+    fontSize: 30,
     fontFamily: "Inspiration",
+    color: "white",
+    letterSpacing: 2,
+  },
+
+  textBienvenida: {
+    color: "#7B7D7D",
+    fontSize: 14,
   },
 
   progressContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // borderWidth: 1,
     overflow: "hidden",
   },
 
@@ -431,10 +453,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     height: 45,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     borderWidth: 2,
-
-    borderRadius: 10,
+    borderRadius: 100,
+    borderColor: "#555555",
   },
 
   textAndInput: {
@@ -451,14 +473,13 @@ const styles = StyleSheet.create({
     height: 20,
     gap: 10,
     borderRightWidth: 1,
-    borderColor: "#7B7D7D"
+    borderColor: "#7B7D7D",
   },
 
   countryFlag: {
     width: 20,
-    height: 20
+    height: 20,
   },
-
 
   placeholderText: {
     fontWeight: "bold",
@@ -475,15 +496,16 @@ const styles = StyleSheet.create({
   },
 
   buttonContinue: {
+    flexDirection: "row",
     width: "100%",
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    textAlign: "center",
+    gap: 10,
     marginTop: 20,
     marginBottom: 20,
     backgroundColor: "black",
-    borderRadius: 10,
+    borderRadius: 100,
   },
 
   buttonContinueText: {
@@ -491,6 +513,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+
+  iconArrow1: {
+    width: 25,
+    height: 25,
+  },
+
   separatorContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -502,8 +530,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#7b7d7d7a",
   },
+
   separatorText: {},
+
   socialContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     width: "100%",
     marginTop: 20,
     gap: 11,
@@ -512,12 +545,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    height: 50,
+    width: 40,
+    height: 40,
     gap: 7,
-    borderWidth: 1,
-    borderColor: "#7B7D7D",
-    borderRadius: 10,
+    backgroundColor: "white",
+    borderRadius: 100,
+    shadowColor: "#00000",
+    elevation: 5,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
   },
   socialButtonText: {
     fontSize: 16,
@@ -529,39 +569,47 @@ const styles = StyleSheet.create({
     height: 20,
     resizeMode: "contain",
   },
+
   message: {
     position: "absolute",
     width: "100%",
+    height: 100,
     justifyContent: "center",
     alignItems: "center",
     zIndex: 10,
-    padding: 10,
-    paddingHorizontal: 20,
-    shadowColor: "#000",
+    paddingTop: 40,
+    // paddingHorizontal: 20,
+  },
+
+  contentTextMessage: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    // width: 300,
+    gap: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: "white",
+    borderRadius: 100,
+    borderWidth: 1,
+    shadowColor: "white",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 6,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-  contentTextMessage: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#111827",
-    borderRadius: 100,
-    height: 50,
-    padding: 15,
-    gap: 5,
-  },
+
   contenIconIphone: {
     justifyContent: "center",
     alignItems: "center",
     width: 40,
     height: 40,
     borderRadius: 100,
+    borderWidth: 1,
   },
+
   iconIphone: {
     width: 25,
     height: 25,
@@ -569,6 +617,7 @@ const styles = StyleSheet.create({
 
   textMessage: {
     fontWeight: "500",
-    color: "white",
+    fontSize: 15,
+    // color: "white",
   },
 });

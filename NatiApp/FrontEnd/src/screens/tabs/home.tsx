@@ -34,7 +34,7 @@ export default function Home({ navigation }: any) {
 
   return (
     <View style={[styles.container]}>
-      <StatusBar backgroundColor="transparent" />
+      {/* <StatusBar backgroundColor={"transparent"} /> */}
       <View style={styles.headerContainer}>
         <ImageBackground
           source={vector7}
