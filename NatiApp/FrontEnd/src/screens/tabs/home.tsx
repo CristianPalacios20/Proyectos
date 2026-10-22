@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   StyleSheet,
   ImageBackground,
   ScrollView,
+  Dimensions,
+  PanResponder,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -22,25 +24,107 @@ import iconVisible from "../../assets/icons/iconVisible.png";
 import iconArrowRight from "../../assets/icons/iconArrowRight.png";
 import iconResumenAnual from "../../assets/icons/iconResumenAnual.png";
 import iconNoti from "../../assets/icons/iconNoti.png";
+import iconArrow from "../../assets/icons/iconArrow1.png";
 
 import { useRoute } from "@react-navigation/native";
 
 export default function Home({ navigation }: any) {
   const insets = useSafeAreaInsets();
   const route = useRoute;
-
+  const ALTURA_PANTALLA = Dimensions.get("window").height;
   const [seeMonto, setSeeMonto] = useState(false);
-  // const [iconActivo, setIconActivo] = useState(false);
+  const [expanido, setExpandido] = useState(false);
+  const [altura, setAltura] = useState(105);
+
+  const alturaInicial = useRef(300);
+
+  const responder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+
+      onMoveShouldSetPanResponder: () => true,
+
+      onPanResponderGrant: () => {
+        alturaInicial.current = altura;
+      },
+
+      onPanResponderMove: (_, gesto) => {
+        const nuevaAltura = Math.max(
+          105,
+          Math.min(ALTURA_PANTALLA, alturaInicial.current + gesto.dy),
+        );
+
+        setAltura(nuevaAltura);
+      },
+
+      onPanResponderRelease: (_, gesto) => {
+        const alturaFinal = alturaInicial.current + gesto.dy;
+
+        if (alturaFinal >= ALTURA_PANTALLA * 0.65) {
+          setAltura(ALTURA_PANTALLA);
+          setExpandido(true);
+        } else {
+          setAltura(105);
+          setExpandido(false);
+        }
+      },
+    }),
+  ).current;
 
   return (
     <View style={[styles.container]}>
       {/* <StatusBar backgroundColor={"transparent"} /> */}
+      <View
+        style={[
+          styles.floatingContainer,
+          {
+            height: altura,
+            borderBottomLeftRadius: expanido ? 0 : 20,
+            borderBottomRightRadius: expanido ? 0 : 20,
+          },
+        ]}
+      >
+        <View style={styles.floatingContent}>
+          <View>
+            <TouchableOpacity>
+              <Image />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {expanido && (
+          <View style={styles.contentButtomCerrar}>
+            <TouchableOpacity
+              style={styles.buttomCerrar}
+              onPress={() => {
+                setAltura(105);
+                setExpandido(false);
+              }}
+            >
+              {/* <Text>cerrar</Text> */}
+              <Image style={styles.iconArrowRight} source={iconArrow} />
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {!expanido && (
+          <View
+            style={styles.floatingActionContainer}
+            {...responder.panHandlers}
+          >
+            <View style={styles.floatingButton}></View>
+          </View>
+        )}
+      </View>
       <View style={styles.headerContainer}>
         <ImageBackground
           source={vector7}
           style={[styles.header, { paddingTop: insets.top }]}
         >
-          <View style={styles.profileContainer}>
+          {/* <View style={styles.profileContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("Profile")}
               style={styles.avatarContainer}
@@ -56,7 +140,7 @@ export default function Home({ navigation }: any) {
 
               <Image source={iconNoti} style={styles.notificationIcon} />
             </View>
-          </View>
+          </View> */}
           <View style={styles.infoContainer}>
             <View style={styles.estadoContainer}>
               <View style={styles.containerMonto}>
@@ -103,7 +187,10 @@ export default function Home({ navigation }: any) {
         <View style={styles.movementsHeader}>
           <Text style={styles.movementsTitle}>Últimos movimientos</Text>
 
-          <TouchableOpacity onPress={()=>navigation.navigate("Movimientos")} style={styles.viewAllButton}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Movimientos")}
+            style={styles.viewAllButton}
+          >
             <Text style={styles.viewAllButtonText}>Ver todos</Text>
           </TouchableOpacity>
         </View>
@@ -174,12 +261,62 @@ export const styles = StyleSheet.create({
     backgroundColor: "#000",
   },
 
+  floatingContainer: {
+    position: "absolute",
+    width: "100%",
+    backgroundColor: "#2DB964",
+    zIndex: 1,
+    shadowColor: "#00000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 20,
+  },
+
+  floatingContent: {},
+
+  contentButtomCerrar: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: 50,
+    alignItems: "center",
+    // borderWidth: 1
+  },
+
+  buttomCerrar: {},
+
+  iconArrowRight: {
+    width: 30,
+    height: 20,
+    transform: [{ rotate: "-90deg" }],
+  },
+
+  floatingActionContainer: {
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 8,
+  },
+
+  floatingButton: {
+    width: 70,
+    height: 4,
+    backgroundColor: "white",
+    borderRadius: 100,
+  },
+
   headerContainer: {
     width: "100%",
     flex: 1,
     backgroundColor: "white",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    // borderWidth: 10,
   },
 
   header: {
@@ -194,6 +331,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 10,
+    borderWidth: 10,
   },
 
   avatarContainer: {
@@ -255,6 +393,8 @@ export const styles = StyleSheet.create({
   infoContainer: {
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 60,
+    // borderWidth: 1,
   },
 
   estadoContainer: {
